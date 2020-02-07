@@ -3,6 +3,11 @@
 
 using namespace std;
 
+//Player::Player()
+//{
+//
+//}
+
 void Player::PlaceHarvestTile()
 {
 	return;
@@ -28,8 +33,8 @@ void Player::BuildVillage()
 
 }
 
-int Player::CalculateResources()
-{
-	//TODO return resources size. waiting for resources to be implemented
-	//return resources.size();
-}
+//int Player::CalculateResources()
+//{
+//	//TODO return resources size. waiting for resources to be implemented
+//	//return resources.size();
+//}

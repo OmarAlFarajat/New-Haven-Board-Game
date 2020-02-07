@@ -18,7 +18,7 @@ public:
 		return playerNumber; 
 	}
 
-	int CalculateResources();
+	//int CalculateResources();
 
 private:
 

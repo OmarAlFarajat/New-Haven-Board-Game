@@ -1,0 +1,4 @@
+﻿  Player.cpp
+  PlayerDriver.cpp
+  Generating Code...
+C:\Users\luiz8\Documents\GitHub\COMP-345-Team-19\New Haven\Part 4 Player\Player.cpp(35): error C4716: 'Player::CalculateResources': must return a value
