@@ -1,5 +1,11 @@
 #pragma once
-class GBMap
+#include "Graph.h"
+
+class GBMap : public Graph
 {
+
+public:
+	GBMap();
+	~GBMap();
 };
 
