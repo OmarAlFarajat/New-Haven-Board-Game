@@ -7,8 +7,7 @@ enum class Direction { LEFT, RIGHT, UP, DOWN };
 class Node
 {
 	int* id; 
-	// For DFS
-	bool* visited; 
+	bool* visited;	// For DFS
 
 	Node* up; 
 	Node* down;

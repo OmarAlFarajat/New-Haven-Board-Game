@@ -56,15 +56,16 @@ void Graph::makeSquareGrid(int length)
 
 	// Create all the connections (edges)
 	for (int i = 0; i < totalNodes; i++)
-	{		
+	{	
+		size_t I = static_cast<size_t>(i);
 		if(i-length >= 0)
-			nodes[i]->addConnection(nodes[i-length], Direction::UP);
+			nodes[i]->addConnection(nodes[I-length], Direction::UP);
 		if (i + length <= totalNodes - 1)
-			nodes[i]->addConnection(nodes[i+length], Direction::DOWN);
-		if(i-1 >= 0)
-			nodes[i]->addConnection(nodes[i-1], Direction::LEFT);
-		if(i+1 <= totalNodes - 1)
-			nodes[i]->addConnection(nodes[i+1], Direction::RIGHT);	
+			nodes[i]->addConnection(nodes[I+length], Direction::DOWN);
+		if(i-1 >= 0 && i%length != 0)
+			nodes[i]->addConnection(nodes[I-1], Direction::LEFT);
+		if (i + 1 <= totalNodes - 1 && (I - (length - 1))%length != 0)
+			nodes[i]->addConnection(nodes[I+1], Direction::RIGHT);	
 	}
 
 }
@@ -77,12 +78,13 @@ void Graph::printGrid(int length)
 	for (int i = 0; i < totalNodes - length + 1; i+=length) {
 		// Format id(up, down, left, right, visited)
 		for (int j = 0; j < length; j++) {
-			std::string up = nodes[i + j]->up ? std::to_string(*nodes[i + j]->up->id) : "x";
-			std::string down = nodes[i + j]->down ? std::to_string(*nodes[i + j]->down->id) : "x";
-			std::string left = nodes[i + j]->left ? std::to_string(*nodes[i + j]->left->id) : "x";
-			std::string right = nodes[i + j]->right ? std::to_string(*nodes[i + j]->right->id) : "x";
-			std::string visited = *nodes[i + j]->visited ? "Y" : "N";
-			std::cout << *nodes[i+j]->id << "(" 
+			size_t I = static_cast<size_t>(i);
+			std::string up = nodes[I + j]->up ? std::to_string(*nodes[I + j]->up->id) : "x";
+			std::string down = nodes[I + j]->down ? std::to_string(*nodes[I + j]->down->id) : "x";
+			std::string left = nodes[I + j]->left ? std::to_string(*nodes[I + j]->left->id) : "x";
+			std::string right = nodes[I + j]->right ? std::to_string(*nodes[I + j]->right->id) : "x";
+			std::string visited = *nodes[I + j]->visited ? "Y" : "N";
+			std::cout << *nodes[I+j]->id << "(" 
 			<< up << ","
 			<< down << ","
 			<< left << ","
