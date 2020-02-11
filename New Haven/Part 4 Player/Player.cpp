@@ -9,7 +9,7 @@ enum Characters* Player::chosenCharacters = new Characters[3];
 // Default constructor for player arrays
 Player::Player()
 {
-	//if the playerCount is 0 then initialize the array of chosenCharacters
+	// If playerCount is 0, then initialize the array of chosenCharacters
 	if (playerCount == 0)
 	{
 		Player::initializeCharacters();
@@ -17,8 +17,8 @@ Player::Player()
 
 	this->name = "Player"; //set the name of the player
 
-	playerCount++; //increment the number of players in the game
-	playerNumber = playerCount; //set the player number to the current player count
+	playerCount++; // Increment the total number of players in the game
+	playerNumber = playerCount; // Set the number of players to the current player count
 
 
 }
