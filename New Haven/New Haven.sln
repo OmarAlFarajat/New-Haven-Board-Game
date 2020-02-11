@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Part 5 Buildings Deck Hand"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Part 6 Resources and Buildings", "Part 6 Resources and Buildings\Part 6 Resources and Buildings.vcxproj", "{C848B0E0-2362-4178-9C85-2046A2F6913D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Assignment1", "Assignment1\Assignment1.vcxproj", "{805F6E33-0260-4575-AABE-AE777A85CF84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,6 +73,14 @@ Global
 		{C848B0E0-2362-4178-9C85-2046A2F6913D}.Release|x64.Build.0 = Release|x64
 		{C848B0E0-2362-4178-9C85-2046A2F6913D}.Release|x86.ActiveCfg = Release|Win32
 		{C848B0E0-2362-4178-9C85-2046A2F6913D}.Release|x86.Build.0 = Release|Win32
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Debug|x64.ActiveCfg = Debug|x64
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Debug|x64.Build.0 = Debug|x64
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Debug|x86.ActiveCfg = Debug|Win32
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Debug|x86.Build.0 = Debug|Win32
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Release|x64.ActiveCfg = Release|x64
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Release|x64.Build.0 = Release|x64
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Release|x86.ActiveCfg = Release|Win32
+		{805F6E33-0260-4575-AABE-AE777A85CF84}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
