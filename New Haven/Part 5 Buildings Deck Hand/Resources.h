@@ -12,10 +12,12 @@ class HarvestDeck
 {
 public:
 	HarvestDeck();
-//	HarvestTiles draw();
+	HarvestTiles draw();
 
 private:
-	int NumOfObj;
+	const static int numOfTiles = 60; // 60 Harvest Tiles
+	static int numOfRemain;
+	HarvestTiles deck[numOfTiles];
 
 };
 
@@ -24,9 +26,12 @@ class BuildingDeck
 {
 public:
 	BuildingDeck();
-//	BuildingTiles draw();
+	BuildingTiles draw();
 
 private:
+	const static int numOfTiles = 144; // 144 buildings
+	static int numOfRemain;
+	BuildingTiles deck[numOfTiles];
 
 };
 
@@ -35,25 +40,42 @@ class HarvestTiles
 {
 public:
 	HarvestTiles();
+	bool isContain(ResourceType type);
 
 private:
 	const static int numOfResource = 4;
-	Resources contain[numOfResource];
+	Resource contain[numOfResource];
 
 };
 
+enum class BuildingType {MEADOW, QUARRY, FOREST, WHEATFIELD};
+enum class BuildingColor {GREEN, GREY, RED, YELLOW};
 // Building tiles Object
 class BuildingTiles 
 {
 public:
 	BuildingTiles();
+	BuildingTiles(BuildingColor color, BuildingType buildingType, int value);
+	BuildingType getBuildingType();
 
 private:
-	string title; // meadow, quarry, forest, wheatfield
-	string color; // green, grey, red, yellow
-	int value;    // 1 to 6
+	BuildingType *Type; 
+	BuildingColor *Color; 
+	int *Value;    // 1 to 6
 
 };
+
+enum class ResourceType { TIMBER, STONE, WHEAT, SHEEP};
+class Resource
+{
+public:
+	Resource();
+	Resource(ResourceType type);
+
+private:
+	ResourceType *value;
+};
+
 
 // Hand Object 
 class hand
@@ -65,18 +87,3 @@ public:
 private:
 
 };
-
-class Resources
-{
-public:
-	Resources();
-	Resources(string value);
-	bool isValidValue(string value);
-
-private:
-	string value; //wood, silver, wheat
-	string valid_values[3] = { "wood", "silver", "wheat" };
-
-};
-
-
