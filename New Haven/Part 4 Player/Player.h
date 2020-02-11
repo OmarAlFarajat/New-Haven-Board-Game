@@ -17,7 +17,7 @@ private:
 
 public:
 	Player();	// Default constructor
-	Player(std::string);
+	Player(std::string, int playerNumber);
 	~Player();	// Player class destructor
 	std::string getName();		//get the name of the player
 	void setName(std::string); //set the name of the player

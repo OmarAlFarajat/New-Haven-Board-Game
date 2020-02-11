@@ -2,8 +2,7 @@
 #include <iostream>
 #include <string>
 
-//using namespace std;
-int Player::playerCount = 0;
+int Player::playerCount = 0; // Total number of players that are playing the game
 enum Characters* Player::chosenCharacters = new Characters[3];
 
 
@@ -24,7 +23,7 @@ Player::Player()
 
 }
 
-Player::Player(std::string name)
+Player::Player(std::string name, int playerNumber)
 {
 	//if the playerCount is 0 then initialize the array of chosenCharacters
 	if (playerCount == 0)
