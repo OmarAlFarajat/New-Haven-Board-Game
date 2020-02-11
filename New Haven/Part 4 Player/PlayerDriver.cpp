@@ -7,8 +7,7 @@ int main()
 {
 	//vector<Country> countries;
 	//Hand hand;
-	//DiceFacility dice;
-	cout << "Creating a player..." << endl;
+	cout << "Creating player..." << endl;
 	//Player player(tiles, hand, dice);
 	cout << "A player has been created." << endl;
 
