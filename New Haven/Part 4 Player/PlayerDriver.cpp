@@ -5,22 +5,21 @@ using namespace std;
 
 int main()
 {
-	//vector<Country> countries;
 	//Hand hand;
 	cout << "Creating player..." << endl;
-	//Player player(tiles, hand, dice);
+	//Player player(tiles, hand, );
 	cout << "A player has been created." << endl;
 
 	cout << endl;
 
-	cout << "The player will now reinforce..." << endl;
-	//player.reinforce();
+	cout << "The player will now ..." << endl;
+
 	cout << endl;
-	cout << "The player will now attack..." << endl;
-	//player.attack();
+	cout << "The player will now ..." << endl;
+
 	cout << endl;
-	cout << "The player will now fortify..." << endl;
-	//player.fortify();
+	cout << "The player will now ..." << endl;
+
 	system("pause");
 
 	return 0;
