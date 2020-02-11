@@ -13,7 +13,7 @@ Player::Player()
 	//if the playerCount is 0 then initialize the array of chosenCharacters
 	if (playerCount == 0)
 	{
-		Player::initializeChosenCharacters();
+		Player::initializeCharacters();
 	}
 
 	this->name = "Player"; //set the name of the player
@@ -29,13 +29,24 @@ Player::Player(std::string name)
 	//if the playerCount is 0 then initialize the array of chosenCharacters
 	if (playerCount == 0)
 	{
-		Player::initializeChosenCharacters();
+		Player::initializeCharacters();
 	}
 
 	this->name = "Player"; //set the name of the player
 
 	playerCount++; //increment the number of players in the game
 	playerNumber = playerCount; //set the player number to the current player count
+}
+
+Player::~Player() 	// Class destructor
+{
+	//make sure the tiles object is deleted
+	//delete tiles;
+	//tiles = NULL;
+	//delete building;
+	//building = NULL;
+	delete[] chosenCharacters;
+	chosenCharacters = NULL;
 }
 
 std::string Player::getName()
@@ -67,10 +78,11 @@ enum Characters* Player::getChosenCharacters()
 	return chosenCharacters;
 }
 
-void Player::initializeChosenCharacters()
+void Player::initializeCharacters()
 {
-	//this method is called once, when the player count is zero in the constructor
-	//it exists to initialize everything in the chosen characters array to something that could not be picked
+	/* Method is only called once, when the player count is zero in the constructor
+	it exists to initialize everything in the chosen characters array to something that could not be picked
+	*/
 	for (int i = 0; i < 3; i++)
 	{
 		chosenCharacters[i] = 0;

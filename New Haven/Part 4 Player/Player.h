@@ -6,13 +6,13 @@
 class Player
 {
 private:
-	static Characters* chosenCharacters; // an array holding all the characters that have been chosen so far so that no character is played by more than one player
-	static int playerCount; //the number of players that are playing the game
-	int playerNumber; //player 1, player 2, etc.
+	static Characters* chosenCharacters; // Array that holds all the characters that have been chosen so far so that no character is played by more than one player
+	static int playerCount; // Total number of players that are playing the game
+	int playerNumber; //Player identifier i.e. player 1, player 2, etc.
 	int player = 0;
-	std::string name; // the player's name
+	std::string name; // the player's nickname
 
-	void initializeChosenCharacters(); //a method to initialize the chosen characters when beginning the game
+	void initializeCharacters(); // Method that initializes the chosen characters at the start of the game
 
 
 public:
