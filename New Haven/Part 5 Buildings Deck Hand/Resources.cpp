@@ -1,29 +1,81 @@
 #include "Resources.h"
-#include <iostream>
 
-using namespace std;
-
-HarvestDeck::HarvestDeck() {
-
-
-
+Resource::Resource()
+{
 }
 
-BuildingDeck::BuildingDeck() {
-
+Resource::Resource(ResourceType type)
+{
 }
 
-HarvestTiles::HarvestTiles() {
-
-
+Resource::~Resource()
+{
 }
 
-BuildingTiles::BuildingTiles() {
-
-
+HarvestTiles::HarvestTiles()
+{
 }
 
-Resource::Resource() {
+HarvestTiles::~HarvestTiles()
+{
+}
 
+bool HarvestTiles::isContain(ResourceType type)
+{
+	return false;
+}
 
+HarvestDeck::HarvestDeck()
+{
+}
+
+HarvestDeck::~HarvestDeck()
+{
+}
+
+HarvestTiles HarvestDeck::draw()
+{
+	return HarvestTiles();
+}
+
+BuildingTiles::BuildingTiles()
+{
+}
+
+BuildingTiles::BuildingTiles(BuildingColor color, BuildingType buildingType, int value)
+{
+}
+
+BuildingTiles::~BuildingTiles()
+{
+}
+
+BuildingType BuildingTiles::getBuildingType()
+{
+	return BuildingType();
+}
+
+BuildingDeck::BuildingDeck()
+{
+}
+
+BuildingDeck::~BuildingDeck()
+{
+}
+
+BuildingTiles BuildingDeck::draw()
+{
+	return BuildingTiles();
+}
+
+hand::hand()
+{
+}
+
+hand::~hand()
+{
+}
+
+void hand::exchange()
+{
 }
