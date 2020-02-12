@@ -12,17 +12,18 @@ Resource::~Resource()
 {
 }
 
-HarvestTiles::HarvestTiles()
+HarvestTile::HarvestTile()
 {
 }
 
-HarvestTiles::~HarvestTiles()
+HarvestTile::HarvestTile(Resource resources[4], TileStatus status)
 {
+	*this->resources = resources;
+	this->status = &status;
 }
 
-bool HarvestTiles::isContain(ResourceType type)
+HarvestTile::~HarvestTile()
 {
-	return false;
 }
 
 HarvestDeck::HarvestDeck()
@@ -33,9 +34,9 @@ HarvestDeck::~HarvestDeck()
 {
 }
 
-HarvestTiles HarvestDeck::draw()
+HarvestTile HarvestDeck::draw()
 {
-	return HarvestTiles();
+	return HarvestTile();
 }
 
 BuildingTiles::BuildingTiles()

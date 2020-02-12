@@ -11,7 +11,7 @@ public:
 	void addNode(Node*);
 	Graph();
 	~Graph();
-	void makeSquareGrid(int);
+	void makeSquareGrid(int, NodeType);
 	void printGrid(int);
 	bool isConnected_DFS(Node*);
 	Node* getRootNode() {

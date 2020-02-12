@@ -1,4 +1,5 @@
 #pragma once
+#include "Node.h"
 
 /*
 TODO: implement draw() methods in HarvestDeck and BuildingDesk. Let's User use these methods
@@ -8,7 +9,7 @@ to draw a tiles (building or harvest)
 
 // Resource Class
 enum class ResourceType { TIMBER, STONE, WHEAT, SHEEP };
-class Resource
+class Resource : public Node
 {
 public:
 	Resource();
@@ -16,21 +17,21 @@ public:
 	~Resource();
 
 private:
-	ResourceType* value;
+	ResourceType* type;
 };
 
 // Harvest tiles Object
-class HarvestTiles
+enum class TileStatus{IN_HAND, IN_PLAY};
+class HarvestTile : public Node
 {
 public:
-	HarvestTiles();
-	~HarvestTiles();
-	bool isContain(ResourceType type);
+	HarvestTile();
+	HarvestTile(Resource[4], TileStatus);
+	~HarvestTile();
 
 private:
-	const static int numOfResource = 4;
-	Resource contain[numOfResource];
-
+	TileStatus* status; 
+	Resource* resources[4];
 };
 
 
@@ -40,12 +41,12 @@ class HarvestDeck
 public:
 	HarvestDeck();
 	~HarvestDeck();
-	HarvestTiles draw();
+	HarvestTile draw();
 
 private:
 	const static int numOfTiles = 60; // 60 Harvest Tiles
 	static int numOfRemain;
-	static HarvestTiles deck[numOfTiles];
+	static HarvestTile deck[numOfTiles];
 
 };
 
