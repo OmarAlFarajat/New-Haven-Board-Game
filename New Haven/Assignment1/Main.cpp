@@ -1,31 +1,38 @@
-#include "GBMap.h"
-#include "Node.h"
 #include <iostream>
+#include <string>
+#include "GBMap.h"
 #include "Resources.h"
-
-const int MAX_MAP_LENGTH = 7;
-const int MAX_RESOURCE_LENGTH = 14; 
-
+#include "GBMapLoader.h"
 int main() {
-	GBMap* gb_map = new GBMap();
-	gb_map->mapGraph->makeSquareGrid(MAX_MAP_LENGTH, NodeType::MAP);
-	gb_map->tileGraph->makeSquareGrid(MAX_MAP_LENGTH, NodeType::TILE);
-	gb_map->resourceGraph->makeSquareGrid(MAX_RESOURCE_LENGTH, NodeType::RESOURCE);
 	
-	std::cout << "BEFORE DFS:" << std::endl;
-	gb_map->resourceGraph->printGrid(MAX_RESOURCE_LENGTH);
-
-	std::cout << "Number of nodes: " << gb_map->resourceGraph->getNumberOfNodes() << std::endl;
-	std::cout << "Connected? " << std::boolalpha << gb_map->resourceGraph->isConnected_DFS(gb_map->resourceGraph->getRootNode()) << std::endl << std::endl;
-
-	std::cout << "AFTER DFS:" << std::endl;
-	gb_map->resourceGraph->printGrid(14);
+	// Assume for this example that it's a 3-player board
 
 
 
+	int numberOfPlayers = 0; 
+	std::cout << "Please enter the number of players: "; 
+	std::cin >> numberOfPlayers; 
 
-	Resource resources[4] = { Resource(ResourceType::STONE), Resource(ResourceType::SHEEP), Resource(ResourceType::TIMBER), Resource(ResourceType::WHEAT) };
+	std::string fileName = ""; 
+	switch(numberOfPlayers){
+	case 2:
+		fileName = "GB_A_2_Players.gbmap";
+		break;
+	case 3:
+		fileName = "GB_A_3_Players.gbmap";
+		break;
+	case 4:
+		fileName = "GB_A_4_Players.gbmap";
+		break;
+	default:
+		std::cout << "* YOU ENTERED AN INVALID NUMBER OF PLAYERS. GOODBYE! *" << std::endl;
+		return 666; 
 
-	HarvestTile harvestTile(resources, TileStatus::IN_PLAY);
-	//gb_map->mapGraph->addNode();
+	}
+	GBMap* gb_map = new GBMap();
+	loadMap(fileName, *gb_map);
+
+	gb_map->tileGraph->printGridGraph(true);
+	gb_map->resourceGraph->printGridGraph(false);
+
 }

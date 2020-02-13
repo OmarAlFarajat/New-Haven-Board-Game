@@ -1,40 +1,38 @@
 #pragma once
-#include "Node.h"
+#include "GBMap.h"
 
 /*
 TODO: implement draw() methods in HarvestDeck and BuildingDesk. Let's User use these methods
 to draw a tiles (building or harvest)
 */
 
-
-// Resource Class
+// Resource class (extends Node)
 enum class ResourceType { TIMBER, STONE, WHEAT, SHEEP };
 class Resource : public Node
 {
 public:
 	Resource();
-	Resource(ResourceType type);
 	~Resource();
-
+	void setType(ResourceType type);
 private:
 	ResourceType* type;
 };
 
-// Harvest tiles Object
-enum class TileStatus{IN_HAND, IN_PLAY};
+// Harvest tile class (extends Node)
 class HarvestTile : public Node
 {
 public:
 	HarvestTile();
-	HarvestTile(Resource[4], TileStatus);
+	HarvestTile(Resource[4]);
 	~HarvestTile();
 
 private:
-	TileStatus* status; 
 	Resource* resources[4];
 };
 
-
+/////////////
+// TO-DO ... 
+//
 // The Deck of Harvest Tiles Object
 class HarvestDeck
 {
@@ -49,7 +47,6 @@ private:
 	static HarvestTile deck[numOfTiles];
 
 };
-
 
 // Building tiles Object
 enum class BuildingType { MEADOW, QUARRY, FOREST, WHEATFIELD };
@@ -69,7 +66,6 @@ private:
 
 };
 
-
 // The Deck of Building Object
 class BuildingDeck
 {
@@ -84,7 +80,6 @@ private:
 	BuildingTiles deck[numOfTiles];
 
 };
-
 
 // Hand Object 
 class hand
