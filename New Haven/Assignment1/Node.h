@@ -1,24 +1,26 @@
 #pragma once
-#include <vector>
-#include <string>
+#include <cstddef>
 
 enum class Direction { LEFT, RIGHT, UP, DOWN };
+enum class NodeType { TILE, RESOURCE };
 
 class Node
 {
-	int* id; 
+	int* id;
 	bool* visited;	// For DFS
+	bool* enabled; 
 
-	Node* up; 
+	// Edges
+	Node* up;
 	Node* down;
-	Node* left; 
+	Node* left;
 	Node* right;
 
 public:
 	Node();
 	~Node();
-	void addConnection(Node*, Direction);
-
-	friend class Graph; 
+	void addEdge(Node*, Direction);
+	void setEnabled(bool enabled);
+	friend class Graph;
 };
 

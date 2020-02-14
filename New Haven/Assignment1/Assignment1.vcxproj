@@ -124,16 +124,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GBMap.cpp" />
+    <ClCompile Include="GBMapLoader.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="TileNode.cpp" />
+    <ClCompile Include="VGMapLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GBMap.h" />
+    <ClInclude Include="GBMapLoader.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="TileNode.h" />
+    <ClInclude Include="VGMapLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
