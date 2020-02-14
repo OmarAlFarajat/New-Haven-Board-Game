@@ -6,7 +6,7 @@
 class Player
 {
 private:
-	static Characters* chosenCharacters; // Array that holds all the characters that have been chosen so far so that no character is played by more than one player
+	//static Characters* chosenCharacters; // Array that holds all the characters that have been chosen so far so that no character is played by more than one player
 	static int playerCount; // Total number of players that are playing the game
 	int playerNumber; //Player identifier i.e. player 1, player 2, etc.
 	int player = 0;
@@ -21,9 +21,8 @@ public:
 	~Player();	// Player class destructor
 	std::string getName();		//get the name of the player
 	void setName(std::string); //set the name of the player
-	void setPlayerNumber(int);	// set the player's number i.e. Player1, Player2, etc
 
-	static enum Characters* getChosenCharacters(); //gets a pointer to an array holding the chosen characters
+	//static enum Characters* getChosenCharacters(); //gets a pointer to an array holding the chosen characters
 
 	void setPlayerNumber(int); //set the number of the player: player1, player2, etc.
 	int getPlayerNumber(); //get the number of the player: player1,player 2, etc.

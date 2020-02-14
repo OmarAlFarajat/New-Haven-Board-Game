@@ -3,7 +3,7 @@
 #include <string>
 
 int Player::playerCount = 0; // Total number of players that are playing the game
-enum Characters* Player::chosenCharacters = new Characters[3];
+//enum Characters* Player::chosenCharacters = new Characters[3];
 
 
 // Default constructor for player arrays
@@ -44,8 +44,8 @@ Player::~Player() 	// Class destructor
 	//tiles = NULL;
 	//delete building;
 	//building = NULL;
-	delete[] chosenCharacters;
-	chosenCharacters = NULL;
+	//delete[] chosenCharacters;
+	//chosenCharacters = NULL;
 }
 
 std::string Player::getName()
@@ -69,22 +69,6 @@ void Player::setPlayerNumber(int number)
 	if (number >= 0 && number <= 3)
 	{
 		playerNumber = number;
-	}
-}
-
-enum Characters* Player::getChosenCharacters()
-{
-	return chosenCharacters;
-}
-
-void Player::initializeCharacters()
-{
-	/* Method is only called once, when the player count is zero in the constructor
-	it exists to initialize everything in the chosen characters array to something that could not be picked
-	*/
-	for (int i = 0; i < 3; i++)
-	{
-		chosenCharacters[i] = 0;
 	}
 }
 
