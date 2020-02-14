@@ -26,7 +26,7 @@ int main() {
 		break;
 	default:
 		std::cout << "* YOU ENTERED AN INVALID NUMBER OF PLAYERS. GOODBYE! *" << std::endl;
-		return 666; 
+		return 666;		// Hail Satan
 
 	}
 	GBMap* gb_map = new GBMap();
@@ -34,5 +34,7 @@ int main() {
 
 	gb_map->tileGraph->printGridGraph(true);
 	gb_map->resourceGraph->printGridGraph(false);
+	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
+	gb_map->tileGraph->printGridGraph(true);
 
 }
