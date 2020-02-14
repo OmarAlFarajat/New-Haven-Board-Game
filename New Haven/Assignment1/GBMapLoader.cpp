@@ -28,8 +28,6 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 		else if (results[0].compare("DISABLE") == 0) {
 			// TO-DO: Go to node in gb_map and disable it. 
 		}
-
-
 	}
 	inFile.close();
 

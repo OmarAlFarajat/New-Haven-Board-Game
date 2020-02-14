@@ -4,6 +4,7 @@ Node::Node()
 {
 	id = new int(-1);
 	visited = new bool(false);
+	enabled = new bool(true); 
 	up = NULL;
 	down = NULL;
 	right = NULL;
@@ -30,4 +31,8 @@ void Node::addEdge(Node* node, Direction direction)
 		left = node;
 		break;
 	}
+}
+
+void Node::setEnabled(bool enabled) {
+	*this->enabled = enabled; 
 }

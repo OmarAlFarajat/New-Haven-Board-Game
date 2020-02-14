@@ -6,9 +6,6 @@
 int main() {
 	
 	// Assume for this example that it's a 3-player board
-
-
-
 	int numberOfPlayers = 0; 
 	std::cout << "Please enter the number of players: "; 
 	std::cin >> numberOfPlayers; 
@@ -36,5 +33,16 @@ int main() {
 	gb_map->resourceGraph->printGridGraph(false);
 	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
 	gb_map->tileGraph->printGridGraph(true);
+
+	// Disable nodes 1, 7, 8 
+	gb_map->tileGraph->getNode(1)->setEnabled(false);
+	gb_map->tileGraph->getNode(7)->setEnabled(false);
+	gb_map->tileGraph->getNode(8)->setEnabled(false);
+
+	gb_map->tileGraph->resetAllVisited();
+	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getNode(23)) << std::endl;
+	gb_map->tileGraph->printGridGraph(true);
+
+
 
 }

@@ -8,6 +8,7 @@ to draw a tiles (building or harvest)
 
 // Resource class (extends Node)
 enum class ResourceType { TIMBER, STONE, WHEAT, SHEEP };
+
 class Resource : public Node
 {
 public:
@@ -19,7 +20,7 @@ private:
 };
 
 // Harvest tile class (extends Node)
-class HarvestTile : public Node
+class HarvestTile
 {
 public:
 	HarvestTile();

@@ -13,12 +13,11 @@ void Resource::setType(ResourceType type) {
 	*this->type = type; 
 }
 
-HarvestTile::HarvestTile() : Node()
+HarvestTile::HarvestTile()
 {
-
 }
 
-HarvestTile::HarvestTile(Resource resources[4]) 
+HarvestTile::HarvestTile(Resource resources[4])
 {
 	*this->resources = resources;
 }

@@ -8,6 +8,7 @@ class Node
 {
 	int* id;
 	bool* visited;	// For DFS
+	bool* enabled; 
 
 	// Edges
 	Node* up;
@@ -19,7 +20,7 @@ public:
 	Node();
 	~Node();
 	void addEdge(Node*, Direction);
-
+	void setEnabled(bool enabled);
 	friend class Graph;
 };
 

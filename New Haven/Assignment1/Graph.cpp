@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include "Resources.h"
+#include "TileNode.h"
 
 Graph::Graph()
 {
@@ -21,16 +22,16 @@ bool Graph::isConnected_DFS(Node* node)
 
 	// Recursive calls
 	// If connection is not null and the connected node has not been visited 
-	if (node->up && !*node->up->visited)
+	if (node->up && !*node->up->visited && *node->up->enabled)
 		isConnected_DFS(node->up);
 
-	if (node->down && !*node->down->visited)
+	if (node->down && !*node->down->visited && *node->down->enabled)
 		isConnected_DFS(node->down);
 
-	if (node->left && !*node->left->visited)
+	if (node->left && !*node->left->visited && *node->left->enabled)
 		isConnected_DFS(node->left);
 
-	if (node->right && !*node->right->visited)
+	if (node->right && !*node->right->visited && *node->right->enabled)
 		isConnected_DFS(node->right);
 
 	// Count how many nodes have been visited
@@ -41,10 +42,18 @@ bool Graph::isConnected_DFS(Node* node)
 
 	// Compare it with the total number of nodes. 
 	// If number of nodes visisted is equal to total number of nodes, then graph is connected.  
-	if (counter == *number_of_nodes)
+	if (counter == *number_of_nodes) 
 		return true;
 	else
 		return false;
+
+}
+
+void Graph::resetAllVisited()
+{
+	for (int i = 0; i < nodes->size(); i++) {
+		*nodes[0][i]->visited = false;
+	}
 
 }
 
@@ -66,7 +75,7 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 			this->addNode(new Resource());
 			break;
 		case NodeType::TILE:
-			this->addNode(new HarvestTile());
+			this->addNode(new TileNode());
 			break;
 		}
 	}
