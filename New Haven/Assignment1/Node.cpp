@@ -1,4 +1,5 @@
 #include "Node.h"
+#include "Graph.h"
 
 Node::Node()
 {
@@ -31,9 +32,4 @@ void Node::addEdge(Node* node, Direction direction)
 		left = node;
 		break;
 	}
-}
-
-void Node::setEnabled(bool enabled) {
-	
-	*this->enabled = enabled; 
 }

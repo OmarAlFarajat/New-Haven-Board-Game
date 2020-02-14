@@ -49,6 +49,22 @@ bool Graph::isConnected_DFS(Node* node)
 
 }
 
+void Graph::disableNode(int id)
+{
+	if (*this->getNode(id)->enabled) {
+		*this->getNode(id)->enabled = false;
+		(*number_of_nodes)--;
+	}
+}
+
+void Graph::enableNode(int id)
+{
+	if (!(*this->getNode(id)->enabled)) {
+		*this->getNode(id)->enabled = true;
+		(*number_of_nodes)++;
+	}
+}
+
 void Graph::resetAllVisited()
 {
 	for (int i = 0; i < nodes->size(); i++) {
@@ -115,6 +131,7 @@ void Graph::printGridGraph(bool verbose)
 			std::string enabled = *nodes[0][I + j]->enabled ? "Y" : "N";
 
 			std::cout << *nodes[0][I + j]->id << " ";
+			// Print more information per node is verbose is enabled.
 			if (verbose)
 				std::cout << "("
 				<< up << ","

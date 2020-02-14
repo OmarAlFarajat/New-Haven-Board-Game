@@ -21,5 +21,7 @@ public:
 	Node* getRootNode() {return nodes[0][0]; }
 	Node* getNode(int index) { return nodes[0][index]; };
 	int getNumberOfNodes() { return *number_of_nodes; };
+	void disableNode(int id);
+	void enableNode(int id);
 	void resetAllVisited();
 };

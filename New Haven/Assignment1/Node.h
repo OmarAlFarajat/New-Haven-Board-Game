@@ -20,7 +20,6 @@ public:
 	Node();
 	~Node();
 	void addEdge(Node*, Direction);
-	void setEnabled(bool enabled);
 	friend class Graph;
 };
 

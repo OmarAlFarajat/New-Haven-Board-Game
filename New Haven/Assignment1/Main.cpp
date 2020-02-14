@@ -34,10 +34,11 @@ int main() {
 	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
 	gb_map->tileGraph->printGridGraph(true);
 
-	// Disable nodes 1, 7, 8 
-	gb_map->tileGraph->getNode(1)->setEnabled(false);
-	gb_map->tileGraph->getNode(7)->setEnabled(false);
-	gb_map->tileGraph->getNode(8)->setEnabled(false);
+	// Disable nodes 1, 2, 6, 7
+	gb_map->tileGraph->disableNode(1);
+	gb_map->tileGraph->disableNode(5);
+	gb_map->tileGraph->disableNode(6);
+	//gb_map->tileGraph->disableNode(7);
 
 	gb_map->tileGraph->resetAllVisited();
 	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getNode(23)) << std::endl;
