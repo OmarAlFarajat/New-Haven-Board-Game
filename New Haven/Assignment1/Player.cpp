@@ -6,6 +6,10 @@ int Player::playerCount = 0; // Total number of players that are playing the gam
 //enum Characters* Player::chosenCharacters = new Characters[3];
 
 
+void Player::initializeCharacters()
+{
+}
+
 // Default constructor for player arrays
 Player::Player()
 {

@@ -30,7 +30,7 @@ int main() {
 	loadMap(fileName, *gb_map);
 
 	gb_map->tileGraph->printGridGraph(true);
-	gb_map->resourceGraph->printGridGraph(false);
+	//gb_map->resourceGraph->printGridGraph(false);
 	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
 	gb_map->tileGraph->printGridGraph(true);
 
@@ -41,6 +41,8 @@ int main() {
 
 	gb_map->tileGraph->resetAllVisited();
 	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getNode(23)) << std::endl;
+	gb_map->tileGraph->printGridGraph(true);
+	gb_map->tileGraph->resetAllVisited();
 	gb_map->tileGraph->printGridGraph(true);
 
 

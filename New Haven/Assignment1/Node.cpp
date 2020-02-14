@@ -34,5 +34,6 @@ void Node::addEdge(Node* node, Direction direction)
 }
 
 void Node::setEnabled(bool enabled) {
+	
 	*this->enabled = enabled; 
 }

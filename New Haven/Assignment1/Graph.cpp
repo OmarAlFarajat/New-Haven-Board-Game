@@ -102,26 +102,27 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 // Debugging function to print the grid graph
 void Graph::printGridGraph(bool verbose)
 {
-	int totalNodes = *this->length * *this->height;
-
-	for (int i = 0; i < totalNodes - *this->length + 1; i += *this->length) {
+	for (int i = 0; i < *number_of_nodes - *this->length + 1; i += *this->length) {
 		// Format id(up, down, left, right, visited)
 		for (int j = 0; j < *this->length; j++) {
 			size_t I = static_cast<size_t>(i);
 
-			std::string up = nodes[0][I + j]->up ? std::to_string(*nodes[0][I + j]->up->id) : "x";
-			std::string down = nodes[0][I + j]->down ? std::to_string(*nodes[0][I + j]->down->id) : "x";
-			std::string left = nodes[0][I + j]->left ? std::to_string(*nodes[0][I + j]->left->id) : "x";
-			std::string right = nodes[0][I + j]->right ? std::to_string(*nodes[0][I + j]->right->id) : "x";
+			std::string up = (nodes[0][I + j]->up && *nodes[0][I + j]->enabled && *nodes[0][I + j]->up->enabled) ? std::to_string(*nodes[0][I + j]->up->id) : "x";
+			std::string down = (nodes[0][I + j]->down && *nodes[0][I + j]->enabled && *nodes[0][I + j]->down->enabled) ? std::to_string(*nodes[0][I + j]->down->id) : "x";
+			std::string left = (nodes[0][I + j]->left && *nodes[0][I + j]->enabled && *nodes[0][I + j]->left->enabled) ? std::to_string(*nodes[0][I + j]->left->id) : "x";
+			std::string right = (nodes[0][I + j]->right && *nodes[0][I + j]->enabled && *nodes[0][I + j]->right->enabled) ? std::to_string(*nodes[0][I + j]->right->id) : "x";
 			std::string visited = *nodes[0][I + j]->visited ? "Y" : "N";
-			std::cout << *nodes[0][I + j]->id << "\t";
+			std::string enabled = *nodes[0][I + j]->enabled ? "Y" : "N";
+
+			std::cout << *nodes[0][I + j]->id << " ";
 			if (verbose)
 				std::cout << "("
 				<< up << ","
 				<< right << ","
 				<< down << ","
 				<< left << ","
-				<< visited << ")"
+				<< visited << ","
+				<< enabled << ")"
 				<< "  || ";
 		}
 		std::cout << std::endl;
