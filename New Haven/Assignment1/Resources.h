@@ -1,54 +1,53 @@
 #pragma once
+#include "GBMap.h"
 
 /*
 TODO: implement draw() methods in HarvestDeck and BuildingDesk. Let's User use these methods
 to draw a tiles (building or harvest)
 */
 
-
-// Resource Class
+// Resource class (extends Node)
 enum class ResourceType { TIMBER, STONE, WHEAT, SHEEP };
-class Resource
+
+class Resource : public Node
 {
 public:
 	Resource();
-	Resource(ResourceType type);
 	~Resource();
-
+	void setType(ResourceType type);
 private:
-	ResourceType* value;
+	ResourceType* type;
 };
 
-// Harvest tiles Object
-class HarvestTiles
+// Harvest tile class (extends Node)
+class HarvestTile
 {
 public:
-	HarvestTiles();
-	~HarvestTiles();
-	bool isContain(ResourceType type);
+	HarvestTile();
+	HarvestTile(Resource[4]);
+	~HarvestTile();
 
 private:
-	const static int numOfResource = 4;
-	Resource contain[numOfResource];
-
+	Resource* resources[4];
 };
 
-
+/////////////
+// TO-DO ... 
+//
 // The Deck of Harvest Tiles Object
 class HarvestDeck
 {
 public:
 	HarvestDeck();
 	~HarvestDeck();
-	HarvestTiles draw();
+	HarvestTile draw();
 
 private:
 	const static int numOfTiles = 60; // 60 Harvest Tiles
 	static int numOfRemain;
-	static HarvestTiles deck[numOfTiles];
+	static HarvestTile deck[numOfTiles];
 
 };
-
 
 // Building tiles Object
 enum class BuildingType { MEADOW, QUARRY, FOREST, WHEATFIELD };
@@ -68,7 +67,6 @@ private:
 
 };
 
-
 // The Deck of Building Object
 class BuildingDeck
 {
@@ -83,7 +81,6 @@ private:
 	BuildingTiles deck[numOfTiles];
 
 };
-
 
 // Hand Object 
 class hand

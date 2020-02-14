@@ -1,10 +1,7 @@
 #include "Resources.h"
+#include "GBMap.h"
 
-Resource::Resource()
-{
-}
-
-Resource::Resource(ResourceType type)
+Resource::Resource() : Node()
 {
 }
 
@@ -12,17 +9,21 @@ Resource::~Resource()
 {
 }
 
-HarvestTiles::HarvestTiles()
+void Resource::setType(ResourceType type) {
+	*this->type = type; 
+}
+
+HarvestTile::HarvestTile()
 {
 }
 
-HarvestTiles::~HarvestTiles()
+HarvestTile::HarvestTile(Resource resources[4])
 {
+	*this->resources = resources;
 }
 
-bool HarvestTiles::isContain(ResourceType type)
+HarvestTile::~HarvestTile()
 {
-	return false;
 }
 
 HarvestDeck::HarvestDeck()
@@ -33,9 +34,9 @@ HarvestDeck::~HarvestDeck()
 {
 }
 
-HarvestTiles HarvestDeck::draw()
+HarvestTile HarvestDeck::draw()
 {
-	return HarvestTiles();
+	return HarvestTile();
 }
 
 BuildingTiles::BuildingTiles()
