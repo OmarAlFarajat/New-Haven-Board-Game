@@ -1,20 +1,22 @@
 #include "Node.h"
+#include "Graph.h"
 
 Node::Node()
 {
 	id = new int(-1);
-	visited = new bool(false); 
+	visited = new bool(false);
+	enabled = new bool(true); 
 	up = NULL;
 	down = NULL;
 	right = NULL;
-	left = NULL; 
+	left = NULL;
 }
 
 Node::~Node()
 {
 }
 
-void Node::addConnection(Node* node, Direction direction)
+void Node::addEdge(Node* node, Direction direction)
 {
 	switch (direction) {
 	case Direction::UP:
@@ -31,4 +33,3 @@ void Node::addConnection(Node* node, Direction direction)
 		break;
 	}
 }
-

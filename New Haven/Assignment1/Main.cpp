@@ -1,21 +1,51 @@
-#include "GBMap.h"
-#include "Node.h"
 #include <iostream>
+#include <string>
+#include "GBMap.h"
 #include "Resources.h"
-
+#include "GBMapLoader.h"
 int main() {
+	
+	// Assume for this example that it's a 3-player board
+	int numberOfPlayers = 0; 
+	std::cout << "Please enter the number of players: "; 
+	std::cin >> numberOfPlayers; 
+
+	std::string fileName = ""; 
+	switch(numberOfPlayers){
+	case 2:
+		fileName = "GB_A_2_Players.gbmap";
+		break;
+	case 3:
+		fileName = "GB_A_3_Players.gbmap";
+		break;
+	case 4:
+		fileName = "GB_A_4_Players.gbmap";
+		break;
+	default:
+		std::cout << "* YOU ENTERED AN INVALID NUMBER OF PLAYERS. GOODBYE! *" << std::endl;
+		return 666;		// Hail Satan
+
+	}
 	GBMap* gb_map = new GBMap();
-	gb_map->makeSquareGrid(7);
+	loadMap(fileName, *gb_map);
 
-	std::cout << "BEFORE DFS:" << std::endl;
-	gb_map->printGrid(7);
+	gb_map->tileGraph->printGridGraph(true);
+	//gb_map->resourceGraph->printGridGraph(false);
+	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
+	gb_map->tileGraph->printGridGraph(true);
 
-	std::cout << "Number of nodes: " << gb_map->getNumberOfNodes() << std::endl;
-	std::cout << "Connected? " << std::boolalpha << gb_map->isConnected_DFS(gb_map->getRootNode()) << std::endl << std::endl;
+	// Disable nodes 1, 2, 6, 7
+	gb_map->tileGraph->disableNode(1);
+	gb_map->tileGraph->disableNode(5);
+	gb_map->tileGraph->disableNode(6);
+	//gb_map->tileGraph->disableNode(7);
 
-	std::cout << "AFTER DFS:" << std::endl;
-	gb_map->printGrid(7);
+	gb_map->tileGraph->resetAllVisited();
+	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getNode(23)) << std::endl;
+	gb_map->tileGraph->printGridGraph(true);
+	gb_map->tileGraph->resetAllVisited();
+	gb_map->tileGraph->printGridGraph(true);
 
-	Resource temp(ResourceType::STONE);
+
 
 }
