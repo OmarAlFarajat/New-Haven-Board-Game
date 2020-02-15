@@ -19,9 +19,8 @@ bool Graph::isConnected_DFS(Node* node)
 {
 	// Mark the node as visited
 	*node->visited = true;
-
 	// Recursive calls
-	// If connection is not null and the connected node has not been visited 
+	// If connection is not null AND the connected node has not been visited AND the connected node is enabled
 	if (node->up && !*node->up->visited && *node->up->enabled)
 		isConnected_DFS(node->up);
 
@@ -42,11 +41,17 @@ bool Graph::isConnected_DFS(Node* node)
 
 	// Compare it with the total number of nodes. 
 	// If number of nodes visisted is equal to total number of nodes, then graph is connected.  
-	if (counter == *numEnabledNodes) 
+	if (counter == *numEnabledNodes)
 		return true;
 	else
 		return false;
 
+}
+
+void Graph::resetAllVisited()
+{
+	for (int i = 0; i < nodes[0].size(); i++) 
+		*nodes[0][i]->visited = false;
 }
 
 void Graph::disableNode(int id)
@@ -65,13 +70,6 @@ void Graph::enableNode(int id)
 	}
 }
 
-void Graph::resetAllVisited()
-{
-	for (int i = 0; i < nodes->size(); i++) {
-		*nodes[0][i]->visited = false;
-	}
-
-}
 
 void Graph::addNode(Node* node)
 {
@@ -88,18 +86,28 @@ void Graph::linkResourceNodes(Graph* resourceGraph)
 
 	for (int i = 0; i < totalNodes; i++)
 	{
-		
+		// rowCount is used to keep track of which row node i is in
+		// The row value is used in the calculations to figure out the mapping of the resource id to a tile id. 
 		if (rowCount == *this->length) {
 			rowCount = 0; 
 			rowValue++;
 		}
 
+		// Resources on Harvest tile: 
+		//	|0|1|
+		//	|2|3|
+		// Calculate the first Resource id number based on the Tile 
 		int firstResource = (i * 2) + (*this->length*rowValue*2);
 
-		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource)), 0);
-		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + 1)), 1);
-		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + *this->length * 2)), 2);
-		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + *this->length * 2 + 1)),3);
+		// Link the nodes in the Resource graph to the nodes in the Tile graph based on calculations 
+		static_cast<TileNode*>(nodes[0][i])
+			->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource)), 0);
+		static_cast<TileNode*>(nodes[0][i])
+			->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + 1)), 1);
+		static_cast<TileNode*>(nodes[0][i])
+			->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + *this->length * 2)), 2);
+		static_cast<TileNode*>(nodes[0][i])
+			->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + *this->length * 2 + 1)), 3);
 
 		rowCount++; 
 	}
@@ -125,7 +133,7 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 	for (int i = 0; i < totalNodes; i++)
 	{
 		size_t I = static_cast<size_t>(i);
-		// If-conditions ensure that the edges are made to form a grid
+		// Calculations based on the node id are used to ensure connections form a grid-shaped graph. 
 		if (i - length >= 0)
 			nodes[0][i]->addEdge(nodes[0][I - length], Direction::UP);
 		if (i + length <= totalNodes - 1)
@@ -150,6 +158,11 @@ void Graph::printGridGraph(bool verbose)
 		for (int j = 0; j < *this->length; j++) {
 			size_t I = static_cast<size_t>(i);
 
+			/*	If connected node isn't null AND if current node is enabled AND if connected node is enabled.
+			*	Take note of the conditional ? operator, it might not be clear in the block of code below. 
+			*	Will print each node's connected nodes if verbose is enabled.
+			*	If no connection exists, then an 'x' is put in place.
+			*	Prints if the node has been visited and enabled. */
 			std::string up = (nodes[0][I + j]->up && *nodes[0][I + j]->enabled && *nodes[0][I + j]->up->enabled) ? std::to_string(*nodes[0][I + j]->up->id) : "x";
 			std::string down = (nodes[0][I + j]->down && *nodes[0][I + j]->enabled && *nodes[0][I + j]->down->enabled) ? std::to_string(*nodes[0][I + j]->down->id) : "x";
 			std::string left = (nodes[0][I + j]->left && *nodes[0][I + j]->enabled && *nodes[0][I + j]->left->enabled) ? std::to_string(*nodes[0][I + j]->left->id) : "x";

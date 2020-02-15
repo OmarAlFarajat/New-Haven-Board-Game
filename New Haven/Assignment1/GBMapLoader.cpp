@@ -23,15 +23,13 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 		else if (results[0].compare("HEIGHT") == 0) 
 			height = std::stoi(results[1]);		
 		else if (results[0].compare("RESOURCE") == 0){
-			// TO-DO: Go to gb_map and update the resource nodes
+TODO:	// Go to gb_map and update the resource nodes
 		}
 		else if (results[0].compare("DISABLE") == 0) {
-			// TO-DO: Go to node in gb_map and disable it. 
+TODO:	// Go to node in gb_map and disable it. 
 		}
 	}
 	inFile.close();
-
-	std::cout << "Map has been created from " << fileName << "." << std::endl; 
 
 	// Create the graphs using the length and height data from the file
 	gb_map.tileGraph->makeGridGraph(length, height, NodeType::TILE);
