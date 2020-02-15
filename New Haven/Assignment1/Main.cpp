@@ -35,9 +35,11 @@ int main() {
 	gb_map->tileGraph->printGridGraph(true);
 
 	// Disable nodes 1, 2, 6, 7
-	gb_map->tileGraph->disableNode(1);
-	gb_map->tileGraph->disableNode(5);
 	gb_map->tileGraph->disableNode(6);
+	gb_map->tileGraph->disableNode(7);
+	gb_map->tileGraph->disableNode(11);
+	gb_map->tileGraph->disableNode(12);
+
 	//gb_map->tileGraph->disableNode(7);
 
 	gb_map->tileGraph->resetAllVisited();
