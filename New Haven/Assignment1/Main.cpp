@@ -51,9 +51,10 @@ int main() {
 	gb_map->tileGraph->printGridGraph(true);
 	std::cout << std::endl;
 	
-TODO: /* Currently, resetAllVisited() must be called each time after isConnected_DFS() 
-	  in order to reset the graph to the default state. Ideally, this should be done at 
-	  the last recursive resolution of isConnected_DFS(). */
+//TODO: 
+	/* Currently, resetAllVisited() must be called each time after isConnected_DFS() 
+	in order to reset the graph to the default state. Ideally, this should be done at 
+	the last recursive resolution of isConnected_DFS(). */
 
 	std::cout << "Resetting all nodes to unvisited..." << std::endl;
 	gb_map->tileGraph->resetAllVisited();

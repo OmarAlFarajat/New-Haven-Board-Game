@@ -23,10 +23,10 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 		else if (results[0].compare("HEIGHT") == 0) 
 			height = std::stoi(results[1]);		
 		else if (results[0].compare("RESOURCE") == 0){
-TODO:	// Go to gb_map and update the resource nodes
+//TODO:	// Go to gb_map and update the resource nodes
 		}
 		else if (results[0].compare("DISABLE") == 0) {
-TODO:	// Go to node in gb_map and disable it. 
+//TODO:	// Go to node in gb_map and disable it. 
 		}
 	}
 	inFile.close();
