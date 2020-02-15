@@ -36,8 +36,9 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 	// Create the graphs using the length and height data from the file
 	gb_map.tileGraph->makeGridGraph(length, height, NodeType::TILE);
 	gb_map.resourceGraph->makeGridGraph(length * 2, height * 2, NodeType::RESOURCE);
-
+	gb_map.tileGraph->linkResourceNodes(gb_map.resourceGraph); 
 	// TO-DO: Use resource data from file to update the above two graphs accordingly. 
+
 
 }
 

@@ -3,6 +3,8 @@
 #include "GBMap.h"
 #include "Resources.h"
 #include "GBMapLoader.h"
+#include "TileNode.h"
+
 int main() {
 	
 	// Assume for this example that it's a 3-player board
@@ -29,25 +31,31 @@ int main() {
 	GBMap* gb_map = new GBMap();
 	loadMap(fileName, *gb_map);
 
-	gb_map->tileGraph->printGridGraph(true);
-	//gb_map->resourceGraph->printGridGraph(false);
-	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
+	std::cout << "Initial tile graph with " << gb_map->tileGraph->getNumEnabledNodes() << " active nodes." << std::endl; 
 	gb_map->tileGraph->printGridGraph(true);
 
-	// Disable nodes 1, 2, 6, 7
+	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
+	std::cout << "After DFS: " << std::endl;
+	gb_map->tileGraph->printGridGraph(true);
+	std::cout << "Resetting all nodes to unvisited..." << std::endl;
+	gb_map->tileGraph->resetAllVisited();
+
+	std::cout << "Disabling nodes 6, 7, 11, 12..." << std::endl;
 	gb_map->tileGraph->disableNode(6);
 	gb_map->tileGraph->disableNode(7);
 	gb_map->tileGraph->disableNode(11);
 	gb_map->tileGraph->disableNode(12);
 
-	//gb_map->tileGraph->disableNode(7);
-
-	gb_map->tileGraph->resetAllVisited();
+	std::cout << "After disabling the nodes, the number of active nodes is " << gb_map->tileGraph->getNumEnabledNodes() << std::endl;
 	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getNode(23)) << std::endl;
+
+
 	gb_map->tileGraph->printGridGraph(true);
 	gb_map->tileGraph->resetAllVisited();
-	gb_map->tileGraph->printGridGraph(true);
-
+	
+	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 10:" << std::endl;
+	for(int i = 0; i < 4; i++)
+		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(10))->getResourceNodes()[i]->getID() << " ";
 
 
 }

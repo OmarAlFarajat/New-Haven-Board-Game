@@ -6,7 +6,7 @@ Graph::Graph()
 {
 	length = new int(0);
 	height = new int(0);
-	number_of_nodes = new int(0);
+	numEnabledNodes = new int(0);
 	nodes = new std::vector<Node*>;
 }
 
@@ -42,7 +42,7 @@ bool Graph::isConnected_DFS(Node* node)
 
 	// Compare it with the total number of nodes. 
 	// If number of nodes visisted is equal to total number of nodes, then graph is connected.  
-	if (counter == *number_of_nodes) 
+	if (counter == *numEnabledNodes) 
 		return true;
 	else
 		return false;
@@ -53,7 +53,7 @@ void Graph::disableNode(int id)
 {
 	if (*this->getNode(id)->enabled) {
 		*this->getNode(id)->enabled = false;
-		(*number_of_nodes)--;
+		(*numEnabledNodes)--;
 	}
 }
 
@@ -61,7 +61,7 @@ void Graph::enableNode(int id)
 {
 	if (!(*this->getNode(id)->enabled)) {
 		*this->getNode(id)->enabled = true;
-		(*number_of_nodes)++;
+		(*numEnabledNodes)++;
 	}
 }
 
@@ -75,9 +75,34 @@ void Graph::resetAllVisited()
 
 void Graph::addNode(Node* node)
 {
-	*node->id = *number_of_nodes;
-	(*number_of_nodes)++;
+	*node->id = *numEnabledNodes;
+	(*numEnabledNodes)++;
 	nodes[0].push_back(node);
+}
+
+void Graph::linkResourceNodes(Graph* resourceGraph)
+{
+	int totalNodes = *this->length * *this->height;
+	int rowCount = 0;
+	int rowValue = 0; 
+
+	for (int i = 0; i < totalNodes; i++)
+	{
+		
+		if (rowCount == *this->length) {
+			rowCount = 0; 
+			rowValue++;
+		}
+
+		int firstResource = (i * 2) + (*this->length*rowValue*2);
+
+		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource)), 0);
+		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + 1)), 1);
+		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + *this->length * 2)), 2);
+		static_cast<TileNode*>(nodes[0][i])->linkResourceNode(static_cast<Resource*>(resourceGraph->getNode(firstResource + *this->length * 2 + 1)),3);
+
+		rowCount++; 
+	}
 }
 
 // Makes a square grid of size length x length. 
@@ -118,7 +143,9 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 // Debugging function to print the grid graph
 void Graph::printGridGraph(bool verbose)
 {
-	for (int i = 0; i < *number_of_nodes - *this->length + 1; i += *this->length) {
+	int totalNodes = *this->length * *this->height;
+
+	for (int i = 0; i < totalNodes - *this->length + 1; i += *this->length) {
 		// Format id(up, down, left, right, visited)
 		for (int j = 0; j < *this->length; j++) {
 			size_t I = static_cast<size_t>(i);
