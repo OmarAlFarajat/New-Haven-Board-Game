@@ -1,6 +1,15 @@
+#include <iomanip>
 #include "Graph.h"
 #include "Resources.h"
 #include "TileNode.h"
+
+// Template for evenly spacing out elements of a table (or a grid in this case)
+// To be used in makeGridGraph()
+// Source: https://stackoverflow.com/a/14796892
+template<typename T> void printElement(T t, const int& width)
+{
+	std::cout << std::left << std::setw(width) << std::setfill(' ') << t;
+}
 
 Graph::Graph()
 {
@@ -14,7 +23,7 @@ Graph::~Graph()
 {
 }
 
-// A recursive depth-first search
+// A recursive depth-first search that visits all nodes from the passed root node to check if the graph is connected
 bool Graph::isConnected_DFS(Node* node)
 {
 	// Mark the node as visited
@@ -70,7 +79,6 @@ void Graph::enableNode(int id)
 	}
 }
 
-
 void Graph::addNode(Node* node)
 {
 	*node->id = *numEnabledNodes;
@@ -78,6 +86,7 @@ void Graph::addNode(Node* node)
 	nodes[0].push_back(node);
 }
 
+// Links the appropriate tile nodes to the corresponding resource nodes (part of map initiation)
 void Graph::linkResourceNodes(Graph* resourceGraph)
 {
 	int totalNodes = *this->length * *this->height;
@@ -169,18 +178,25 @@ void Graph::printGridGraph(bool verbose)
 			std::string right = (nodes[0][I + j]->right && *nodes[0][I + j]->enabled && *nodes[0][I + j]->right->enabled) ? std::to_string(*nodes[0][I + j]->right->id) : "x";
 			std::string visited = *nodes[0][I + j]->visited ? "Y" : "N";
 			std::string enabled = *nodes[0][I + j]->enabled ? "Y" : "N";
+			std::string temp = "";
 
-			std::cout << *nodes[0][I + j]->id << " ";
 			// Print more information per node is verbose is enabled.
-			if (verbose)
-				std::cout << "("
-				<< up << ","
-				<< right << ","
-				<< down << ","
-				<< left << ","
-				<< visited << ","
-				<< enabled << ")"
-				<< "  || ";
+			if (verbose) {
+				temp = std::to_string(*nodes[0][I + j]->id) + "("
+					+ up + ","
+					+ right + ","
+					+ down + ","
+					+ left + ","
+					+ visited + ","
+					+ enabled + ")";
+				printElement(temp, 21);
+			}
+			else {
+				temp = std::to_string(*nodes[0][I + j]->id) + "";
+				printElement(temp, 5);
+			}
+
+
 		}
 		std::cout << std::endl;
 	}

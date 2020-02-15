@@ -39,9 +39,10 @@ int main() {
 	std::cout << "Map has been created from " << fileName << "." << std::endl;
 	std::cout << std::endl; 
 
-	// Print a verbose grid graph of the tile map and check if it's connected.
+	// Print a verbose and non-verbose grid-graph of the tile map and check if it's connected.
 	std::cout << "Initial tile graph state. The format is id(up, right, down, left, visited, enabled). " << gb_map->tileGraph->getNumEnabledNodes() << " active nodes." << std::endl; 
 	std::cout << std::endl;
+	gb_map->tileGraph->printGridGraph(false);
 	gb_map->tileGraph->printGridGraph(true);
 	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
 	std::cout << std::endl;

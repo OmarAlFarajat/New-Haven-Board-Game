@@ -12,7 +12,8 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 	while (inFile) {
 
 		getline(inFile, lineRead);
-		// String tokenizing method: https://stackoverflow.com/questions/53849/how-do-i-tokenize-a-string-in-c
+		// String tokenizing code used for parsing the loaded map file 
+		// Source: https://stackoverflow.com/a/53921
 		std::stringstream strstr(lineRead);
 		std::istream_iterator<std::string> it(strstr);
 		std::istream_iterator<std::string> end; 
