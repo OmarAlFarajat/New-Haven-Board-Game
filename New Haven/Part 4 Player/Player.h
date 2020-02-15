@@ -3,7 +3,7 @@
 #define PLAYER_H
 #include <iostream>
 #include <string>
-#include "../Part 5 Buildings Deck Hand/Resources.h"
+#include "../Assignment1/Resources.h"
 
 class Player
 {
@@ -27,7 +27,7 @@ public:
 	std::string getName();		//get the name of the player
 	int getPlayerNumber(); //get the number of the player: player1,player 2, etc.
 
-	HarvestTiles draw();
+	//HarvestTiles draw();
 	//BuildingTiles draw();
 
 	void PlaceHarvestTile();

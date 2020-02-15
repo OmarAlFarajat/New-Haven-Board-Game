@@ -3,53 +3,37 @@
 #include <string>
 
 int Player::playerCount = 0; // Total number of players that are playing the game
-//enum Characters* Player::chosenCharacters = new Characters[3];
-
-
-void Player::initializeCharacters()
-{
-}
 
 // Default constructor for player arrays
 Player::Player()
 {
-	// If playerCount is 0, then initialize the array of chosenCharacters
-	if (playerCount == 0)
-	{
-		Player::initializeCharacters();
-	}
-
 	this->name = "Player"; //set the name of the player
 
 	playerCount++; // Increment the total number of players in the game
 	playerNumber = playerCount; // Set the number of players to the current player count
+	numOfHarvestTiles = 0;
+	numOfBuildings = 0;
 
 
 }
 
 Player::Player(std::string name, int playerNumber)
 {
-	//if the playerCount is 0 then initialize the array of chosenCharacters
-	if (playerCount == 0)
-	{
-		Player::initializeCharacters();
-	}
-
 	this->name = "Player"; //set the name of the player
 
 	playerCount++; //increment the number of players in the game
 	playerNumber = playerCount; //set the player number to the current player count
+	numOfHarvestTiles = 0;
+	numOfBuildings = 0;
 }
 
 Player::~Player() 	// Class destructor
 {
 	//make sure the tiles object is deleted
-	//delete tiles;
+	//delete HarvestTile();
 	//tiles = NULL;
 	//delete building;
 	//building = NULL;
-	//delete[] chosenCharacters;
-	//chosenCharacters = NULL;
 }
 
 std::string Player::getName()
@@ -76,17 +60,27 @@ void Player::setPlayerNumber(int number)
 	}
 }
 
+void Player::setNumOfHarvestTiles(int h)
+{
+	numOfHarvestTiles = h;
+}
+
+void Player::setNumOfBuildings(int b)
+{
+	numOfBuildings = b;
+}
+
 void Player::PlaceHarvestTile()
 {
 	return;
 }
 
-void Player::DrawBuilding()
+HarvestTile Player::draw()
 {
-
+	return HarvestTile();
 }
 
-void Player::DrawHarvestTile()
+void Player::DrawBuilding()
 {
 
 }

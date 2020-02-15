@@ -61,11 +61,6 @@ void Player::PlaceHarvestTile()
 	return;
 }
 
-HarvestTiles Player::draw()
-{
-	
-}
-
 void Player::DrawBuilding()
 {
 
