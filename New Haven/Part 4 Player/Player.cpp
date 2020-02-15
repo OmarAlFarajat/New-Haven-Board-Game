@@ -3,18 +3,10 @@
 #include <string>
 
 int Player::playerCount = 0; // Total number of players that are playing the game
-//enum Characters* Player::chosenCharacters = new Characters[3];
-
 
 // Default constructor for player arrays
 Player::Player()
 {
-	// If playerCount is 0, then initialize the array of chosenCharacters
-	if (playerCount == 0)
-	{
-		Player::initializeCharacters();
-	}
-
 	this->name = "Player"; //set the name of the player
 
 	playerCount++; // Increment the total number of players in the game
@@ -25,12 +17,6 @@ Player::Player()
 
 Player::Player(std::string name, int playerNumber)
 {
-	//if the playerCount is 0 then initialize the array of chosenCharacters
-	if (playerCount == 0)
-	{
-		Player::initializeCharacters();
-	}
-
 	this->name = "Player"; //set the name of the player
 
 	playerCount++; //increment the number of players in the game
@@ -44,8 +30,6 @@ Player::~Player() 	// Class destructor
 	//tiles = NULL;
 	//delete building;
 	//building = NULL;
-	//delete[] chosenCharacters;
-	//chosenCharacters = NULL;
 }
 
 std::string Player::getName()
@@ -77,12 +61,12 @@ void Player::PlaceHarvestTile()
 	return;
 }
 
-void Player::DrawBuilding()
+HarvestTiles Player::draw()
 {
-
+	
 }
 
-void Player::DrawHarvestTile()
+void Player::DrawBuilding()
 {
 
 }
