@@ -3,13 +3,11 @@
 
 Resource::Resource() : Node()
 {
+	type = new ResourceType();
+	*type = ResourceType::NONE;
 }
 
 Resource::~Resource()
 {
-}
-
-void Resource::setType(ResourceType type) {
-	*this->type = type; 
 }
 

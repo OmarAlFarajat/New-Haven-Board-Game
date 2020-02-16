@@ -8,6 +8,6 @@
 
 #include "GBMap.h"
 #include "Resources.h"
-
+#include "TileNode.h"
 void loadMap(std::string& filename, GBMap& gb_map);
 

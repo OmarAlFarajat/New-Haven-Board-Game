@@ -15,13 +15,16 @@ int main() {
 	std::string fileName = ""; 
 	switch(numberOfPlayers){
 	case 2:
-		fileName = "GB_A_2_Players.gbmap";
+		fileName = "GBA_2Players.gbmap";
 		break;
 	case 3:
-		fileName = "GB_A_3_Players.gbmap";
+		fileName = "GBA_3Players.gbmap";
 		break;
 	case 4:
-		fileName = "GB_A_4_Players.gbmap";
+		fileName = "GBA_4Players.gbmap";
+		break;
+	case 666:
+		fileName = "GBA_2Players_invalid.gbmap";
 		break;
 	default:
 		std::cout << std::endl;
@@ -84,9 +87,35 @@ int main() {
 	std::cout << std::endl;
 
 	// This demonstrates how a tile node can be linked to its four Resource nodes in the resource graph.
-	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 10:" << std::endl;
+	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 0:" << std::endl;
 	for(int i = 0; i < 4; i++)
-		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(10))->getResourceNodes()[i]->getID() << " ";
+		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(0))->getResourceNodes()[i]->getID() << " ";
+	std::cout << std::endl;
+	for (int i = 0; i < 4; i++) {
+		std::string str = static_cast<TileNode*>(gb_map->tileGraph->getNode(0))->getResourceNodes()[i]->getTypeAsString().c_str();
+		std::cout << str << " | ";
+	}
+	std::cout << std::endl;
 	std::cout << std::endl;
 
+	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 5:" << std::endl;
+	for (int i = 0; i < 4; i++)
+		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(5))->getResourceNodes()[i]->getID() << " ";
+	std::cout << std::endl;
+	for (int i = 0; i < 4; i++) {
+		std::string str = static_cast<TileNode*>(gb_map->tileGraph->getNode(5))->getResourceNodes()[i]->getTypeAsString().c_str();
+		std::cout <<  str << " | ";
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 8:" << std::endl;
+	for (int i = 0; i < 4; i++)
+		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(8))->getResourceNodes()[i]->getID() << " ";
+	std::cout << std::endl;
+	for (int i = 0; i < 4; i++) {
+		std::string str = static_cast<TileNode*>(gb_map->tileGraph->getNode(8))->getResourceNodes()[i]->getTypeAsString().c_str();
+		std::cout << str << " | ";
+	}
+	std::cout << std::endl;
 }
