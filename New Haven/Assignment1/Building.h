@@ -1,5 +1,5 @@
 #pragma once
-#include "Resources.h"
+#include<vector>
 
 // Building tiles Object
 enum class BuildingType { MEADOW, QUARRY, FOREST, WHEATFIELD };
@@ -29,7 +29,7 @@ public:
 
 private:
 	const static int numOfTiles = 144; // 144 buildings
-	static int* tileIndex;
+	int* tileIndex;
 	std::vector<BuildingTiles> deck;
 
 };

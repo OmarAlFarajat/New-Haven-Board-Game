@@ -24,8 +24,9 @@ BuildingType* BuildingTiles::getBuildingType()
 
 BuildingDeck::BuildingDeck()
 { 
-
-
+	/*
+		TODO: Create a deck of building with different suits
+	*/
 }
 
 BuildingDeck::~BuildingDeck()
@@ -34,6 +35,14 @@ BuildingDeck::~BuildingDeck()
 
 BuildingTiles* BuildingDeck::draw()
 {
+	if (*tileIndex >= 0) {
+		*tileIndex = *tileIndex - 1;
+		return &deck[*tileIndex];
+	}
+	else { //deck is empty
+		return NULL;
+	}
+
 }
 
 

@@ -1,11 +1,53 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h> 
+#include <time.h>
+
 #include "GBMap.h"
 #include "Resources.h"
+#include "Harvest.h"
+#include "Building.h"
 #include "GBMapLoader.h"
 #include "TileNode.h"
 
+int testHarvestDeck() {
+	std::cout << "Enter testing for Harvest" << std::endl;
+	std::cout << "Creating a random HarvestTile" << std::endl;
+	HarvestTile randomHT;
+	std::cout << "Displaying that random HarvestTile" << std::endl;
+	std::cout << randomHT<< std::endl;
+
+	std::cout << "Creating a Harvest Deck" << std::endl;
+	HarvestDeck deck;
+
+	const int loopCtr = 5; // Change the number of time drawing a tile for testing
+	for (int i = 0; i < loopCtr; ++i) {
+		std::cout << "Drawing a Harvest tile -- Displaying details of the tile: \n" << std::endl;
+		HarvestTile* tile = deck.draw();
+		std::cout << *tile << std::endl;
+		std::cout << std::endl;
+	}
+
+	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << deck.getNumOfRemain() << std::endl;
+
+	return 0;
+}
+
 int main() {
+	/*
+	Generate a random seed according to the current machine time
+	-- Need to be placed at the beginning of main to avoid bias for rand()
+	*/
+	srand(time(NULL)); 
+
+	// Enable Test for Harvest
+	bool testHarvest= true;
+	if (testHarvest) {
+		testHarvestDeck();
+		return 0;
+	}
+	//-----------------------------------------
+
 	// User prompted for number of players
 	int numberOfPlayers = 0; 
 	std::cout << "Please enter the number of players: "; 
@@ -119,3 +161,5 @@ int main() {
 	}
 	std::cout << std::endl;
 }
+
+
