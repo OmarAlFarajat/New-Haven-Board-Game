@@ -8,7 +8,14 @@ to draw a tiles (building or harvest)
 */
 
 // Resource class (extends Node)
-enum class ResourceType { TIMBER, STONE, WHEAT, SHEEP, NONE };
+enum class ResourceType {BEGIN, TIMBER, STONE, WHEAT, SHEEP, NONE, END };
+ResourceType& operator++(ResourceType& e) {
+	if (e == ResourceType::NONE) {
+		throw std::out_of_range("Iterated out of range in ResourceType");
+	}
+	e = ResourceType(static_cast<std::underlying_type<ResourceType>::type>(e) + 1);
+	return e;
+}
 
 class Resource : public Node
 {

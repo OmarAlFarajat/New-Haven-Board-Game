@@ -1,5 +1,7 @@
 #pragma once
+#include <vector>
 #include "Resources.h"
+
 
 // Harvest tile class (extends Node)
 class HarvestTile
@@ -10,7 +12,8 @@ public:
 	~HarvestTile();
 
 private:
-	Resource* resources[4];
+	const int numOfResource = 4;
+	std::vector<Resource> container;
 };
 
 /////////////
@@ -22,11 +25,11 @@ class HarvestDeck
 public:
 	HarvestDeck();
 	~HarvestDeck();
-	HarvestTile draw();
+	HarvestTile* draw();
 
 private:
 	const static int numOfTiles = 60; // 60 Harvest Tiles
-	static int numOfRemain;
-	static HarvestTile deck[numOfTiles];
+	static int *tileIndex;  // keep track of the number of remainning tiles inside the deck to be drawed
+	std::vector<HarvestTile> deck;
 
 };

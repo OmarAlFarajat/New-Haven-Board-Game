@@ -1,34 +1,39 @@
 #include "Building.h"
-#include "Resources.h"
 
 BuildingTiles::BuildingTiles()
 {
+	//Not gonna be used
 }
 
 BuildingTiles::BuildingTiles(BuildingColor color, BuildingType buildingType, int value)
 {
+	// Create a building tile as requested attributes
+	this->Color = &color;
+	this->Type = &buildingType;
+	this->Value = &value;
 }
 
 BuildingTiles::~BuildingTiles()
 {
 }
 
-BuildingType BuildingTiles::getBuildingType()
+BuildingType* BuildingTiles::getBuildingType()
 {
-	return BuildingType();
+	return this->Type;
 }
 
 BuildingDeck::BuildingDeck()
-{
+{ 
+
+
 }
 
 BuildingDeck::~BuildingDeck()
 {
 }
 
-BuildingTiles BuildingDeck::draw()
+BuildingTiles* BuildingDeck::draw()
 {
-	return BuildingTiles();
 }
 
 

@@ -10,7 +10,7 @@ public:
 	BuildingTiles();
 	BuildingTiles(BuildingColor color, BuildingType buildingType, int value);
 	~BuildingTiles();
-	BuildingType getBuildingType();
+	BuildingType* getBuildingType();
 
 private:
 	BuildingType* Type;
@@ -25,12 +25,12 @@ class BuildingDeck
 public:
 	BuildingDeck();
 	~BuildingDeck();
-	BuildingTiles draw();
+	BuildingTiles* draw();
 
 private:
 	const static int numOfTiles = 144; // 144 buildings
-	static int numOfRemain;
-	BuildingTiles deck[numOfTiles];
+	static int* tileIndex;
+	std::vector<BuildingTiles> deck;
 
 };
 
