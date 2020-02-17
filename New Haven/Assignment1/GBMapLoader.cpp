@@ -22,10 +22,14 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 	
 	int length = 0;
 	int height = 0;
+
+	// The containers below store the data read from the file.
+	// The graphs are only created and updated after the file is closed. 
 	std::map<int, std::vector<ResourceType>> resourceData;
 	std::vector<int> resourceIndices; 
 	std::vector<int> disableData;
 
+	// Reading from file
 	while (inFile) {
 
 		getline(inFile, lineRead);
@@ -36,10 +40,11 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 		std::istream_iterator<std::string> end; 
 		std::vector<std::string> results(it, end);
 
+
 		if (results[0].compare("LENGTH") == 0) 
 			length = std::stoi(results[1]);
 		else if (results[0].compare("HEIGHT") == 0) 
-			height = std::stoi(results[1]);		
+			height = std::stoi(results[1]);	
 		else if (results[0].compare("RESOURCE") == 0){
 			resourceData[std::stoi(results[1])] = { strToEnum(results[2]), strToEnum(results[3]), strToEnum(results[4]), strToEnum(results[5]) };
 			resourceIndices.push_back(std::stoi(results[1]));
@@ -55,10 +60,11 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 	gb_map.resourceGraph->makeGridGraph(length * 2, height * 2, NodeType::RESOURCE);
 	gb_map.tileGraph->linkResourceNodes(gb_map.resourceGraph); 
 
-	// TO-DO: Use resource data from file to update the above two graphs accordingly. 
+	// Iterate through the disableData and update gb_map's tile graph. 
 	for (int i = 0; i < disableData.size(); i++)
 		gb_map.tileGraph->disableNode(disableData[i]);
 
+	// Iterate through the resourceData and update gb_map's tile graph. 
 	for (int i = 0; i < resourceIndices.size(); i++) {
 		static_cast<TileNode*>(gb_map.tileGraph->getNode(resourceIndices[i]))->getResourceNodes()[0]->setType(resourceData[resourceIndices[i]][0]);
 		static_cast<TileNode*>(gb_map.tileGraph->getNode(resourceIndices[i]))->getResourceNodes()[1]->setType(resourceData[resourceIndices[i]][1]);

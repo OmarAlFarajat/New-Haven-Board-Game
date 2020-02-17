@@ -21,6 +21,7 @@ public:
 	// Debug
 	void printGridGraph(bool verbose);
 	bool isConnected_DFS(Node*);
+	bool depthFirstSearch(Node*);
 	// Mutators
 	void disableNode(int id);
 	void enableNode(int id);

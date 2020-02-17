@@ -26,21 +26,28 @@ Graph::~Graph()
 // A recursive depth-first search that visits all nodes from the passed root node to check if the graph is connected
 bool Graph::isConnected_DFS(Node* node)
 {
+	bool isConnected = depthFirstSearch(node);
+	resetAllVisited();
+
+	return isConnected; 
+}
+
+bool Graph::depthFirstSearch(Node* node) {
 	// Mark the node as visited
 	*node->visited = true;
 	// Recursive calls
 	// If connection is not null AND the connected node has not been visited AND the connected node is enabled
 	if (node->up && !*node->up->visited && *node->up->enabled)
-		isConnected_DFS(node->up);
+		depthFirstSearch(node->up);
 
 	if (node->down && !*node->down->visited && *node->down->enabled)
-		isConnected_DFS(node->down);
+		depthFirstSearch(node->down);
 
 	if (node->left && !*node->left->visited && *node->left->enabled)
-		isConnected_DFS(node->left);
+		depthFirstSearch(node->left);
 
 	if (node->right && !*node->right->visited && *node->right->enabled)
-		isConnected_DFS(node->right);
+		depthFirstSearch(node->right);
 
 	// Count how many nodes have been visited
 	int counter = 0;
@@ -54,7 +61,6 @@ bool Graph::isConnected_DFS(Node* node)
 		return true;
 	else
 		return false;
-
 }
 
 void Graph::resetAllVisited()
@@ -182,12 +188,12 @@ void Graph::printGridGraph(bool verbose)
 
 			// Print more information per node is verbose is enabled.
 			if (verbose) {
-				temp = std::to_string(*nodes[0][I + j]->id) + "("
+				temp = std::to_string(*nodes[0][I + j]->id) + " ("
 					+ up + ","
 					+ right + ","
 					+ down + ","
 					+ left + ","
-					+ visited + ","
+					// + visited + ","
 					+ enabled + ")";
 				printElement(temp, 21);
 			}
