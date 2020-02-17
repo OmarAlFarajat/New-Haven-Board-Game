@@ -8,13 +8,13 @@ class HarvestTile
 {
 public:
 	HarvestTile();
-	HarvestTile(Resource[4]);
+	HarvestTile(ResourceType[4]);
 	~HarvestTile();
 	friend std::ostream& operator<<(std::ostream& os, HarvestTile& ht);
 
 private:
 	const int numOfResource = 4;
-	std::vector<Resource> container;
+	std::vector<ResourceType> container;
 };
 
 // The Deck of Harvest Tiles Object
