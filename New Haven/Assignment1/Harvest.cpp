@@ -35,8 +35,8 @@ HarvestTile::HarvestTile()
 	for (int i = 0; i < numOfResource; ++i) {
 		int randNum = (rand() % typeLib.size())+ 0;
 
-		Resource newResource;
-		newResource.setType(typeLib[randNum]);
+		ResourceType newResource;
+		newResource = typeLib[randNum];
 
 		this->container.push_back(newResource);
 		typeLib.erase(typeLib.begin() + randNum);
@@ -45,7 +45,7 @@ HarvestTile::HarvestTile()
 
 }
 
-HarvestTile::HarvestTile(Resource resources[4])
+HarvestTile::HarvestTile(ResourceType resources[4])
 {
 	for (int i = 0; i < 4; ++i) {
 		container.push_back(resources[i]);
@@ -65,24 +65,41 @@ std::ostream& operator<<(std::ostream& os, HarvestTile& ht)
 	*/
 	std::vector<std::string> output;
 	// Loop through the container and get the type of Resource in each position
-	for (std::vector<Resource>::iterator it = ht.container.begin(); it!= ht.container.end(); ++it) {
-		Resource temp = *it;
-		std::string target = temp.getTypeAsString();
-		if (target.compare("TIMBER") == 0) {
-			output.push_back("TIMBER");
-		}
-		else if (target.compare("STONE") == 0 ) {
-			output.push_back("STONE");
-		}
-		else if (target.compare("WHEAT") == 0) {
-			output.push_back("WHEAT");
-		} 
-		else if (target.compare("SHEEP") == 0) {
+	for (std::vector<ResourceType>::iterator it = ht.container.begin(); it!= ht.container.end(); ++it) {
+		switch (*it) {
+		case ResourceType::SHEEP:
 			output.push_back("SHEEP");
-		}
-		else {
+			break;
+		case ResourceType::STONE:
+			output.push_back("STONE");
+			break;
+		case ResourceType::TIMBER:
+			output.push_back("TIMBER");
+			break;
+		case ResourceType::WHEAT:
+			output.push_back("WHEAT");
+			break;
+		default:
 			output.push_back("INVALID RESOURCE -->>> NEED DEBUG");
 		}
+
+		//ResourceType temp = *it;
+		//std::string target = temp.getTypeAsString();
+		//if (target.compare("TIMBER") == 0) {
+		//	output.push_back("TIMBER");
+		//}
+		//else if (target.compare("STONE") == 0 ) {
+		//	output.push_back("STONE");
+		//}
+		//else if (target.compare("WHEAT") == 0) {
+		//	output.push_back("WHEAT");
+		//} 
+		//else if (target.compare("SHEEP") == 0) {
+		//	output.push_back("SHEEP");
+		//}
+		//else {
+		//	output.push_back("INVALID RESOURCE -->>> NEED DEBUG");
+		//}
 	}
 
 	// Print out to the screen
