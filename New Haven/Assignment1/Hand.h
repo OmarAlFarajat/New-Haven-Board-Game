@@ -1,6 +1,4 @@
 #pragma once
-#include "Harvest.h"
-#include "Building.h"
 
 // Hand Object 
 class hand

@@ -2,4 +2,5 @@
 *.vscode
 *.vs/
 x64/
-x86/
+x86/
+*.idea

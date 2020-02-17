@@ -1,21 +1,19 @@
 #pragma once
+#include <string>
 #include "GBMap.h"
 
-/*
-TODO: implement draw() methods in HarvestDeck and BuildingDesk. Let's User use these methods
-to draw a tiles (building or harvest)
-*/
+enum class ResourceType {TIMBER, STONE, WHEAT, SHEEP, NONE};
 
 // Resource class (extends Node)
-enum class ResourceType { TIMBER, STONE, WHEAT, SHEEP };
-
 class Resource : public Node
 {
+	ResourceType* type;
 public:
 	Resource();
 	~Resource();
-	void setType(ResourceType type);
-private:
-	ResourceType* type;
+	void setType(ResourceType type) {
+		*this->type = type;
+	}
+	ResourceType getType() { return *type; }
+	std::string getTypeAsString();
 };
-

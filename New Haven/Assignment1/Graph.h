@@ -7,21 +7,27 @@
 class Graph
 {
 	std::vector<Node*>* nodes;
-	int* number_of_nodes;
+	int* numEnabledNodes;
 	int* length;
 	int* height;
 
 public:
-	void addNode(Node*);
 	Graph();
 	~Graph();
+	// Initializing functions
 	void makeGridGraph(int length, int height, NodeType nodeType);
+	void addNode(Node*);
+	void linkResourceNodes(Graph* graph);
+	// Debug
 	void printGridGraph(bool verbose);
 	bool isConnected_DFS(Node*);
-	Node* getRootNode() {return nodes[0][0]; }
-	Node* getNode(int index) { return nodes[0][index]; };
-	int getNumberOfNodes() { return *number_of_nodes; };
+	bool depthFirstSearch(Node*);
+	// Mutators
 	void disableNode(int id);
 	void enableNode(int id);
 	void resetAllVisited();
+	// Inline getters
+	Node* getRootNode() { return nodes[0][0]; }
+	Node* getNode(int index) { return nodes[0][index]; };
+	int getNumEnabledNodes() { return *numEnabledNodes; };
 };
