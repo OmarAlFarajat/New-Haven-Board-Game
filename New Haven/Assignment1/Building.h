@@ -1,4 +1,6 @@
 #pragma once
+#include<iostream>
+#include<string>
 #include<vector>
 
 // Building tiles Object
@@ -11,9 +13,13 @@ public:
 	BuildingTiles(BuildingColor color, BuildingType buildingType, int value);
 	~BuildingTiles();
 	BuildingType* getBuildingType();
+	friend std::ostream& operator<<(std::ostream& os, BuildingTiles& bt);
+	std::string typeToString();
+	std::string colorToString();
+	int getValue() const { return *Value; };
 
 private:
-	BuildingType* Type;
+	BuildingType* Type; //opposite side type
 	BuildingColor* Color;
 	int* Value;    // 1 to 6
 
@@ -26,6 +32,7 @@ public:
 	BuildingDeck();
 	~BuildingDeck();
 	BuildingTiles* draw();
+	int getNumOfRemain() const { return *this->tileIndex;  };
 
 private:
 	const static int numOfTiles = 144; // 144 buildings
