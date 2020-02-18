@@ -40,7 +40,7 @@ int testBuildingDeck() {
 	const int loopCtr = 5; //Change the number of time drawing a tile 
 	for (int i = 0; i < loopCtr; ++i) {
 		std::cout << "Drawing a Building tile \n" << std::endl;
-		BuildingTiles* tile = deck.draw();
+		BuildingTile* tile = deck.draw();
 		std::cout << *tile << std::endl;
 		std::cout << std::endl;
 	}

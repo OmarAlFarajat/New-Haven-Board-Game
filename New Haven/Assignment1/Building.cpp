@@ -2,32 +2,32 @@
 #include <vector>
 #include "Building.h"
 
-BuildingTiles::BuildingTiles()
+BuildingTile::BuildingTile()
 {
 	//Not gonna be used
 }
 
-BuildingTiles::BuildingTiles(BuildingColor color, BuildingType buildingType, int value)
+BuildingTile::BuildingTile(BuildingColor color, BuildingType type, int value)
 {
-	// Create a building tile as requested attributes
-	this->Color = &color;
-	this->Type = &buildingType;
-	this->Value = &value;
+	this->color = new BuildingColor(color);
+	this->type = new BuildingType(type);
+	this->value = new int(value);
+
 }
 
-BuildingTiles::~BuildingTiles()
+BuildingTile::~BuildingTile()
 {
 }
 
-BuildingType* BuildingTiles::getBuildingType()
+BuildingType* BuildingTile::getBuildingType()
 {
-	return this->Type;
+	return this->type;
 }
 
-std::string BuildingTiles::typeToString()
+std::string BuildingTile::typeToString()
 {
 	std::string output;
-	switch (*(this->Type)) {
+	switch (*(this->type)) {
 	case BuildingType::FOREST:
 		output = "FOREST";
 		break;
@@ -46,10 +46,10 @@ std::string BuildingTiles::typeToString()
 	return output;
 }
 
-std::string BuildingTiles::colorToString()
+std::string BuildingTile::colorToString()
 {
 	std::string output;
-	switch (*(this->Color)) {
+	switch (*(this->color)) {
 	case BuildingColor::GREEN:
 		output = "GREEN";
 		break;
@@ -99,7 +99,7 @@ BuildingDeck::BuildingDeck()
 		int row = 1;
 		while (row <= 6) {
 			for (int value = 1; value <= 6; ++value) {
-				BuildingTiles newTile(*colorIT, *typeIT, value);
+				BuildingTile newTile(*colorIT, *typeIT, value);
 				this->deck.push_back(newTile);
 			}
 			row++;
@@ -117,7 +117,7 @@ BuildingDeck::~BuildingDeck()
 }
 
 // Draw a tile out of the deck
-BuildingTiles* BuildingDeck::draw()
+BuildingTile* BuildingDeck::draw()
 {
 	if (*tileIndex >= 0) {
 		*tileIndex = *tileIndex - 1;
@@ -130,7 +130,7 @@ BuildingTiles* BuildingDeck::draw()
 }
 
 //Override operator to print out the details of building tile
-std::ostream& operator<<(std::ostream& os, BuildingTiles& bt)
+std::ostream& operator<<(std::ostream& os, BuildingTile& bt)
 {
 	std::string color = bt.colorToString();
 	std::string type = bt.typeToString();
@@ -138,7 +138,7 @@ std::ostream& operator<<(std::ostream& os, BuildingTiles& bt)
 	os << "Details of Building Tile:" << std::endl;
 	os << "+ Color: " << color << std::endl;
 	os << "+ Type: " << type << std::endl;
-	os << "+ Value: " << *bt.Value << std::endl;
+	os << "+ Value: " << *bt.value << std::endl;
 
 	return os;
 }

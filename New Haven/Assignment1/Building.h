@@ -6,22 +6,22 @@
 // Building tiles Object
 enum class BuildingType { MEADOW, QUARRY, FOREST, WHEATFIELD };
 enum class BuildingColor { GREEN, GREY, RED, YELLOW };
-class BuildingTiles
+class BuildingTile
 {
 public:
-	BuildingTiles();
-	BuildingTiles(BuildingColor color, BuildingType buildingType, int value);
-	~BuildingTiles();
+	BuildingTile();
+	BuildingTile(BuildingColor color, BuildingType buildingType, int value);
+	~BuildingTile();
 	BuildingType* getBuildingType();
-	friend std::ostream& operator<<(std::ostream& os, BuildingTiles& bt);
+	friend std::ostream& operator<<(std::ostream& os, BuildingTile& bt);
 	std::string typeToString();
 	std::string colorToString();
-	int getValue() const { return *Value; };
+	int getValue() const { return *value; };
 
 private:
-	BuildingType* Type; //opposite side type
-	BuildingColor* Color;
-	int* Value;    // 1 to 6
+	BuildingType* type; //opposite side type
+	BuildingColor* color;
+	int* value;    // 1 to 6
 
 };
 
@@ -31,13 +31,13 @@ class BuildingDeck
 public:
 	BuildingDeck();
 	~BuildingDeck();
-	BuildingTiles* draw();
+	BuildingTile* draw();
 	int getNumOfRemain() const { return *this->tileIndex;  };
 
 private:
 	const static int numOfTiles = 144; // 144 buildings
 	int* tileIndex;
-	std::vector<BuildingTiles> deck;
+	std::vector<BuildingTile> deck;
 
 };
 
