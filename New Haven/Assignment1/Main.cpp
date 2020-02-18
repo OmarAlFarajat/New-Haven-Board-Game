@@ -2,7 +2,6 @@
 #include <string>
 #include <stdlib.h> 
 #include <time.h>
-
 #include "GBMap.h"
 #include "Resources.h"
 #include "Harvest.h"
@@ -33,17 +32,47 @@ int testHarvestDeck() {
 	return 0;
 }
 
+int testBuildingDeck() {
+	std::cout << "Enter testing for Building Deck" << std::endl;
+	std::cout << "Creating a Building Deck" << std::endl;
+	BuildingDeck deck;
+
+	const int loopCtr = 5; //Change the number of time drawing a tile 
+	for (int i = 0; i < loopCtr; ++i) {
+		std::cout << "Drawing a Building tile \n" << std::endl;
+		BuildingTile* tile = deck.draw();
+		std::cout << *tile << std::endl;
+		std::cout << std::endl;
+	}
+
+	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << deck.getNumOfRemain() << std::endl;
+
+	return 0;
+}
+
 int main() {
 	/*
 	Generate a random seed according to the current machine time
 	-- Need to be placed at the beginning of main to avoid bias for rand()
 	*/
 	srand(time(NULL)); 
-
+	
+	/*
+	Enable boolean values to display/debug parts
+	--> Always set the boolean values to false before commiting
+	*/
+	//----------------------------------------
 	// Enable Test for Harvest
-	bool testHarvest= true;
+	bool testHarvest= false;
 	if (testHarvest) {
 		testHarvestDeck();
+		return 0;
+	}
+	//-----------------------------------------
+	// Enable Test for Building
+	bool testBuilding = false;
+	if (testBuilding) {
+		testBuildingDeck();
 		return 0;
 	}
 	//-----------------------------------------

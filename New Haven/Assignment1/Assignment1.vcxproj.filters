@@ -13,15 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Resources&lt;P5&gt;">
+      <UniqueIdentifier>{4642472b-00f5-425d-b41f-c4d46795bff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources&lt;P5&gt;">
+      <UniqueIdentifier>{02bef6d6-728e-4cdc-9a98-8889df16ef11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GBMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GBMapLoader.cpp">
@@ -43,20 +46,20 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Building.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Harvest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Resources&lt;P5&gt;</Filter>
     </ClCompile>
     <ClCompile Include="Hand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Resources&lt;P5&gt;</Filter>
+    </ClCompile>
+    <ClCompile Include="Harvest.cpp">
+      <Filter>Source Files\Resources&lt;P5&gt;</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source Files\Resources&lt;P5&gt;</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GBMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GBMapLoader.h">
@@ -78,13 +81,16 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Building.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Resources&lt;P5&gt;</Filter>
     </ClInclude>
     <ClInclude Include="Harvest.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Resources&lt;P5&gt;</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header Files\Resources&lt;P5&gt;</Filter>
     </ClInclude>
     <ClInclude Include="Hand.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Resources&lt;P5&gt;</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -16,7 +16,7 @@ private:
 	int numOfHarvestTiles;
 	int numOfBuildings;
 	std::vector<HarvestTile> harvestTiles;
-	std::vector<BuildingTiles> buildingTiles;
+	std::vector<BuildingTile> buildingTiles;
 
 public:
 	Player();	// Default constructor
