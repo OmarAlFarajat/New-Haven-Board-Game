@@ -83,24 +83,7 @@ std::ostream& operator<<(std::ostream& os, HarvestTile& ht)
 			output.push_back("INVALID RESOURCE -->>> NEED DEBUG");
 		}
 
-		//ResourceType temp = *it;
-		//std::string target = temp.getTypeAsString();
-		//if (target.compare("TIMBER") == 0) {
-		//	output.push_back("TIMBER");
-		//}
-		//else if (target.compare("STONE") == 0 ) {
-		//	output.push_back("STONE");
-		//}
-		//else if (target.compare("WHEAT") == 0) {
-		//	output.push_back("WHEAT");
-		//} 
-		//else if (target.compare("SHEEP") == 0) {
-		//	output.push_back("SHEEP");
-		//}
-		//else {
-		//	output.push_back("INVALID RESOURCE -->>> NEED DEBUG");
-		//}
-	}
+}
 
 	// Print out to the screen
 	/* 
