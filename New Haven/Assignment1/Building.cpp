@@ -7,10 +7,10 @@ BuildingTile::BuildingTile()
 	//Not gonna be used
 }
 
-BuildingTile::BuildingTile(BuildingColor color, BuildingType buildingType, int value)
+BuildingTile::BuildingTile(BuildingColor color, BuildingType type, int value)
 {
 	this->color = new BuildingColor(color);
-	this->type = new BuildingType(buildingType);
+	this->type = new BuildingType(type);
 	this->value = new int(value);
 
 }

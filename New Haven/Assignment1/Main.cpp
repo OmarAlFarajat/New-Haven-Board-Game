@@ -70,7 +70,7 @@ int main() {
 	}
 	//-----------------------------------------
 	// Enable Test for Building
-	bool testBuilding = true;
+	bool testBuilding = false;
 	if (testBuilding) {
 		testBuildingDeck();
 		return 0;
