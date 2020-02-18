@@ -38,19 +38,19 @@ HarvestTiles HarvestDeck::draw()
 	return HarvestTiles();
 }
 
-BuildingTiles::BuildingTiles()
+BuildingTile::BuildingTile()
 {
 }
 
-BuildingTiles::BuildingTiles(BuildingColor color, BuildingType buildingType, int value)
+BuildingTile::BuildingTile(BuildingColor color, BuildingType buildingType, int value)
 {
 }
 
-BuildingTiles::~BuildingTiles()
+BuildingTile::~BuildingTile()
 {
 }
 
-BuildingType BuildingTiles::getBuildingType()
+BuildingType BuildingTile::getBuildingType()
 {
 	return BuildingType();
 }
@@ -63,9 +63,9 @@ BuildingDeck::~BuildingDeck()
 {
 }
 
-BuildingTiles BuildingDeck::draw()
+BuildingTile BuildingDeck::draw()
 {
-	return BuildingTiles();
+	return BuildingTile();
 }
 
 hand::hand()
