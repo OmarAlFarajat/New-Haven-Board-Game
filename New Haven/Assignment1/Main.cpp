@@ -9,94 +9,36 @@
 #include "GBMapLoader.h"
 #include "TileNode.h"
 
-int testHarvestDeck() {
-	std::cout << "Enter testing for Harvest" << std::endl;
-	std::cout << "Creating a random HarvestTile" << std::endl;
-	HarvestTile randomHT;
-	std::cout << "Displaying that random HarvestTile" << std::endl;
-	std::cout << randomHT<< std::endl;
+/* Global Variables for the game*/
+static int numberOfPlayers;
+static std::string mapFileName = "";
+static GBMap* gb_map = new GBMap();
 
-	std::cout << "Creating a Harvest Deck" << std::endl;
-	HarvestDeck deck;
+static HarvestDeck harvestDeck;
+static BuildingDeck buildingDeck;
+/*-------------------------------*/
 
-	const int loopCtr = 5; // Change the number of time drawing a tile for testing
-	for (int i = 0; i < loopCtr; ++i) {
-		std::cout << "Drawing a Harvest tile -- Displaying details of the tile: \n" << std::endl;
-		HarvestTile* tile = deck.draw();
-		std::cout << *tile << std::endl;
-		std::cout << std::endl;
-	}
-
-	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << deck.getNumOfRemain() << std::endl;
-
-	return 0;
-}
-
-int testBuildingDeck() {
-	std::cout << "Enter testing for Building Deck" << std::endl;
-	std::cout << "Creating a Building Deck" << std::endl;
-	BuildingDeck deck;
-
-	const int loopCtr = 5; //Change the number of time drawing a tile 
-	for (int i = 0; i < loopCtr; ++i) {
-		std::cout << "Drawing a Building tile \n" << std::endl;
-		BuildingTile* tile = deck.draw();
-		std::cout << *tile << std::endl;
-		std::cout << std::endl;
-	}
-
-	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << deck.getNumOfRemain() << std::endl;
-
-	return 0;
-}
-
-int main() {
-	/*
-	Generate a random seed according to the current machine time
-	-- Need to be placed at the beginning of main to avoid bias for rand()
-	*/
-	srand(time(NULL)); 
-	
-	/*
-	Enable boolean values to display/debug parts
-	--> Always set the boolean values to false before commiting
-	*/
-	//----------------------------------------
-	// Enable Test for Harvest
-	bool testHarvest= false;
-	if (testHarvest) {
-		testHarvestDeck();
-		return 0;
-	}
-	//-----------------------------------------
-	// Enable Test for Building
-	bool testBuilding = false;
-	if (testBuilding) {
-		testBuildingDeck();
-		return 0;
-	}
-	//-----------------------------------------
+int initialize() {
+	std::cout << "Initialize global variables::" << std::endl;
 
 	// User prompted for number of players
-	int numberOfPlayers = 0; 
 	std::cout << "Please enter the number of players: "; 
 	std::cin >> numberOfPlayers; 
 	std::cout << std::endl; 
 
 	// Switch statement assigns a string to fileName
-	std::string fileName = ""; 
 	switch(numberOfPlayers){
 	case 2:
-		fileName = "GBA_2Players.gbmap";
+		mapFileName = "GBA_2Players.gbmap";
 		break;
 	case 3:
-		fileName = "GBA_3Players.gbmap";
+		mapFileName = "GBA_3Players.gbmap";
 		break;
 	case 4:
-		fileName = "GBA_4Players.gbmap";
+		mapFileName = "GBA_4Players.gbmap";
 		break;
 	case 666:
-		fileName = "GBA_2Players_invalid.gbmap";
+		mapFileName = "GBA_2Players_invalid.gbmap";
 		break;
 	default:
 		std::cout << std::endl;
@@ -106,14 +48,16 @@ int main() {
 		std::cout << std::endl;
 		return 666;
 	}
-	// Create an instance of GBMap class and pass it and the file name to loadMap()
-	GBMap* gb_map = new GBMap();
-	loadMap(fileName, *gb_map);
 
+	loadMap(mapFileName, *gb_map);
 	// Display which map was loaded
-	std::cout << "Map has been created from " << fileName << "." << std::endl;
+	std::cout << "Map has been created from " << mapFileName << "." << std::endl;
 	std::cout << std::endl; 
 
+	return 0;
+}
+
+int testGBMap() {
 	// Print a verbose and non-verbose grid-graph of the tile map and check if it's connected.
 	std::cout << "Initial tile graph state. The format is id(up, right, down, left, visited, enabled). " << gb_map->tileGraph->getNumEnabledNodes() << " active nodes." << std::endl; 
 	std::cout << std::endl;
@@ -169,6 +113,86 @@ int main() {
 		std::cout << str << " | ";
 	}
 	std::cout << std::endl;
+
+	return 0;
+}
+
+int testHarvestDeck() {
+	std::cout << "Enter testing for Harvest" << std::endl;
+	std::cout << "Creating a random HarvestTile" << std::endl;
+	HarvestTile randomHT;
+	std::cout << "Displaying that random HarvestTile" << std::endl;
+	std::cout << randomHT<< std::endl;
+
+	const int loopCtr = 5; // Change the number of time drawing a tile for testing
+	for (int i = 0; i < loopCtr; ++i) {
+		std::cout << "Drawing a Harvest tile from the Deck-- Displaying details of the tile: \n" << std::endl;
+		HarvestTile* tile = harvestDeck.draw();
+		std::cout << *tile << std::endl;
+		std::cout << std::endl;
+	}
+
+	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << harvestDeck.getNumOfRemain() << std::endl;
+
+	return 0;
+}
+
+int testBuildingDeck() {
+	std::cout << "Enter testing for Building Deck" << std::endl;
+
+	const int loopCtr = 5; //Change the number of time drawing a tile 
+	for (int i = 0; i < loopCtr; ++i) {
+		std::cout << "Drawing a Building tile from the Deck \n" << std::endl;
+		BuildingTile* tile = buildingDeck.draw();
+		std::cout << *tile << std::endl;
+		std::cout << std::endl;
+	}
+
+	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << buildingDeck.getNumOfRemain() << std::endl;
+
+	return 0;
 }
 
 
+int main() {
+	/*
+	Generate a randomize seed according to the current machine time
+	-- Need to be placed at the beginning of main to avoid bias for rand()
+	*/
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	//Initialize global variables
+	if (initialize() != 0) {
+		return 1;
+	}
+	
+	/*
+	Enable boolean values to display/debug parts
+	--> Always set the boolean values to false before commiting
+	*/
+
+	// Enable Test for Gameboard map
+	bool testGameboard= false;
+	if (testGameboard) {
+		testGBMap();
+		std::cout << "<----------------->" << std::endl;
+	}
+
+	// Enable Test for Harvest
+	bool testHarvest= false;
+	if (testHarvest) {
+		testHarvestDeck();
+		std::cout << "<----------------->" << std::endl;
+	}
+
+	// Enable Test for Building
+	bool testBuilding = false;
+	if (testBuilding) {
+		testBuildingDeck();
+		std::cout << "<----------------->" << std::endl;
+	}
+	//-----------------------------------------
+
+	std::cout << "--Done Testing--" << std::endl;
+	return 0;
+	}

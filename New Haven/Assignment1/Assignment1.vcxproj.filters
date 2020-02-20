@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Resources&lt;P5&gt;">
       <UniqueIdentifier>{02bef6d6-728e-4cdc-9a98-8889df16ef11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Player&lt;P4&gt;">
+      <UniqueIdentifier>{6d55571a-e5ce-45d1-8bfa-78ed15e787b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player&lt;P4&gt;">
+      <UniqueIdentifier>{deeefcc7-502e-43a2-8081-ab556f96e47b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -42,9 +48,6 @@
     <ClCompile Include="TileNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Building.cpp">
       <Filter>Source Files\Resources&lt;P5&gt;</Filter>
     </ClCompile>
@@ -57,14 +60,11 @@
     <ClCompile Include="Resources.cpp">
       <Filter>Source Files\Resources&lt;P5&gt;</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Player&lt;P4&gt;</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GBMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GBMapLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VGMapLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -77,9 +77,6 @@
     <ClInclude Include="TileNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Building.h">
       <Filter>Header Files\Resources&lt;P5&gt;</Filter>
     </ClInclude>
@@ -90,6 +87,15 @@
       <Filter>Header Files\Resources&lt;P5&gt;</Filter>
     </ClInclude>
     <ClInclude Include="Hand.h">
+      <Filter>Header Files\Resources&lt;P5&gt;</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Player&lt;P4&gt;</Filter>
+    </ClInclude>
+    <ClInclude Include="GBMapLoader.h">
+      <Filter>Header Files\Resources&lt;P5&gt;</Filter>
+    </ClInclude>
+    <ClInclude Include="GBMap.h">
       <Filter>Header Files\Resources&lt;P5&gt;</Filter>
     </ClInclude>
   </ItemGroup>
