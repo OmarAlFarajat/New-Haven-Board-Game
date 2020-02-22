@@ -9,6 +9,6 @@ public:
 	TileNode();
 	~TileNode();
 	void linkResourceNode(Resource* resource, int index);
-	Resource** getResourceNodes() { return resources; }
+	Resource** getResourceNodes();
 };
 

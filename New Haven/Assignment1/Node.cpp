@@ -6,6 +6,7 @@ Node::Node()
 	id = new int(-1);
 	visited = new bool(false);
 	enabled = new bool(true); 
+	occupied = new bool(false);
 	up = NULL;
 	down = NULL;
 	right = NULL;

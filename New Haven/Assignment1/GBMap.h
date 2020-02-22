@@ -4,11 +4,14 @@
 
 class GBMap 
 {
-public:
 	Graph* tileGraph;
-	Graph* resourceGraph; 
+	Graph* resourceGraph;
+public:
 	GBMap();
 	~GBMap();
+	Graph* getTileGraph() { return tileGraph; }
+	Graph* getResourceGraph() { return resourceGraph; }
+
 };
 
 

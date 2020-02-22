@@ -59,35 +59,35 @@ int initialize() {
 
 int testGBMap() {
 	// Print a verbose and non-verbose grid-graph of the tile map and check if it's connected.
-	std::cout << "Initial tile graph state. The format is id(up, right, down, left, visited, enabled). " << gb_map->tileGraph->getNumEnabledNodes() << " active nodes." << std::endl; 
+	std::cout << "Initial tile graph state. The format is id(up, right, down, left, visited, enabled). " << gb_map->getTileGraph()->getNumEnabledNodes() << " active nodes." << std::endl;
 	std::cout << std::endl;
-	gb_map->tileGraph->printGridGraph(false);
-	gb_map->tileGraph->printGridGraph(true);
-	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getRootNode()) << std::endl;
+	gb_map->getTileGraph()->printGridGraph(false);
+	gb_map->getTileGraph()->printGridGraph(true);
+	std::cout << "Is connected? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getRootNode()) << std::endl;
 	std::cout << std::endl;
 	
 	// Disable nodes 1 and 5. In a 2-player or 3-player game, this will make node 0 disconnected from the rest of the nodes.
 	std::cout << "Disabling nodes 1 and 5..." << std::endl;
 	std::cout << std::endl;
-	gb_map->tileGraph->disableNode(1);
-	gb_map->tileGraph->disableNode(5);
+	gb_map->getTileGraph()->disableNode(1);
+	gb_map->getTileGraph()->disableNode(5);
 
-	std::cout << "After disabling the nodes, the number of active nodes is " << gb_map->tileGraph->getNumEnabledNodes() << "..." << std::endl;
+	std::cout << "After disabling the nodes, the number of active nodes is " << gb_map->getTileGraph()->getNumEnabledNodes() << "..." << std::endl;
 	std::cout << std::endl;
 	std::cout << "After disabling nodes: " << std::endl;
-	gb_map->tileGraph->printGridGraph(true);
+	gb_map->getTileGraph()->printGridGraph(true);
 
 	// After disabling the above nodes, the graph will not be connected and this output will show false.
 	// Print the graph to show how the graph has become disconnected (missing edges)
-	std::cout << "Is connected? " << std::boolalpha << gb_map->tileGraph->isConnected_DFS(gb_map->tileGraph->getNode(23)) << std::endl;
+	std::cout << "Is connected? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getNode(23)) << std::endl;
 	std::cout << std::endl;
 	// This demonstrates how a tile node can be linked to its four Resource nodes in the resource graph.
 	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 0:" << std::endl;
 	for(int i = 0; i < 4; i++)
-		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(0))->getResourceNodes()[i]->getID() << " ";
+		std::cout << static_cast<TileNode*>(gb_map->getTileGraph()->getNode(0))->getResourceNodes()[i]->getID() << " ";
 	std::cout << std::endl;
 	for (int i = 0; i < 4; i++) {
-		std::string str = static_cast<TileNode*>(gb_map->tileGraph->getNode(0))->getResourceNodes()[i]->getTypeAsString().c_str();
+		std::string str = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(0))->getResourceNodes()[i]->getTypeAsString().c_str();
 		std::cout << str << " | ";
 	}
 	std::cout << std::endl;
@@ -95,10 +95,10 @@ int testGBMap() {
 
 	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 5:" << std::endl;
 	for (int i = 0; i < 4; i++)
-		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(5))->getResourceNodes()[i]->getID() << " ";
+		std::cout << static_cast<TileNode*>(gb_map->getTileGraph()->getNode(5))->getResourceNodes()[i]->getID() << " ";
 	std::cout << std::endl;
 	for (int i = 0; i < 4; i++) {
-		std::string str = static_cast<TileNode*>(gb_map->tileGraph->getNode(5))->getResourceNodes()[i]->getTypeAsString().c_str();
+		std::string str = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(5))->getResourceNodes()[i]->getTypeAsString().c_str();
 		std::cout <<  str << " | ";
 	}
 	std::cout << std::endl;
@@ -106,10 +106,10 @@ int testGBMap() {
 
 	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 8:" << std::endl;
 	for (int i = 0; i < 4; i++)
-		std::cout << static_cast<TileNode*>(gb_map->tileGraph->getNode(8))->getResourceNodes()[i]->getID() << " ";
+		std::cout << static_cast<TileNode*>(gb_map->getTileGraph()->getNode(8))->getResourceNodes()[i]->getID() << " ";
 	std::cout << std::endl;
 	for (int i = 0; i < 4; i++) {
-		std::string str = static_cast<TileNode*>(gb_map->tileGraph->getNode(8))->getResourceNodes()[i]->getTypeAsString().c_str();
+		std::string str = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(8))->getResourceNodes()[i]->getTypeAsString().c_str();
 		std::cout << str << " | ";
 	}
 	std::cout << std::endl;
@@ -172,21 +172,21 @@ int main() {
 	*/
 
 	// Enable Test for Gameboard map
-	bool testGameboard= false;
+	bool testGameboard= true;
 	if (testGameboard) {
 		testGBMap();
 		std::cout << "<----------------->" << std::endl;
 	}
 
 	// Enable Test for Harvest
-	bool testHarvest= false;
+	bool testHarvest= true;
 	if (testHarvest) {
 		testHarvestDeck();
 		std::cout << "<----------------->" << std::endl;
 	}
 
 	// Enable Test for Building
-	bool testBuilding = false;
+	bool testBuilding = true;
 	if (testBuilding) {
 		testBuildingDeck();
 		std::cout << "<----------------->" << std::endl;
