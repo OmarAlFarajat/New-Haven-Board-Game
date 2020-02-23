@@ -15,6 +15,7 @@ public:
 	Graph* getTileGraph() { return tileGraph; }
 	Graph* getResourceGraph() { return resourceGraph; }
 	void calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int> & output);
+	bool isValid(TileNode* tileNode);
 	bool placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode);
 };
 
