@@ -158,10 +158,32 @@ int testBuildingDeck() {
 
 int testResourceCount() {
 	std::map<ResourceType, int> resourcesCollected = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
-	
+
 	// We use tile node 0 as an example. In the game, it will be the tile placed down by the player. 
 	gb_map->calcResourceAdjacencies(static_cast<TileNode*>(gb_map->getTileGraph()->getNode(0)), resourcesCollected);
-	
+
+	// Print out the resources collected
+	std::cout << "SHEEP: " << resourcesCollected[ResourceType::SHEEP] << std::endl;
+	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
+	std::cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << std::endl;
+	std::cout << "WHEAT: " << resourcesCollected[ResourceType::WHEAT] << std::endl;
+
+	HarvestTile* node7 = new HarvestTile(new ResourceType[4]{ ResourceType::SHEEP, ResourceType::SHEEP, ResourceType::TIMBER, ResourceType::SHEEP });
+	HarvestTile* node12 = new HarvestTile(new ResourceType[4]{ ResourceType::TIMBER, ResourceType::SHEEP, ResourceType::STONE, ResourceType::STONE });
+
+	gb_map->placeHarvestTile(node7, static_cast<TileNode*>(gb_map->getTileGraph()->getNode(7)));
+	gb_map->placeHarvestTile(node12, static_cast<TileNode*>(gb_map->getTileGraph()->getNode(12)));
+
+	std::cout << "After adding resources to nodes 7 and 12, we test resources collected from TileNode 0." << std::endl; 
+	std::cout << std::endl; 
+	resourcesCollected[ResourceType::SHEEP] = 0;
+	resourcesCollected[ResourceType::STONE] = 0;
+	resourcesCollected[ResourceType::TIMBER] = 0;
+	resourcesCollected[ResourceType::WHEAT] = 0;
+
+	// We use tile node 0 as an example. In the game, it will be the tile placed down by the player. 
+	gb_map->calcResourceAdjacencies(static_cast<TileNode*>(gb_map->getTileGraph()->getNode(0)), resourcesCollected);
+
 	// Print out the resources collected
 	std::cout << "SHEEP: " << resourcesCollected[ResourceType::SHEEP] << std::endl;
 	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
