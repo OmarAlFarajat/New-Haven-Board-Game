@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Node.h"
+#include "Resources.h"
 
 class Graph
 {
@@ -22,6 +23,7 @@ public:
 	void printGridGraph(bool verbose);
 	bool isConnected_DFS(Node*);
 	bool depthFirstSearch(Node*);
+	void DFS_ByType(Resource* node);
 	// Mutators
 	void disableNode(int id);
 	void enableNode(int id);

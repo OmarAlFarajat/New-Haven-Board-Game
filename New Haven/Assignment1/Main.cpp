@@ -28,6 +28,9 @@ int initialize() {
 
 	// Switch statement assigns a string to fileName
 	switch(numberOfPlayers){
+	case 0:
+		mapFileName = "GBA_2Players_resourceTest.gbmap";
+		break;
 	case 2:
 		mapFileName = "GBA_2Players.gbmap";
 		break;
@@ -153,6 +156,20 @@ int testBuildingDeck() {
 	return 0;
 }
 
+int testResourceCount() {
+	std::map<ResourceType, int> resourcesCollected = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
+	
+	// We use tile node 0 as an example. In the game, it will be the tile placed down by the player. 
+	gb_map->calcResourceAdjacencies(static_cast<TileNode*>(gb_map->getTileGraph()->getNode(0)), resourcesCollected);
+	
+	// Print out the resources collected
+	std::cout << "SHEEP: " << resourcesCollected[ResourceType::SHEEP] << std::endl;
+	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
+	std::cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << std::endl;
+	std::cout << "WHEAT: " << resourcesCollected[ResourceType::WHEAT] << std::endl;
+
+	return 0;
+}
 
 int main() {
 	/*
@@ -172,23 +189,30 @@ int main() {
 	*/
 
 	// Enable Test for Gameboard map
-	bool testGameboard= true;
+	bool testGameboard= false;
 	if (testGameboard) {
 		testGBMap();
 		std::cout << "<----------------->" << std::endl;
 	}
 
 	// Enable Test for Harvest
-	bool testHarvest= true;
+	bool testHarvest= false;
 	if (testHarvest) {
 		testHarvestDeck();
 		std::cout << "<----------------->" << std::endl;
 	}
 
 	// Enable Test for Building
-	bool testBuilding = true;
+	bool testBuilding = false;
 	if (testBuilding) {
 		testBuildingDeck();
+		std::cout << "<----------------->" << std::endl;
+	}
+
+	// Enable Test for Resources Collected
+	bool testResource = true;
+	if (testResource) {
+		testResourceCount(); 
 		std::cout << "<----------------->" << std::endl;
 	}
 	//-----------------------------------------

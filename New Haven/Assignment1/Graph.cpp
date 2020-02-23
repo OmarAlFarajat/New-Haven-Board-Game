@@ -63,6 +63,24 @@ bool Graph::depthFirstSearch(Node* node) {
 		return false;
 }
 
+void Graph::DFS_ByType(Resource* node) {
+	// Mark the node as visited
+	*node->visited = true;
+	// Recursive calls
+	// If connection is not null AND the connected node has not been visited AND the connected node is enabled AND the connected node is the same Resource type
+	if (node->up && !*node->up->visited && *node->up->enabled && (static_cast<Resource*>(node->up)->getType() == node->getType()))
+		DFS_ByType(static_cast<Resource*>(node->up));
+
+	if (node->down && !*node->down->visited && *node->down->enabled && (static_cast<Resource*>(node->down)->getType() == node->getType()))
+		DFS_ByType(static_cast<Resource*>(node->down));
+
+	if (node->left && !*node->left->visited && *node->left->enabled && (static_cast<Resource*>(node->left)->getType() == node->getType()))
+		DFS_ByType(static_cast<Resource*>(node->left));
+
+	if (node->right && !*node->right->visited && *node->right->enabled && (static_cast<Resource*>(node->right)->getType() == node->getType()))
+		DFS_ByType(static_cast<Resource*>(node->right));
+}
+
 void Graph::resetAllVisited()
 {
 	for (int i = 0; i < nodes[0].size(); i++) 

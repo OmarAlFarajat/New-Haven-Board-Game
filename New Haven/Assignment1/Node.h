@@ -23,6 +23,10 @@ public:
 	void setOccupied(bool occupied) { *this->occupied = occupied; }
 	void addEdge(Node*, Direction);
 	int getID() { return *id; }
+	bool isVisited() { return *visited; }
+	bool isEnabled() { return *enabled; }
+	bool isOccupied() { return *occupied; }
+
 	friend class Graph;
 };
 
