@@ -5,3 +5,8 @@ x64/
 x86/
 *.idea
 *cmake-build-debug
+*CMakeCache.txt
+*CMakeFiles
+*Makefile
+*NewHaven
+*cmake_install.cmake
