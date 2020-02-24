@@ -10,17 +10,24 @@ class Hand
 	public:
 	Hand();
 	~Hand();
-	bool hasNoHarvest() {return (*this->remainHarvest == 0);}
-	int getRemainHarvest() {return *this->remainHarvest;}
-	int getRemainBuilding() {return *this->remainBuilding;}
+	int getRemainHarvest() {return *this->numOfHarvest;}
+	bool hasNoHarvest() {return (*this->numOfHarvest == 0);}
+
+	int getRemainBuilding() {return *this->numOfBuilding;}
+	bool hasNoBuilding() { return (*this->numOfBuilding == 0);}
+
 	HarvestTile* getHarvestTile(int index) {return this->harvestHold[0][index];}
-	void rotateRequest(HarvestTile* target);
-	void exchange(GBMap* gb_map);
+
+	void showHand();
+	void addHarvestTile(HarvestTile* ht);
+	void addBuildingTile(BuildingTile* bt);
+	bool requestRotate(HarvestTile* target);
+	void exchange(GBMap* gb_map, HarvestTile* target);
 	int playHarvest(GBMap* gb_map);
 
 private:
-	int* remainHarvest;
-	int* remainBuilding;
+	int* numOfHarvest;
+	int* numOfBuilding;
 	std::vector<HarvestTile*>* harvestHold;
 	std::vector<BuildingTile*>* buildingHold;
 

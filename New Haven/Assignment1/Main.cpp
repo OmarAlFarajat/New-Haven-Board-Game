@@ -6,6 +6,7 @@
 #include "Resources.h"
 #include "Harvest.h"
 #include "Building.h"
+#include "Hand.h"
 #include "GBMapLoader.h"
 #include "TileNode.h"
 
@@ -126,11 +127,12 @@ int testHarvestDeck() {
 	HarvestTile randomHT;
 	std::cout << "Displaying that random HarvestTile" << std::endl;
 	std::cout << randomHT<< std::endl;
-
-	const int loopCtr = 5; // Change the number of time drawing a tile for testing
+	
+	const int loopCtr = 6; // Change the number of time drawing a tile for testing
 	for (int i = 0; i < loopCtr; ++i) {
 		std::cout << "Drawing a Harvest tile from the Deck-- Displaying details of the tile: \n" << std::endl;
 		HarvestTile* tile = harvestDeck.draw();
+
 		std::cout << *tile << std::endl;
 		std::cout << std::endl;
 	}
@@ -152,6 +154,24 @@ int testBuildingDeck() {
 	}
 
 	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << buildingDeck.getNumOfRemain() << std::endl;
+
+	return 0;
+}
+
+int testHandObj() {
+	std::cout << "Enter testing for Hand Object" << std::endl;
+	Hand mine;
+	std::cout << "Testing for ability to hold objects" << std::endl;
+	int loop = 2;
+	for (int i = 0; i < 2; ++i) {
+		mine.addHarvestTile(harvestDeck.draw());
+		mine.addBuildingTile(buildingDeck.draw());
+	}
+	std::cout << "Showing cards on Hand after drawing from the Deck" << std::endl;
+	mine.showHand();
+
+	std::cout << "Playing a Harvest Tile" << std::endl;
+	mine.playHarvest(gb_map);
 
 	return 0;
 }
@@ -198,7 +218,7 @@ int main() {
 	Generate a randomize seed according to the current machine time
 	-- Need to be placed at the beginning of main to avoid bias for rand()
 	*/
-	srand(static_cast<unsigned int>(time(nullptr)));
+	srand(time(NULL));
 
 	//Initialize global variables
 	if (initialize() != 0) {
@@ -231,8 +251,15 @@ int main() {
 		std::cout << "<----------------->" << std::endl;
 	}
 
+	// Enable Test for Hand Obj
+	bool testHand = true;
+	if (testHand) {
+		testHandObj();
+		std::cout << "<----------------->" << std::endl;
+	}
+
 	// Enable Test for Resources Collected
-	bool testResource = true;
+	bool testResource = false;
 	if (testResource) {
 		testResourceCount(); 
 		std::cout << "<----------------->" << std::endl;
