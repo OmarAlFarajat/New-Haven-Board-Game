@@ -9,6 +9,9 @@ class GBMap
 {
 	Graph* tileGraph;
 	Graph* resourceGraph;
+	int* lengthTileGraph;
+	int* widthTileGraph;
+
 public:
 	GBMap();
 	~GBMap();
