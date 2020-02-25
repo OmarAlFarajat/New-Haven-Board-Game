@@ -11,6 +11,8 @@ public:
 	HarvestTile(ResourceType[4]);
 	~HarvestTile();
 	friend std::ostream& operator<<(std::ostream& os, HarvestTile& ht);
+	std::vector<ResourceType> getResources() { return container; }
+	std::vector<ResourceType>* getContainer() { return &container; } // Return a reference to the container
 
 private:
 	const int numOfResource = 4;

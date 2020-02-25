@@ -19,3 +19,6 @@ void TileNode::linkResourceNode(Resource* resource, int index)
 	resources[index] = resource; 
 }
 
+Resource** TileNode::getResourceNodes() { return resources; }
+
+

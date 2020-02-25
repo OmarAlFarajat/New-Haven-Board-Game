@@ -88,19 +88,13 @@ std::ostream& operator<<(std::ostream& os, HarvestTile& ht)
 	// Print out to the screen
 	/* 
 	Format:
-	||STONE||SHEEP
-	||WHEAT||TIMBER
+	|| STONE || SHEEP ||
+	|| WHEAT || TIMBER ||
 	*/
-	const std::string separator = " || ";
-	int counter = 0;
-	for (std::vector<std::string>::iterator it = output.begin(); it!=output.end(); ++it) {
-		os << *it << separator;
-		counter++;
-		if (counter >= 2) {
-			os << std::endl;
-			counter = 0;
-		}
-	}
+	
+	std::string separator = " || ";
+	os << separator << output[0] << separator << output[1] << separator << std::endl;
+	os << separator << output[3] << separator << output[2] << separator << std::endl;
 	return os;
 }
 

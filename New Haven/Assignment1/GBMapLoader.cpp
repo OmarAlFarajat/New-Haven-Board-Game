@@ -56,20 +56,21 @@ void loadMap(std::string& fileName, GBMap& gb_map)
 	inFile.close();
 
 	// Create the graphs using the length and height data from the file
-	gb_map.tileGraph->makeGridGraph(length, height, NodeType::TILE);
-	gb_map.resourceGraph->makeGridGraph(length * 2, height * 2, NodeType::RESOURCE);
-	gb_map.tileGraph->linkResourceNodes(gb_map.resourceGraph); 
+	gb_map.getTileGraph()->makeGridGraph(length, height, NodeType::TILE);
+	gb_map.getResourceGraph()->makeGridGraph(length * 2, height * 2, NodeType::RESOURCE);
+	gb_map.getTileGraph()->linkResourceNodes(gb_map.getResourceGraph());
 
 	// Iterate through the disableData and update gb_map's tile graph. 
 	for (int i = 0; i < disableData.size(); i++)
-		gb_map.tileGraph->disableNode(disableData[i]);
+		gb_map.getTileGraph()->disableNode(disableData[i]);
 
 	// Iterate through the resourceData and update gb_map's tile graph. 
 	for (int i = 0; i < resourceIndices.size(); i++) {
-		static_cast<TileNode*>(gb_map.tileGraph->getNode(resourceIndices[i]))->getResourceNodes()[0]->setType(resourceData[resourceIndices[i]][0]);
-		static_cast<TileNode*>(gb_map.tileGraph->getNode(resourceIndices[i]))->getResourceNodes()[1]->setType(resourceData[resourceIndices[i]][1]);
-		static_cast<TileNode*>(gb_map.tileGraph->getNode(resourceIndices[i]))->getResourceNodes()[2]->setType(resourceData[resourceIndices[i]][2]);
-		static_cast<TileNode*>(gb_map.tileGraph->getNode(resourceIndices[i]))->getResourceNodes()[3]->setType(resourceData[resourceIndices[i]][3]);
+		static_cast<TileNode*>(gb_map.getTileGraph()->getNode(resourceIndices[i]))->getResourceNodes()[0]->setType(resourceData[resourceIndices[i]][0]);
+		static_cast<TileNode*>(gb_map.getTileGraph()->getNode(resourceIndices[i]))->getResourceNodes()[1]->setType(resourceData[resourceIndices[i]][1]);
+		static_cast<TileNode*>(gb_map.getTileGraph()->getNode(resourceIndices[i]))->getResourceNodes()[2]->setType(resourceData[resourceIndices[i]][2]);
+		static_cast<TileNode*>(gb_map.getTileGraph()->getNode(resourceIndices[i]))->getResourceNodes()[3]->setType(resourceData[resourceIndices[i]][3]);
+		gb_map.getTileGraph()->getNode(resourceIndices[i])->setOccupied(true);
 	}
 }
 

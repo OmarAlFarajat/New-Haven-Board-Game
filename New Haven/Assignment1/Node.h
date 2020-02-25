@@ -9,6 +9,7 @@ class Node
 	int* id;
 	bool* visited;	// For DFS
 	bool* enabled; 
+	bool* occupied; 
 
 	// Edges
 	Node* up;
@@ -19,8 +20,13 @@ class Node
 public:
 	Node();
 	~Node();
+	void setOccupied(bool occupied) { *this->occupied = occupied; }
 	void addEdge(Node*, Direction);
 	int getID() { return *id; }
+	bool isVisited() { return *visited; }
+	bool isEnabled() { return *enabled; }
+	bool isOccupied() { return *occupied; }
+
 	friend class Graph;
 };
 

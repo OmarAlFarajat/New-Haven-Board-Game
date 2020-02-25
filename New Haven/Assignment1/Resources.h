@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "GBMap.h"
+#include "Node.h"
 
 enum class ResourceType {TIMBER, STONE, WHEAT, SHEEP, NONE};
 
