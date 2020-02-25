@@ -32,4 +32,6 @@ public:
 	Node* getRootNode() { return nodes[0][0]; }
 	Node* getNode(int index) { return nodes[0][index]; };
 	int getNumEnabledNodes() { return *numEnabledNodes; };
+	int getLength() { return *length; }
+	int getHeight() { return *height; }
 };

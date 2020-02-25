@@ -10,10 +10,10 @@ class Hand
 	public:
 	Hand();
 	~Hand();
+	//Inline getters
 	int getRemainHarvest() {return *this->numOfHarvest;}
-	bool hasNoHarvest() {return (*this->numOfHarvest == 0);}
-
 	int getRemainBuilding() {return *this->numOfBuilding;}
+	bool hasNoHarvest() {return (*this->numOfHarvest == 0);}
 	bool hasNoBuilding() { return (*this->numOfBuilding == 0);}
 
 	HarvestTile* getHarvestTile(int index) {return this->harvestHold[0][index];}
@@ -21,8 +21,9 @@ class Hand
 	void showHand();
 	void addHarvestTile(HarvestTile* ht);
 	void addBuildingTile(BuildingTile* bt);
-	int getNodeID(int row, int col);
+	int getNodeID(GBMap* gb_map, int row, int col);
 	bool requestRotate(HarvestTile* target);
+
 	void exchange(GBMap* gb_map, HarvestTile* target, TileNode*);
 	int playHarvest(GBMap* gb_map);
 

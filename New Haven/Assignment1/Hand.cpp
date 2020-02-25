@@ -39,13 +39,16 @@ void Hand::addBuildingTile(BuildingTile* bt)
 	*numOfBuilding = *numOfBuilding + 1;
 }
 
-int Hand::getNodeID(int row, int col)
+int Hand::getNodeID(GBMap* gb_map, int row, int col)
 {
+	int height = gb_map->getTileGraph()->getHeight();
+	int length = gb_map->getTileGraph()->getHeight();
+	return (row * length + col);
 }
 
 bool Hand::requestRotate(HarvestTile* target)
 {
-	std::cout << "Start rotating session" << std::endl;
+	std::cout << "\n---Start rotating session---" << std::endl;
 
 	char input;
 	char back = 'b';
@@ -104,7 +107,7 @@ void Hand::exchange(GBMap* gb_map, HarvestTile* target, TileNode* location)
 	gb_map->calcResourceAdjacencies(location, resourcesCollected);
 
 	// Print out the resources collected
-	std::cout << "Generated:" << std::endl;
+	std::cout << "\nGenerated Resources:" << std::endl;
 	std::cout << "SHEEP: " << resourcesCollected[ResourceType::SHEEP] << std::endl;
 	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
 	std::cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << std::endl;
@@ -113,48 +116,69 @@ void Hand::exchange(GBMap* gb_map, HarvestTile* target, TileNode* location)
 }
 
 int Hand::playHarvest(GBMap* gb_map) {
-	std::cout << "----PLAYING HARVEST TILE----" << std::endl;
-	while(true) {
-		if(hasNoHarvest()) {
+	std::cout << "\n----PLAYING HARVEST TILE----" << std::endl;
+	while (true) {
+		if (hasNoHarvest()) {
 			std::cout << "There is no Harvest Tile on hand to play" << std::endl;
 			return 1;
 		}
 
 		showHand();
-				
+
 		int choice;
-		std::cout << "Currently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << std::endl;
+		std::cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << std::endl;
 		std::cout << "Please enter the index of Harvest Tile you want to play" << std::endl;
 		std::cin >> choice;
 		if (choice < 0 || choice >= this->getRemainHarvest()) {
 			std::cout << "Invalid choice. Please try again." << std::endl;
 			continue;
 		}
-
 		HarvestTile* target = getHarvestTile(choice);
-		std::cout << "Enter the ID of the square you want to place your Tile on:" << std::endl;
-		std::cin >> choice;
 
-		TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(choice));
-		if(gb_map->isValid(location)) {
+		std::cout << "\n---Select position to place Tile---" << std::endl;
+		int row, col;
+		try {
+			std::cout << "Enter the index of row:" << std::endl;
+			std::cin >> row;
+			if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
+				throw std::exception();
+			}
+
+			std::cout << "Enter the index of column:" << std::endl;
+			std::cin >> col;
+			if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
+				throw std::exception();
+			}
+		}
+		catch (const std::exception & e) {
+			std::cout << "Invalid position input. Please try again" << std::endl;
+			continue;
+		}
+
+		/* Check if the position is enabled and not occupied
+		=> process to rotate the Tile as requested
+		=> Place Tile on the map and calculate resources by exchange
+		*/
+		int nodeID = this->getNodeID(gb_map, row, col);
+		TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
+		if (gb_map->isValid(location)) {
 			if (requestRotate(target)) {
 				// User satisfies with their choice of rotation, process to place HarvestTile
 				gb_map->placeHarvestTile(target, location);
-				std::cout << "PLACED TILE ON THE GAMEBOARD SUCCESSFULLY" << std::endl;
+				std::cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << std::endl;
 				exchange(gb_map, target, location);
 				break;
-			} 
+			}
 
-		} else {
-			std::cout << "------------------------------------------" << std::endl;
+		}
+		else {
+			std::cout << "\n------------------------------------------" << std::endl;
 			std::cout << "The position is either occupied or invalid" << std::endl;
 			std::cout << "Please try again." << std::endl;
-			std::cout << "------------------------------------------" << std::endl;
+			std::cout << "------------------------------------------\n" << std::endl;
 			continue;
 		}
 	}
 
 	return 0;
 }
-
-

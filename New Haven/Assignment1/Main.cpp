@@ -170,7 +170,7 @@ int testHandObj() {
 	std::cout << "Showing cards on Hand after drawing from the Deck" << std::endl;
 	mine.showHand();
 
-	std::cout << "Playing a Harvest Tile" << std::endl;
+	std::cout << "Test a turn of playing Harvest Tile" << std::endl;
 	mine.playHarvest(gb_map);
 
 	return 0;
