@@ -47,11 +47,11 @@ void GBMap::calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int> 
 	resourceGraph->resetAllVisited();
 }
 
+bool GBMap::isValid(TileNode* tileNode) {
+	return(!tileNode->isOccupied() && tileNode->isEnabled());
+}
+
 bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
-
-	if(tileNode->isOccupied() || !tileNode->isEnabled())
-		return false;
-
 	tileNode->getResourceNodes()[0]->setType(harvestTile->getResources()[0]);
 	tileNode->getResourceNodes()[1]->setType(harvestTile->getResources()[1]);
 	tileNode->getResourceNodes()[2]->setType(harvestTile->getResources()[2]);
@@ -59,3 +59,4 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 
 	return true;
 }
+
