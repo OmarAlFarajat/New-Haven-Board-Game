@@ -5,9 +5,11 @@
 #include <vector>
 #include <sstream>
 #include <iterator>
+#include <map>
 
 #include "GBMap.h"
 #include "Resources.h"
 #include "TileNode.h"
-void loadMap(std::string& filename, GBMap& gb_map);
+
+void loadGBMap(std::string& filename, GBMap& gb_map);
 

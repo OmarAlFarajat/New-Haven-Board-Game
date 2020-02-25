@@ -2,7 +2,7 @@
 #include <cstddef>
 
 enum class Direction { LEFT, RIGHT, UP, DOWN };
-enum class NodeType { TILE, RESOURCE };
+enum class NodeType { TILE, RESOURCE, BUILDING};
 
 class Node
 {

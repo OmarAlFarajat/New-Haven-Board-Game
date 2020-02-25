@@ -53,7 +53,7 @@ int initialize() {
 		return 666;
 	}
 
-	loadMap(mapFileName, *gb_map);
+	loadGBMap(mapFileName, *gb_map);
 	// Display which map was loaded
 	std::cout << "Map has been created from " << mapFileName << "." << std::endl;
 	std::cout << std::endl; 

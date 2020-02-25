@@ -1,6 +1,4 @@
 #include "GBMapLoader.h"
-#include "Resources.h"
-#include <map>
 
 ResourceType strToEnum(std::string str) {
 	if (str.compare("SHEEP") == 0)
@@ -15,16 +13,17 @@ ResourceType strToEnum(std::string str) {
 		return ResourceType::NONE;
 }
 
-void loadMap(std::string& fileName, GBMap& gb_map)
+void loadGBMap(std::string& fileName, GBMap& gb_map)
 {
 	std::ifstream inFile(fileName, std::ios::in);
 	std::string lineRead;
 	
-	int length = 0;
-	int height = 0;
+
 
 	// The containers below store the data read from the file.
-	// The graphs are only created and updated after the file is closed. 
+	// The graphs are only created and updated after the file is closed.
+	int length = 0;
+	int height = 0;
 	std::map<int, std::vector<ResourceType>> resourceData;
 	std::vector<int> resourceIndices; 
 	std::vector<int> disableData;

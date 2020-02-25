@@ -134,6 +134,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="TileNode.cpp" />
+    <ClCompile Include="VGMap.cpp" />
     <ClCompile Include="VGMapLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="TileNode.h" />
+    <ClInclude Include="VGMap.h" />
     <ClInclude Include="VGMapLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

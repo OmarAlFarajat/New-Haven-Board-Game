@@ -2,6 +2,7 @@
 #include "Graph.h"
 #include "Resources.h"
 #include "TileNode.h"
+#include "Building.h"
 
 // Template for evenly spacing out elements of a table (or a grid in this case)
 // To be used in makeGridGraph()
@@ -158,6 +159,9 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 			break;
 		case NodeType::TILE:
 			this->addNode(new TileNode());
+			break;
+		case NodeType::BUILDING:
+			this->addNode(new BuildingTile());
 			break;
 		}
 	}

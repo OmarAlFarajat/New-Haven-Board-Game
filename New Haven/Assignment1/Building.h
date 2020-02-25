@@ -2,11 +2,12 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include "Node.h"
 
 // Building tiles Object
-enum class BuildingType { MEADOW, QUARRY, FOREST, WHEATFIELD };
-enum class BuildingColor { GREEN, GREY, RED, YELLOW };
-class BuildingTile
+enum class BuildingType { NONE, MEADOW, QUARRY, FOREST, WHEATFIELD };
+enum class BuildingColor { NONE, GREEN, GREY, RED, YELLOW };
+class BuildingTile : public Node
 {
 public:
 	BuildingTile();
