@@ -2,6 +2,7 @@
 #include <string>
 #include <stdlib.h> 
 #include <time.h>
+
 #include "GBMap.h"
 #include "Resources.h"
 #include "Harvest.h"
@@ -9,12 +10,14 @@
 #include "Hand.h"
 #include "GBMapLoader.h"
 #include "TileNode.h"
+#include "VGMap.h"
+#include "VGMapLoader.h"
 
 /* Global Variables for the game*/
 static int numberOfPlayers;
 static std::string mapFileName = "";
 static GBMap* gb_map = new GBMap();
-
+static VGMap* vg_map = new VGMap();
 static HarvestDeck harvestDeck;
 static BuildingDeck buildingDeck;
 /*-------------------------------*/
@@ -55,7 +58,7 @@ int initialize() {
 
 	loadGBMap(mapFileName, *gb_map);
 	// Display which map was loaded
-	std::cout << "Map has been created from " << mapFileName << "." << std::endl;
+	std::cout << "GB Map has been created from " << mapFileName << "." << std::endl;
 	std::cout << std::endl; 
 
 	return 0;
@@ -119,6 +122,25 @@ int testGBMap() {
 	std::cout << std::endl;
 
 	return 0;
+}
+
+int testVGMap() {
+	std::string vgFileName = "Stratford_invalid.vgmap";
+
+	loadVGMap(vgFileName, *vg_map);
+
+	std::cout << "VG Map has been created from " << vgFileName << "." << std::endl;
+
+	std::cout << std::endl;
+
+	vg_map->getBuildingGraph()->printGridGraph(false);
+
+	std::cout << "Is VGMap connected? " << std::boolalpha << vg_map->getBuildingGraph()->isConnected_DFS(vg_map->getBuildingGraph()->getNode(7)) << std::endl;
+	std::cout << std::endl;
+
+	vg_map->getBuildingGraph()->printGridGraph(true);
+
+	return 0; 
 }
 
 int testHarvestDeck() {
@@ -252,7 +274,7 @@ int main() {
 	}
 
 	// Enable Test for Hand Obj
-	bool testHand = true;
+	bool testHand = false;
 	if (testHand) {
 		testHandObj();
 		std::cout << "<----------------->" << std::endl;
@@ -262,6 +284,12 @@ int main() {
 	bool testResource = false;
 	if (testResource) {
 		testResourceCount(); 
+		std::cout << "<----------------->" << std::endl;
+	}
+	// Enable Test for Resources Collected
+	bool testVG = true;
+	if (testVG) {
+		testVGMap();
 		std::cout << "<----------------->" << std::endl;
 	}
 	//-----------------------------------------

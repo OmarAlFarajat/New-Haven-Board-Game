@@ -4,8 +4,6 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 	std::ifstream inFile(fileName, std::ios::in);
 	std::string lineRead;
 
-
-
 	// The containers below store the data read from the file.
 	// The graphs are only created and updated after the file is closed. 
 	int length = 0;
@@ -33,5 +31,7 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 
 	vg_map.getBuildingGraph()->makeGridGraph(length, height, NodeType::BUILDING);
 
-
+	// Iterate through the disableData and update gb_map's tile graph. 
+	for (int i = 0; i < disableData.size(); i++)
+		vg_map.getBuildingGraph()->disableNode(disableData[i]);
 }

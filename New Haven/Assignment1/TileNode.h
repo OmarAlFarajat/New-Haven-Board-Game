@@ -4,7 +4,7 @@
 
 class TileNode : public Node
 {
-	Resource *resources[4];
+	Resource* resources[4];
 public:
 	TileNode();
 	~TileNode();

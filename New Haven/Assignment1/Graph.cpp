@@ -191,7 +191,7 @@ void Graph::printGridGraph(bool verbose)
 	int totalNodes = *this->length * *this->height;
 
 	for (int i = 0; i < totalNodes - *this->length + 1; i += *this->length) {
-		// Format id(up, down, left, right, visited)
+		// Format id(up, down, left, right, visited, enabled)
 		for (int j = 0; j < *this->length; j++) {
 			size_t I = static_cast<size_t>(i);
 
@@ -215,7 +215,7 @@ void Graph::printGridGraph(bool verbose)
 					+ right + ","
 					+ down + ","
 					+ left + ","
-					// + visited + ","
+					+ visited + ","
 					+ enabled + ")";
 				printElement(temp, 21);
 			}

@@ -2,6 +2,7 @@
 
 VGMap::VGMap()
 {
+	buildingGraph = new Graph();
 }
 
 VGMap::~VGMap()

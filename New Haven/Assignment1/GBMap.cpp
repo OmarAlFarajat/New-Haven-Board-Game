@@ -5,6 +5,15 @@ GBMap::GBMap()
 {
 	tileGraph = new Graph();
 	resourceGraph = new Graph(); 
+
+	resourceTracker = new std::map<ResourceType,int>;
+	resourceTracker[0][ResourceType::SHEEP]		= 0;
+	resourceTracker[0][ResourceType::TIMBER]	= 0;
+	resourceTracker[0][ResourceType::STONE]		= 0;
+	resourceTracker[0][ResourceType::WHEAT]		= 0;
+
+	for (BuildingTile* x : buildingsAvailable)
+		x = NULL; 
 }
 
 GBMap::~GBMap()

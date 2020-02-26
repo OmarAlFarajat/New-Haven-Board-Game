@@ -4,11 +4,15 @@
 #include "Graph.h"
 #include "TileNode.h"
 #include "Harvest.h"
+#include "Building.h"
 
 class GBMap 
 {
 	Graph* tileGraph;
 	Graph* resourceGraph;
+	std::map<ResourceType, int>* resourceTracker;
+	BuildingTile* buildingsAvailable[5];
+
 
 public:
 	GBMap();
