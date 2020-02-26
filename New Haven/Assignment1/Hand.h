@@ -1,6 +1,6 @@
 #pragma once
+#include <map>
 #include <vector>
-#include "Player.h"
 #include "GBMap.h"
 #include "Harvest.h"
 #include "Building.h"
@@ -25,15 +25,17 @@ class Hand
 	int getNodeID(GBMap* gb_map, int row, int col);
 	bool requestRotate(HarvestTile* target);
 
-	void exchange(Player& p, GBMap* gb_map, HarvestTile* target, TileNode*);
-	int playHarvest(Player* p, GBMap* gb_map);
+	void exchange(GBMap* gb_map, HarvestTile* target, TileNode*);
+	int playHarvest(GBMap* gb_map);
+
+	std::map<ResourceType, int>* getGenerated();
 
 private:
 	int* numOfHarvest;
 	int* numOfBuilding;
 	std::vector<HarvestTile*>* harvestHold;
 	std::vector<BuildingTile*>* buildingHold;
-
+    std::map<ResourceType, int>* generatedResources;
 };
 
 

@@ -5,12 +5,7 @@ Player::Player()
 {
 	this->name = new std::string("Mike");
 	this->mine = new Hand;
-	this->tracker= { 
-		{ResourceType::SHEEP,0},
-		{ResourceType::STONE,0},
-		{ResourceType::TIMBER,0},
-		{ResourceType::WHEAT,0} 
-	};
+    this->tracker = mine->getGenerated();
 }
 
 Player::~Player()
@@ -19,7 +14,8 @@ Player::~Player()
 
 void Player::PlaceHarvestTile(GBMap* gb_map)
 {
-	this->mine->playHarvest(this, gb_map);
+	this->mine->playHarvest(gb_map);
+	this->tracker = mine->getGenerated();
 }
 
 void Player::DrawBuilding(BuildingDeck* deck)
@@ -42,16 +38,14 @@ void Player::DrawHarvestTile(HarvestDeck* deck)
 	}
 }
 
-void Player::ResourceTracker(std::map<ResourceType, int> accumulation)
+void Player::ResourceTracker()
 {
-	//Setting resource trackers
-	this->tracker = accumulation;
 	//Printing out the Resources
 	std::cout << "\nGenerated Resources:" << std::endl;
-	std::cout << "SHEEP: " << tracker[ResourceType::SHEEP] << std::endl;
-	std::cout << "STONE: " << tracker[ResourceType::STONE] << std::endl;
-	std::cout << "TIMBER: " << tracker[ResourceType::TIMBER] << std::endl;
-	std::cout << "WHEAT: " << tracker[ResourceType::WHEAT] << std::endl;
+	std::cout << "SHEEP: " << tracker[0][ResourceType::SHEEP] << std::endl;
+	std::cout << "STONE: " << tracker[0][ResourceType::STONE] << std::endl;
+	std::cout << "TIMBER: " << tracker[0][ResourceType::TIMBER] << std::endl;
+	std::cout << "WHEAT: " << tracker[0][ResourceType::WHEAT] << std::endl;
 }
 
 void Player::BuildVillage()

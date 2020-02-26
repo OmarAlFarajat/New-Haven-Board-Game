@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stdlib.h> 
-#include <time.h>
+#include <stdlib.h>
+#include <ctime>
 #include "GBMap.h"
 #include "Resources.h"
 #include "Harvest.h"
@@ -171,7 +171,7 @@ int testHandObj() {
 	Hand mine;
 	std::cout << "Testing for ability to hold objects" << std::endl;
 	int loop = 2;
-	for (int i = 0; i < 2; ++i) {
+	for (int i = 0; i < loop; ++i) {
 		mine.addHarvestTile(harvestDeck.draw());
 		mine.addBuildingTile(buildingDeck.draw());
 	}
@@ -254,7 +254,7 @@ int main() {
 	Generate a randomize seed according to the current machine time
 	-- Need to be placed at the beginning of main to avoid bias for rand()
 	*/
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	//Initialize global variables
 	if (initialize() != 0) {

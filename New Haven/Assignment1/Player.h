@@ -15,17 +15,18 @@ public:
 	void DrawBuilding(BuildingDeck* deck);
 	void DrawHarvestTile(HarvestDeck* deck);
 	
-	void ResourceTracker(std::map<ResourceType, int> accumulation);
+	void ResourceTracker();
 	void BuildVillage();
 	void CalculateResources();
 
 	void show();
+
 private:
-	Hand* mine;
+    Hand* mine;
 	std::string* name;
-	std::map<ResourceType, int> tracker;
+	std::map<ResourceType, int>* tracker;
 	/*
-	Player own a VG board
+	Player owns a VG board
 	*/
 
 };
