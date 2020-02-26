@@ -17,8 +17,6 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 {
 	std::ifstream inFile(fileName, std::ios::in);
 	std::string lineRead;
-	
-
 
 	// The containers below store the data read from the file.
 	// The graphs are only created and updated after the file is closed.
@@ -32,6 +30,18 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 	while (inFile) {
 
 		getline(inFile, lineRead);
+
+		// Checking for whitespace and empty strings to skip. 
+		bool whiteSpaced = true;
+		for (int i = 0; i < lineRead.length(); i++)
+			if (!isspace(lineRead.at(i))) {
+				whiteSpaced = false;
+				break;
+			}
+
+		if (lineRead.empty() || whiteSpaced)
+			continue;
+
 		// String tokenizing code used for parsing the loaded map file 
 		// Source: https://stackoverflow.com/a/53921
 		std::stringstream strstr(lineRead);
@@ -39,8 +49,9 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 		std::istream_iterator<std::string> end; 
 		std::vector<std::string> results(it, end);
 
-
-		if (results[0].compare("LENGTH") == 0) 
+		if (results[0].compare("#") == 0)
+			continue;
+		else if (results[0].compare("LENGTH") == 0) 
 			length = std::stoi(results[1]);
 		else if (results[0].compare("HEIGHT") == 0) 
 			height = std::stoi(results[1]);	

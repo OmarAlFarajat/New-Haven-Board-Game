@@ -2,6 +2,7 @@
 
 VGMap::VGMap()
 {
+	name = new std::string();
 	buildingGraph = new Graph();
 }
 

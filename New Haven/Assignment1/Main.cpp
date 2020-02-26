@@ -125,7 +125,7 @@ int testGBMap() {
 }
 
 int testVGMap() {
-	std::string vgFileName = "Stratford_invalid.vgmap";
+	std::string vgFileName = "Stratford_example.vgmap";
 
 	loadVGMap(vgFileName, *vg_map);
 
