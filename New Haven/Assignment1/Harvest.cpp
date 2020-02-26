@@ -1,7 +1,5 @@
 #include <vector>
 #include <string>
-#include <stdlib.h> 
-#include <time.h>
 #include <iostream>
 #include "Resources.h"
 #include "Harvest.h"
@@ -100,6 +98,7 @@ std::ostream& operator<<(std::ostream& os, HarvestTile& ht)
 
 HarvestDeck::HarvestDeck()
 {
+    srand((int) time(nullptr));
 	//A for-loop initializes a deck containning 60 harvest tiles
 	for (int i = 0; i < this->numOfTiles; ++i) {
 		this->deck.push_back(HarvestTile());

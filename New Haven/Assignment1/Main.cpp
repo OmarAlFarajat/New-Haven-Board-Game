@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include <stdlib.h> 
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 #include "GBMap.h"
 #include "Resources.h"
 #include "Harvest.h"
@@ -218,7 +218,7 @@ int main() {
 	Generate a randomize seed according to the current machine time
 	-- Need to be placed at the beginning of main to avoid bias for rand()
 	*/
-	srand(time(NULL));
+	srand((int)time(nullptr));
 
 	//Initialize global variables
 	if (initialize() != 0) {
@@ -252,7 +252,7 @@ int main() {
 	}
 
 	// Enable Test for Hand Obj
-	bool testHand = true;
+	bool testHand = false;
 	if (testHand) {
 		testHandObj();
 		std::cout << "<----------------->" << std::endl;
@@ -266,6 +266,6 @@ int main() {
 	}
 	//-----------------------------------------
 
-	std::cout << "--Done Testing--" << std::endl;
+	std::cout << "-- Done Testing --" << std::endl;
 	return 0;
 	}
