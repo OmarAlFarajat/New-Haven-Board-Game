@@ -1,51 +1,31 @@
-//#pragma once
-#ifndef PLAYER_H
-#define PLAYER_H
-#include <iostream>
+#pragma once
+#include <map>
 #include <string>
-#include <vector>
-#include "../Assignment1/Harvest.h"
-#include "../Assignment1/Building.h"
+#include "GBMap.h"
+#include "Building.h"
+#include "Hand.h"
+#include "Resources.h"
 
-class Player
-{
-private:
-	std::string name; // the player's nickname
-	static int playerCount; // Total number of players that are playing the game
-	int playerNumber; //Player identifier i.e. player 1, player 2, etc.
-	int numOfHarvestTiles;
-	int numOfBuildings;
-	std::vector<HarvestTile> harvestTiles;
-	std::vector<BuildingTile> buildingTiles;
-
+class Player {
 public:
-	Player();	// Default constructor
-	Player(std::string, int playerNumber);
-	~Player();	// Player class destructor
+	Player();
+	~Player();
 
-	// Set Methods
-	void setName(std::string); //set the name of the player
-	void setPlayerNumber(int); //set the number of the player: player1, player2, etc.
-	void setNumOfHarvestTiles(int h);
-	void setNumOfBuildings(int b);
-
-
-	// Get Methods
-	std::string getName();		//get the name of the player
-	int getPlayerNumber(); //get the number of the player: player1,player 2, etc.
-	int getNumOfHarvestTiles(void);
-	int getNumOfBuildings(void);
-
-	HarvestTile draw();
-	//BuildingTiles draw();
-
-	void PlaceHarvestTile();
-	void DrawBuilding();
-	void ResourceTracker();
+	void PlaceHarvestTile(GBMap* gb_map);
+	void DrawBuilding(BuildingDeck* deck);
+	void DrawHarvestTile(HarvestDeck* deck);
+	
+	void ResourceTracker(std::map<ResourceType, int> accumulation);
 	void BuildVillage();
+	void CalculateResources();
 
-	//int CalculateResources();
+	void show();
+private:
+	Hand* mine;
+	std::string* name;
+	std::map<ResourceType, int> tracker;
+	/*
+	Player own a VG board
+	*/
 
 };
-#endif
-

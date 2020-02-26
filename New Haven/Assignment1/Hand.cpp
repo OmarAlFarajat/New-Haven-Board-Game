@@ -101,26 +101,19 @@ bool Hand::requestRotate(HarvestTile* target)
 
 }
 
-void Hand::exchange(GBMap* gb_map, HarvestTile* target, TileNode* location)
+void Hand::exchange(Player& p, GBMap* gb_map, HarvestTile* target, TileNode* location)
 {
 	std::map<ResourceType, int> resourcesCollected = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
 	gb_map->calcResourceAdjacencies(location, resourcesCollected);
-
-	// Print out the resources collected
-	std::cout << "\nGenerated Resources:" << std::endl;
-	std::cout << "SHEEP: " << resourcesCollected[ResourceType::SHEEP] << std::endl;
-	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
-	std::cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << std::endl;
-	std::cout << "WHEAT: " << resourcesCollected[ResourceType::WHEAT] << std::endl;
-
+	p.ResourceTracker(resourcesCollected);
 }
 
-int Hand::playHarvest(GBMap* gb_map) {
+int Hand::playHarvest(Player* p, GBMap* gb_map) {
 	std::cout << "\n----PLAYING HARVEST TILE----" << std::endl;
 	while (true) {
 		if (hasNoHarvest()) {
 			std::cout << "There is no Harvest Tile on hand to play" << std::endl;
-			return 1;
+			return 0;
 		}
 
 		showHand();
@@ -166,7 +159,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 				// User satisfies with their choice of rotation, process to place HarvestTile
 				gb_map->placeHarvestTile(target, location);
 				std::cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << std::endl;
-				exchange(gb_map, target, location);
+				exchange(*p, gb_map, target, location);
 				break;
 			}
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Player.h"
 #include "GBMap.h"
 #include "Harvest.h"
 #include "Building.h"
@@ -24,8 +25,8 @@ class Hand
 	int getNodeID(GBMap* gb_map, int row, int col);
 	bool requestRotate(HarvestTile* target);
 
-	void exchange(GBMap* gb_map, HarvestTile* target, TileNode*);
-	int playHarvest(GBMap* gb_map);
+	void exchange(Player& p, GBMap* gb_map, HarvestTile* target, TileNode*);
+	int playHarvest(Player* p, GBMap* gb_map);
 
 private:
 	int* numOfHarvest;
