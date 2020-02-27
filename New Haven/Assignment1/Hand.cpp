@@ -244,7 +244,7 @@ void Hand::playBuilding(VGMap* vg_map) {
 		*/
 		int nodeID = this->getNodeID_VG(vg_map, row, col);
 		BuildingTile* location = static_cast<BuildingTile*>(vg_map->getBuildingGraph()->getNode(nodeID));
-		if (vg_map->isValid(location)) {
+		if (vg_map->isValid(target, location)) {
 				// User satisfies with their choice of rotation, process to place HarvestTile
 				vg_map->placeBuildingTile(target, location);
 				std::cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << std::endl;

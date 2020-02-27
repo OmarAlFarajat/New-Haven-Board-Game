@@ -12,8 +12,9 @@ public:
 	VGMap();
 	~VGMap();
 	Graph* getBuildingGraph() {	return buildingGraph; }
-	bool isValid(BuildingTile* buildingTile);
+	bool isValid(BuildingTile* fromHand, BuildingTile* toBoard);
 	void placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard);
 	int calculatePoints(); 
+	void initTileValues();
 };
 

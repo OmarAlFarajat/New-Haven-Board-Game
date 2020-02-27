@@ -30,8 +30,9 @@ public:
 	void resetAllVisited();
 	// Inline getters
 	Node* getRootNode() { return nodes[0][0]; }
-	Node* getNode(int index) { return nodes[0][index]; };
-	int getNumEnabledNodes() { return *numEnabledNodes; };
+	Node* getNode(int index) { return nodes[0][index]; }
+	std::vector<Node*>* getNodes() { return nodes; }
+	int getNumEnabledNodes() { return *numEnabledNodes; }
 	int getLength() { return *length; }
 	int getHeight() { return *height; }
 };

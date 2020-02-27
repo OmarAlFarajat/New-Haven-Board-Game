@@ -14,6 +14,7 @@ public:
 	ResourceType* getBuildingType();
 	friend std::ostream& operator<<(std::ostream& os, BuildingTile& bt);
 	std::string typeToString();
+	// Inline getters
 	int getValue() const { return *value; };
 	ResourceType getType() const { return *type; };
 	bool getFaceUp() const { return *faceUp; };

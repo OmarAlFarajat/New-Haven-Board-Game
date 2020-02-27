@@ -85,6 +85,8 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 
 	vg_map.getBuildingGraph()->makeGridGraph(length, height, NodeType::BUILDING);
 
+	vg_map.initTileValues();
+
 	// Iterate through the disableData and update gb_map's tile graph. 
 	for (int i = 0; i < disableData.size(); i++)
 		vg_map.getBuildingGraph()->disableNode(disableData[i]);
