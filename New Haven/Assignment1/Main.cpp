@@ -274,7 +274,7 @@ int main() {
 	}
 
 	// Enable Test for Hand Obj
-	bool testHand = false;
+	bool testHand = true;
 	if (testHand) {
 		testHandObj();
 		std::cout << "<----------------->" << std::endl;

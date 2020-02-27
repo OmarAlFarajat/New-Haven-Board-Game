@@ -1,25 +1,24 @@
 #include<algorithm>
 #include <vector>
 #include "Building.h"
-
+#include <time.h>
 BuildingTile::BuildingTile()
 {
 	//Not gonna be used
 }
 
-BuildingTile::BuildingTile(BuildingColor color, BuildingType type, int value)
+BuildingTile::BuildingTile(ResourceType type, int value)
 {
-	this->color = new BuildingColor(color);
-	this->type = new BuildingType(type);
 	this->value = new int(value);
-
+	this->type = new ResourceType(type); 
+	this->faceUp = new bool(true);
 }
 
 BuildingTile::~BuildingTile()
 {
 }
 
-BuildingType* BuildingTile::getBuildingType()
+ResourceType* BuildingTile::getBuildingType()
 {
 	return this->type;
 }
@@ -28,63 +27,32 @@ std::string BuildingTile::typeToString()
 {
 	std::string output;
 	switch (*(this->type)) {
-	case BuildingType::FOREST:
-		output = "FOREST";
+	case ResourceType::TIMBER:
+		output = "TIMBER";
 		break;
-	case BuildingType::MEADOW:
-		output = "MEADOW";
+	case ResourceType::SHEEP:
+		output = "SHEEP";
 		break;
-	case BuildingType::QUARRY:
-		output = "QUARRY";
+	case ResourceType::STONE:
+		output = "STONE";
 		break;
-	case BuildingType::WHEATFIELD:
-		output = "WHEATFIELD";
-		break;
-	default:
-		output = "INVALID";
-	}
-	return output;
-}
-
-std::string BuildingTile::colorToString()
-{
-	std::string output;
-	switch (*(this->color)) {
-	case BuildingColor::GREEN:
-		output = "GREEN";
-		break;
-	case BuildingColor::GREY:
-		output = "GREY";
-		break;
-	case BuildingColor::RED:
-		output = "RED";
-		break;
-	case BuildingColor::YELLOW:
-		output = "YELLOW";
+	case ResourceType::WHEAT:
+		output = "WHEAT";
 		break;
 	default:
 		output = "INVALID";
 	}
 	return output;
-
 }
 
 BuildingDeck::BuildingDeck()
 { 
-	std::vector<BuildingType> typeLib = {
-		BuildingType::MEADOW,
-		BuildingType::QUARRY,
-		BuildingType::FOREST,
-		BuildingType::WHEATFIELD
+	std::vector<ResourceType> typeLib = {
+		ResourceType::SHEEP,
+		ResourceType::STONE,
+		ResourceType::TIMBER,
+		ResourceType::WHEAT
 	};
-
-	std::vector<BuildingColor> colorLib = {
-		BuildingColor::GREEN,
-		BuildingColor::GREY,
-		BuildingColor::RED,
-		BuildingColor::YELLOW
-	};
-
 
 	/*
 	Create a pointer of iterator type for building type
@@ -94,20 +62,18 @@ BuildingDeck::BuildingDeck()
 	There are 4 colors
 	=> 36 * 4 = 144 tiles in the deck
 	*/
-	std::vector<BuildingType>::iterator typeIT = typeLib.begin();
-	for (std::vector<BuildingColor>::iterator colorIT = colorLib.begin(); colorIT != colorLib.end(); ++colorIT) {
+	
+	for(ResourceType x : typeLib)
+	for (std::vector<ResourceType>::iterator typeIT = typeLib.begin(); typeIT != typeLib.end(); ++typeIT) {
 		int row = 1;
 		while (row <= 6) {
 			for (int value = 1; value <= 6; ++value) {
-				BuildingTile newTile(*colorIT, *typeIT, value);
+				BuildingTile newTile(*typeIT, value);
 				this->deck.push_back(newTile);
 			}
 			row++;
 		}
-
-		typeIT++; // Move the pointer of type iterator up when changing the color
 	}
-
 	std::random_shuffle(deck.begin(), deck.end()); //random shuffle the deck
 	tileIndex = new int(numOfTiles);
 }
@@ -132,11 +98,9 @@ BuildingTile* BuildingDeck::draw()
 //Override operator to print out the details of building tile
 std::ostream& operator<<(std::ostream& os, BuildingTile& bt)
 {
-	std::string color = bt.colorToString();
 	std::string type = bt.typeToString();
 	int value = bt.getValue();
 	os << "Details of Building Tile:" << std::endl;
-	os << "+ Color: " << color << std::endl;
 	os << "+ Type: " << type << std::endl;
 	os << "+ Value: " << *bt.value << std::endl;
 

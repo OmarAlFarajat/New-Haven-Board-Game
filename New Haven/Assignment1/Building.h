@@ -3,26 +3,23 @@
 #include<string>
 #include<vector>
 #include "Node.h"
+#include "Resources.h"
 
-// Building tiles Object
-enum class BuildingType { NONE, MEADOW, QUARRY, FOREST, WHEATFIELD };
-enum class BuildingColor { NONE, GREEN, GREY, RED, YELLOW };
 class BuildingTile : public Node
 {
 public:
 	BuildingTile();
-	BuildingTile(BuildingColor color, BuildingType buildingType, int value);
+	BuildingTile(ResourceType type, int value);
 	~BuildingTile();
-	BuildingType* getBuildingType();
+	ResourceType* getBuildingType();
 	friend std::ostream& operator<<(std::ostream& os, BuildingTile& bt);
 	std::string typeToString();
-	std::string colorToString();
 	int getValue() const { return *value; };
 
 private:
-	BuildingType* type; //opposite side type
-	BuildingColor* color;
+	ResourceType* type; //opposite side type
 	int* value;    // 1 to 6
+	bool* faceUp; 
 
 };
 
