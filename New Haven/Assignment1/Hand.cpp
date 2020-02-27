@@ -172,7 +172,8 @@ int Hand::playHarvest(GBMap* gb_map) {
 				gb_map->placeHarvestTile(target, location);
 				std::cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << std::endl;
 				exchange(gb_map, location);
-        harvestHold->erase(harvestHold[0].begin() + choice); //Remove the tile from hand after placement
+				harvestHold->erase(harvestHold[0].begin() + choice); //Remove the tile from hand after placement
+				*numOfHarvest = *numOfHarvest - 1;
 				break;
 			}
 
@@ -247,8 +248,8 @@ void Hand::playBuilding(VGMap* vg_map) {
 				// User satisfies with their choice of rotation, process to place HarvestTile
 				vg_map->placeBuildingTile(target, location);
 				std::cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << std::endl;
-				//exchange(gb_map, location);
 				buildingHold->erase(buildingHold[0].begin() + choice); //Remove the tile from hand after placement
+				*numOfBuilding = *numOfBuilding - 1;
 				break;		
 		}
 		else {

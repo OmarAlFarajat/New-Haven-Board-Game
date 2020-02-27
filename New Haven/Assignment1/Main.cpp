@@ -270,6 +270,7 @@ int testPlayer() {
 	test->PlaceHarvestTile(gb_map);
 	std::cout << "Placing a Building Tile on the Village board" << std::endl;
 	test->PlaceBuildingTile(test->getVGMap());
+	test->show();
 	return 0;
 }
 
