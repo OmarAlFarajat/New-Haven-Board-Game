@@ -15,7 +15,10 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, BuildingTile& bt);
 	std::string typeToString();
 	int getValue() const { return *value; };
-
+	ResourceType getType() const { return *type; };
+	void setValue(int value) { *this->value = value; }
+	void setType(ResourceType type) { *this->type = type;  }
+	void setFaceUp(bool faceUp) { *this->faceUp = faceUp; }
 private:
 	ResourceType* type; //opposite side type
 	int* value;    // 1 to 6

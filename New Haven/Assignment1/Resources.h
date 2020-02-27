@@ -17,3 +17,4 @@ public:
 	ResourceType getType() { return *type; }
 	std::string getTypeAsString();
 };
+

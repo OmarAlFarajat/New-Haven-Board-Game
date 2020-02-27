@@ -33,6 +33,5 @@ std::string Resource::getTypeAsString()
 		break;
 	}
 	return str;
-
 }
 
