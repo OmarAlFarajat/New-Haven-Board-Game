@@ -179,7 +179,7 @@ int testHandObj() {
 	mine.showHand();
 
 	std::cout << "Test a turn of playing Harvest Tile" << std::endl;
-	//mine.playHarvest(gb_map);
+	mine.playHarvest(gb_map);
 
 	return 0;
 }

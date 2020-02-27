@@ -24,7 +24,7 @@ public:
 private:
     Hand* mine;
 	std::string* name;
-	std::map<ResourceType, int>* tracker;
+
 	/*
 	Player owns a VG board
 	*/
