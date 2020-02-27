@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stdlib.h>
+#include <cstdlib>
 #include <ctime>
 #include "GBMap.h"
 #include "Resources.h"
@@ -254,6 +254,7 @@ int main() {
 	Generate a randomize seed according to the current machine time
 	-- Need to be placed at the beginning of main to avoid bias for rand()
 	*/
+
 	srand(time(nullptr));
 
 	//Initialize global variables
@@ -300,15 +301,15 @@ int main() {
 		testResourceCount(); 
 		std::cout << "<----------------->" << std::endl;
 	}
-	//-----------------------------------------
 
-	// Enable Test for Player
+  // Enable Test for Player
 	bool testPlayerObj = true;
 	if (testPlayerObj) {
 		testPlayer();
 		std::cout << "<----------------->" << std::endl;
 	}
-
-	std::cout << "--Done Testing--" << std::endl;
+  
+	std::cout << "-- Done Testing --" << std::endl;
+	//-----------------------------------------
 	return 0;
 	}

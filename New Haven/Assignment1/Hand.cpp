@@ -108,69 +108,79 @@ void Hand::exchange(GBMap* gb_map, TileNode* location)
 }
 
 int Hand::playHarvest(GBMap* gb_map) {
-    std::cout << "\n----PLAYING HARVEST TILE----" << std::endl;
-    while (true) {
-        if (hasNoHarvest()) {
-            std::cout << "There is no Harvest Tile on hand to play" << std::endl;
-            return 0;
-        }
+	std::cout << "\n----PLAYING HARVEST TILE----" << std::endl;
+	while (true) {
+		if (hasNoHarvest()) {
+			std::cout << "There is no Harvest Tile on hand to play" << std::endl;
+			return 1;
+		}
 
-        showHand();
+		showHand();
 
-        int choice;
-        std::cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << std::endl;
-        std::cout << "Please enter the index of Harvest Tile you want to play" << std::endl;
-        std::cin >> choice;
-        if (choice < 0 || choice >= this->getRemainHarvest()) {
-            std::cout << "Invalid choice. Please try again." << std::endl;
-            continue;
-        }
-        HarvestTile *target = getHarvestTile(choice);
-
-        std::cout << "\n---Select position to place Tile---" << std::endl;
-        int row, col;
-        try {
-            std::cout << "Enter the index of row:" << std::endl;
-            std::cin >> row;
-            if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
+		//Ask for choice of Harvest Tile on hand
+		int choice = -1;
+		std::cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << std::endl;
+		std::cout << "Please enter the index of Harvest Tile you want to play" << std::endl;
+		try {
+            std::cin >> choice;
+            if (choice < 0 || choice >= this->getRemainHarvest()) {
                 throw std::exception();
             }
 
-            std::cout << "Enter the index of column:" << std::endl;
-            std::cin >> col;
-            if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
-                throw std::exception();
-            }
-        }
-        catch (const std::exception &e) {
-            std::cout << "Invalid position input. Please try again" << std::endl;
-            continue;
-        }
+		} catch (const std::exception& e) {
+		    std::cout << "Invalid choice. Please try again." << std::endl;
+		    continue;
+		}
 
-        /* Check if the position is enabled and not occupied
-        => process to rotate the Tile as requested
-        => Place Tile on the map and calculate resources by exchange
-        */
-        int nodeID = this->getNodeID(gb_map, row, col);
-        TileNode *location = static_cast<TileNode *>(gb_map->getTileGraph()->getNode(nodeID));
-        if (gb_map->isValid(location)) {
-            if (requestRotate(target)) {
-                // User satisfies with their choice of rotation, process to place HarvestTile
-                gb_map->placeHarvestTile(target, location);
-                std::cout << "\nPLACED TILE ON THE GAME BOARD SUCCESSFULLY\n" << std::endl;
-                exchange(gb_map, location);
-                harvestHold->erase(harvestHold[0].begin() + choice); //Remove the tile from hand after placement
-                break;
-            }
+		HarvestTile* target = getHarvestTile(choice);
 
-        } else {
-            std::cout << "\n------------------------------------------" << std::endl;
-            std::cout << "The position is either occupied or invalid" << std::endl;
-            std::cout << "Please try again." << std::endl;
-            std::cout << "------------------------------------------\n" << std::endl;
-            continue;
-        }
-    }
+		//Ask for position on the map to place tile
+		std::cout << "\n---Select position to place Tile---" << std::endl;
+		int row, col;
+		try {
+			std::cout << "Enter the index of row:" << std::endl;
+			std::cin >> row;
+			if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
+				throw std::exception();
+			}
 
-    return 0;
+			std::cout << "Enter the index of column:" << std::endl;
+			std::cin >> col;
+			if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
+				throw std::exception();
+			}
+		}
+		catch (const std::exception & e) {
+			std::cout << "Invalid position input. Please try again" << std::endl;
+			continue;
+		}
+
+		/* Check if the position is enabled and not occupied
+		=> process to rotate the Tile as requested
+		=> Place Tile on the map and calculate resources by exchange
+		*/
+		int nodeID = this->getNodeID(gb_map, row, col);
+		TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
+		if (gb_map->isValid(location)) {
+			if (requestRotate(target)) {
+				// User satisfies with their choice of rotation, process to place HarvestTile
+				gb_map->placeHarvestTile(target, location);
+				std::cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << std::endl;
+				exchange(gb_map, location);
+        harvestHold->erase(harvestHold[0].begin() + choice); //Remove the tile from hand after placement
+				break;
+			}
+
+		}
+		else {
+			std::cout << "\n------------------------------------------" << std::endl;
+			std::cout << "The position is either occupied or invalid" << std::endl;
+			std::cout << "Please try again." << std::endl;
+			std::cout << "------------------------------------------\n" << std::endl;
+			continue;
+		}
+	}
+
+	return 0;
+
 }
