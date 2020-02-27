@@ -125,16 +125,24 @@ int Hand::playHarvest(GBMap* gb_map) {
 
 		showHand();
 
-		int choice;
+		//Ask for choice of Harvest Tile on hand
+		int choice = -1;
 		std::cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << std::endl;
 		std::cout << "Please enter the index of Harvest Tile you want to play" << std::endl;
-		std::cin >> choice;
-		if (choice < 0 || choice >= this->getRemainHarvest()) {
-			std::cout << "Invalid choice. Please try again." << std::endl;
-			continue;
+		try {
+            std::cin >> choice;
+            if (choice < 0 || choice >= this->getRemainHarvest()) {
+                throw std::exception();
+            }
+
+		} catch (const std::exception& e) {
+		    std::cout << "Invalid choice. Please try again." << std::endl;
+		    continue;
 		}
+
 		HarvestTile* target = getHarvestTile(choice);
 
+		//Ask for position on the map to place tile
 		std::cout << "\n---Select position to place Tile---" << std::endl;
 		int row, col;
 		try {
