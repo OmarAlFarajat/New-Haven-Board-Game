@@ -246,6 +246,7 @@ int testPlayer() {
 	test->PlaceHarvestTile(gb_map);
 	std::cout << "Placing a Building Tile on the Village board" << std::endl;
 	//TODO: implement place building tile on VG board
+	return 0;
 
 }
 
