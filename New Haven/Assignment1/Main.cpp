@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <cstdlib>
 #include <ctime>
 #include "GBMap.h"
@@ -7,6 +8,7 @@
 #include "Harvest.h"
 #include "Building.h"
 #include "Hand.h"
+#include "Player.h"
 #include "GBMapLoader.h"
 #include "TileNode.h"
 
@@ -17,6 +19,8 @@ static GBMap* gb_map = new GBMap();
 
 static HarvestDeck harvestDeck;
 static BuildingDeck buildingDeck;
+
+static std::vector<Player> players;
 /*-------------------------------*/
 
 int initialize() {
@@ -57,6 +61,10 @@ int initialize() {
 	// Display which map was loaded
 	std::cout << "Map has been created from " << mapFileName << "." << std::endl;
 	std::cout << std::endl; 
+
+	for (int i = 0; i < numberOfPlayers; ++i) {
+		players.push_back(Player());
+	}
 
 	return 0;
 }
@@ -163,7 +171,7 @@ int testHandObj() {
 	Hand mine;
 	std::cout << "Testing for ability to hold objects" << std::endl;
 	int loop = 2;
-	for (int i = 0; i < 2; ++i) {
+	for (int i = 0; i < loop; ++i) {
 		mine.addHarvestTile(harvestDeck.draw());
 		mine.addBuildingTile(buildingDeck.draw());
 	}
@@ -213,12 +221,42 @@ int testResourceCount() {
 	return 0;
 }
 
+int testPlayer() {
+	std::cout << "Enter testing for Player Object" << std::endl;
+	Player* test = &players[0];
+
+	int drawHarvest = 2;
+	std::cout << "Drawing " << drawHarvest << " Harvest Tiles" << std::endl;
+	for (int i = 0; i < drawHarvest; ++i) {
+		test->DrawHarvestTile(&harvestDeck);
+	}
+
+	int drawBuilding = 4;
+	std::cout << "Drawing " << drawBuilding << " Building Tiles" << std::endl;
+	for (int i = 0; i < drawBuilding; ++i) {
+		test->DrawBuilding(&buildingDeck);
+	}
+
+	std::cout << "\n==============================" << std::endl;
+	std::cout << " SHOWING HAND AFTER DRAWING " << std::endl;
+	test->show();
+	std::cout << "\n==============================" << std::endl;
+
+	std::cout << "Placing a Harvest Tile on the game board" << std::endl;
+	test->PlaceHarvestTile(gb_map);
+	std::cout << "Placing a Building Tile on the Village board" << std::endl;
+	//TODO: implement place building tile on VG board
+	return 0;
+
+}
+
 int main() {
 	/*
 	Generate a randomize seed according to the current machine time
 	-- Need to be placed at the beginning of main to avoid bias for rand()
 	*/
-	srand((int)time(nullptr));
+
+	srand(time(nullptr));
 
 	//Initialize global variables
 	if (initialize() != 0) {
@@ -264,8 +302,15 @@ int main() {
 		testResourceCount(); 
 		std::cout << "<----------------->" << std::endl;
 	}
-	//-----------------------------------------
 
+  // Enable Test for Player
+	bool testPlayerObj = true;
+	if (testPlayerObj) {
+		testPlayer();
+		std::cout << "<----------------->" << std::endl;
+	}
+  
 	std::cout << "-- Done Testing --" << std::endl;
+	//-----------------------------------------
 	return 0;
 	}

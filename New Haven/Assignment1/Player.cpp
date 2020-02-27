@@ -1,88 +1,39 @@
-#include "Player.h"
 #include <iostream>
-#include <string>
+#include "Player.h"
 
-int Player::playerCount = 0; // Total number of players that are playing the game
-
-// Default constructor for player arrays
 Player::Player()
 {
-	this->name = "Player"; //set the name of the player
-
-	playerCount++; // Increment the total number of players in the game
-	playerNumber = playerCount; // Set the number of players to the current player count
-	numOfHarvestTiles = 0;
-	numOfBuildings = 0;
-
-
+	this->name = new std::string("Mike");
+	this->mine = new Hand;
 }
 
-Player::Player(std::string name, int playerNumber)
+Player::~Player()
 {
-	this->name = "Player"; //set the name of the player
-
-	playerCount++; //increment the number of players in the game
-	playerNumber = playerCount; //set the player number to the current player count
-	numOfHarvestTiles = 0;
-	numOfBuildings = 0;
 }
 
-Player::~Player() 	// Class destructor
+void Player::PlaceHarvestTile(GBMap* gb_map)
 {
-	//make sure the tiles object is deleted
-	//delete HarvestTile();
-	//tiles = NULL;
-	//delete building;
-	//building = NULL;
+	this->mine->playHarvest(gb_map);
 }
 
-std::string Player::getName()
+void Player::DrawBuilding(BuildingDeck* deck)
 {
-	return name;
-}
-
-void Player::setName(std::string name)
-{
-	this->name = name;
-}
-
-int Player::getPlayerNumber()
-{
-	return playerNumber;
-}
-
-void Player::setPlayerNumber(int number)
-{
-	// only allows up to 3 players so between 0 and 3
-	if (number >= 0 && number <= 3)
-	{
-		playerNumber = number;
+	if (deck->getNumOfRemain() <= 0) {
+		std::cout << "There is no more Building Tile in the Deck to draw" << std::endl;
+	}
+	else {
+		mine->addBuildingTile(deck->draw());
 	}
 }
 
-void Player::setNumOfHarvestTiles(int h)
+void Player::DrawHarvestTile(HarvestDeck* deck)
 {
-	numOfHarvestTiles = h;
-}
-
-void Player::setNumOfBuildings(int b)
-{
-	numOfBuildings = b;
-}
-
-void Player::PlaceHarvestTile()
-{
-	return;
-}
-
-HarvestTile Player::draw()
-{
-	return HarvestTile();
-}
-
-void Player::DrawBuilding()
-{
-
+	if (deck->getNumOfRemain() <= 0) {
+		std::cout << "There is no more Harvest Tile in the Deck to draw" << std::endl;
+	} 
+	else {
+		mine->addHarvestTile(deck->draw());
+	}
 }
 
 void Player::ResourceTracker()
@@ -92,11 +43,14 @@ void Player::ResourceTracker()
 
 void Player::BuildVillage()
 {
-
 }
 
-//int Player::CalculateResources()
-//{
-//	//TODO return resources size. waiting for resources to be implemented
-//	//return resources.size();
-//}
+void Player::CalculateResources()
+{
+}
+
+void Player::show()
+{
+	// Showing Hand
+	this->mine->showHand();
+}
