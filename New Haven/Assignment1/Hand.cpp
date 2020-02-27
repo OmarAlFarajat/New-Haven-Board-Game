@@ -6,7 +6,6 @@ Hand::Hand()
 	numOfBuilding = new int(0);
 	harvestHold = new std::vector<HarvestTile*>(0);
 	buildingHold = new std::vector<BuildingTile*>(0);
-
 }
 
 Hand::~Hand()
@@ -101,18 +100,11 @@ bool Hand::requestRotate(HarvestTile* target)
 
 }
 
-void Hand::exchange(GBMap* gb_map, HarvestTile* target, TileNode* location)
+void Hand::exchange(GBMap* gb_map, TileNode* location)
 {
-	std::map<ResourceType, int> resourcesCollected = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
-	gb_map->calcResourceAdjacencies(location, resourcesCollected);
-
-	// Print out the resources collected
-	std::cout << "\nGenerated Resources:" << std::endl;
-	std::cout << "SHEEP: " << resourcesCollected[ResourceType::SHEEP] << std::endl;
-	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
-	std::cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << std::endl;
-	std::cout << "WHEAT: " << resourcesCollected[ResourceType::WHEAT] << std::endl;
-
+    std::map<ResourceType , int> generatedResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
+	gb_map->calcResourceAdjacencies(location, generatedResources);
+	// TODO: Set generated resources on GBMap
 }
 
 int Hand::playHarvest(GBMap* gb_map) {
@@ -125,16 +117,24 @@ int Hand::playHarvest(GBMap* gb_map) {
 
 		showHand();
 
-		int choice;
+		//Ask for choice of Harvest Tile on hand
+		int choice = -1;
 		std::cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << std::endl;
 		std::cout << "Please enter the index of Harvest Tile you want to play" << std::endl;
-		std::cin >> choice;
-		if (choice < 0 || choice >= this->getRemainHarvest()) {
-			std::cout << "Invalid choice. Please try again." << std::endl;
-			continue;
+		try {
+            std::cin >> choice;
+            if (choice < 0 || choice >= this->getRemainHarvest()) {
+                throw std::exception();
+            }
+
+		} catch (const std::exception& e) {
+		    std::cout << "Invalid choice. Please try again." << std::endl;
+		    continue;
 		}
+
 		HarvestTile* target = getHarvestTile(choice);
 
+		//Ask for position on the map to place tile
 		std::cout << "\n---Select position to place Tile---" << std::endl;
 		int row, col;
 		try {
@@ -166,7 +166,8 @@ int Hand::playHarvest(GBMap* gb_map) {
 				// User satisfies with their choice of rotation, process to place HarvestTile
 				gb_map->placeHarvestTile(target, location);
 				std::cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << std::endl;
-				exchange(gb_map, target, location);
+				exchange(gb_map, location);
+        harvestHold->erase(harvestHold[0].begin() + choice); //Remove the tile from hand after placement
 				break;
 			}
 
@@ -181,4 +182,5 @@ int Hand::playHarvest(GBMap* gb_map) {
 	}
 
 	return 0;
+
 }
