@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h> 
-//#include <time.h>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
@@ -38,20 +37,16 @@ int initialize() {
 
 	// Switch statement assigns a string to fileName
 	switch(numberOfPlayers){
-	case 0:
-		mapFileName = "GBA_2Players_resourceTest.gbmap";
-		break;
 	case 2:
 		mapFileName = "GBA_2Players.gbmap";
+		//mapFileName = "GBA_2Players_resourceTest.gbmap";
+		//mapFileName = "GBA_2Players_invalid.gbmap";
 		break;
 	case 3:
 		mapFileName = "GBA_3Players.gbmap";
 		break;
 	case 4:
 		mapFileName = "GBA_4Players.gbmap";
-		break;
-	case 666:
-		mapFileName = "GBA_2Players_invalid.gbmap";
 		break;
 	default:
 		std::cout << std::endl;
@@ -271,6 +266,9 @@ int testPlayer() {
 	std::cout << "Placing a Building Tile on the Village board" << std::endl;
 	test->PlaceBuildingTile(test->getVGMap());
 	test->show();
+
+	std::cout << "NUMBER OF POINTS IS: " << test->getVGMap()->calculatePoints() << std::endl;
+
 	return 0;
 }
 

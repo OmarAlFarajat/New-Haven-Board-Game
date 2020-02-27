@@ -14,5 +14,6 @@ public:
 	Graph* getBuildingGraph() {	return buildingGraph; }
 	bool isValid(BuildingTile* buildingTile);
 	void placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard);
+	int calculatePoints(); 
 };
 
