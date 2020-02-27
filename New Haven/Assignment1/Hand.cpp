@@ -40,14 +40,14 @@ void Hand::addBuildingTile(BuildingTile* bt)
 
 int Hand::getNodeID(GBMap* gb_map, int row, int col)
 {
-	int height = gb_map->getTileGraph()->getHeight();
-	return (row * height + col);
+	int length = gb_map->getTileGraph()->getLength();
+	return (row * length + col);
 }
 
 int Hand::getNodeID_VG(VGMap* vg_map, int row, int col)
 {
-	int height = vg_map->getBuildingGraph()->getHeight();
-	return (row * height + col);
+	int length = vg_map->getBuildingGraph()->getLength();
+	return (row * length + col);
 }
 
 bool Hand::requestRotate(HarvestTile* target)
