@@ -4,7 +4,9 @@
 #include <time.h>
 BuildingTile::BuildingTile()
 {
-	//Not gonna be used
+	this->value = new int(0);
+	this->type = new ResourceType(ResourceType::NONE);
+	this->faceUp = new bool(true);
 }
 
 BuildingTile::BuildingTile(ResourceType type, int value)

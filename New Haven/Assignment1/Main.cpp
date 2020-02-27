@@ -269,9 +269,8 @@ int testPlayer() {
 	std::cout << "Placing a Harvest Tile on the game board" << std::endl;
 	test->PlaceHarvestTile(gb_map);
 	std::cout << "Placing a Building Tile on the Village board" << std::endl;
-	//TODO: implement place building tile on VG board
+	test->PlaceBuildingTile(test->getVGMap());
 	return 0;
-
 }
 
 int main() {
@@ -327,7 +326,7 @@ int main() {
 		std::cout << "<----------------->" << std::endl;
 	}
 	// Enable Test for VGMap
-	bool testVG = true;
+	bool testVG = false;
 	if (testVG) {
 		testVGMap();
 		std::cout << "<----------------->" << std::endl;

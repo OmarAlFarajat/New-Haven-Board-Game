@@ -41,8 +41,13 @@ void Hand::addBuildingTile(BuildingTile* bt)
 int Hand::getNodeID(GBMap* gb_map, int row, int col)
 {
 	int height = gb_map->getTileGraph()->getHeight();
-	int length = gb_map->getTileGraph()->getHeight();
-	return (row * length + col);
+	return (row * height + col);
+}
+
+int Hand::getNodeID_VG(VGMap* vg_map, int row, int col)
+{
+	int height = vg_map->getBuildingGraph()->getHeight();
+	return (row * height + col);
 }
 
 bool Hand::requestRotate(HarvestTile* target)
@@ -183,4 +188,75 @@ int Hand::playHarvest(GBMap* gb_map) {
 
 	return 0;
 
+}
+
+void Hand::playBuilding(VGMap* vg_map) {
+	std::cout << "\n----PLAYING BUILDING TILE----" << std::endl;
+	while (true) {
+		if (hasNoBuilding()) 
+			std::cout << "There is no Harvest Tile on hand to play" << std::endl;
+		
+		showHand();
+
+		//Ask for choice of Building Tile from hand
+		int choice = -1;
+		std::cout << "\nCurrently, you have " << getRemainBuilding() << " Building tiles in your hand" << std::endl;
+		std::cout << "Please enter the index of Building Tile you want to play" << std::endl;
+		try {
+			std::cin >> choice;
+			if (choice < 0 || choice >= this->getRemainBuilding()) {
+				throw std::exception();
+			}
+
+		}
+		catch (const std::exception & e) {
+			std::cout << "Invalid choice. Please try again." << std::endl;
+			continue;
+		}
+
+		BuildingTile* target = getBuildingTile(choice);
+
+		//Ask for position on the map to place tile
+		std::cout << "\n---Select position to place Tile---" << std::endl;
+		int row, col;
+		try {
+			std::cout << "Enter the index of row:" << std::endl;
+			std::cin >> row;
+			if (row < 0 || row >= vg_map->getBuildingGraph()->getHeight()) {
+				throw std::exception();
+			}
+
+			std::cout << "Enter the index of column:" << std::endl;
+			std::cin >> col;
+			if (col < 0 || col >= vg_map->getBuildingGraph()->getLength()) {
+				throw std::exception();
+			}
+		}
+		catch (const std::exception & e) {
+			std::cout << "Invalid position input. Please try again" << std::endl;
+			continue;
+		}
+
+		/* Check if the position is enabled and not occupied
+		=> process to rotate the Tile as requested
+		=> Place Tile on the map and calculate resources by exchange
+		*/
+		int nodeID = this->getNodeID_VG(vg_map, row, col);
+		BuildingTile* location = static_cast<BuildingTile*>(vg_map->getBuildingGraph()->getNode(nodeID));
+		if (vg_map->isValid(location)) {
+				// User satisfies with their choice of rotation, process to place HarvestTile
+				vg_map->placeBuildingTile(target, location);
+				std::cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << std::endl;
+				//exchange(gb_map, location);
+				buildingHold->erase(buildingHold[0].begin() + choice); //Remove the tile from hand after placement
+				break;		
+		}
+		else {
+			std::cout << "\n------------------------------------------" << std::endl;
+			std::cout << "The position is either occupied or invalid" << std::endl;
+			std::cout << "Please try again." << std::endl;
+			std::cout << "------------------------------------------\n" << std::endl;
+			continue;
+		}
+	}
 }

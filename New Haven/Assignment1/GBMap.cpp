@@ -12,8 +12,12 @@ GBMap::GBMap()
 	resourceTracker[0][ResourceType::STONE]		= 0;
 	resourceTracker[0][ResourceType::WHEAT]		= 0;
 
-	for (BuildingTile* x : buildingsAvailable)
-		x = NULL; 
+	buildingsAvailable[0] = new BuildingTile();
+	buildingsAvailable[1] = new BuildingTile();
+	buildingsAvailable[2] = new BuildingTile();
+	buildingsAvailable[3] = new BuildingTile();
+	buildingsAvailable[4] = new BuildingTile();
+
 }
 
 GBMap::~GBMap()
@@ -62,9 +66,16 @@ bool GBMap::isValid(TileNode* tileNode) {
 
 bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	tileNode->getResourceNodes()[0]->setType(harvestTile->getResources()[0]);
+	tileNode->getResourceNodes()[0]->setOccupied(true);
+
 	tileNode->getResourceNodes()[1]->setType(harvestTile->getResources()[1]);
+	tileNode->getResourceNodes()[1]->setOccupied(true);
+
 	tileNode->getResourceNodes()[2]->setType(harvestTile->getResources()[3]);
+	tileNode->getResourceNodes()[2]->setOccupied(true);
+
 	tileNode->getResourceNodes()[3]->setType(harvestTile->getResources()[2]);
+	tileNode->getResourceNodes()[3]->setOccupied(true);
 
 	return true;
 }
