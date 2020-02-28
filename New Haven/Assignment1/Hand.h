@@ -26,10 +26,12 @@ class Hand
 	void addBuildingTile(BuildingTile* bt);
 	int getNodeID(GBMap* gb_map, int row, int col);
 	int getNodeID_VG(VGMap* vg_map, int row, int col);
-	bool requestRotate(HarvestTile* target);
 
-	void exchange(GBMap* gb_map, TileNode*);
+    void exchange(GBMap* gb_map, TileNode*);
+	bool requestRotate(HarvestTile* target);
 	int playHarvest(GBMap* gb_map);
+
+	bool requestFlip(BuildingTile* target);
 	void playBuilding(VGMap* vg_map);
 private:
 	int* numOfHarvest;
