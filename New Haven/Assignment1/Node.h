@@ -2,7 +2,7 @@
 #include <cstddef>
 
 enum class Direction { LEFT, RIGHT, UP, DOWN };
-enum class NodeType { TILE, RESOURCE };
+enum class NodeType { TILE, RESOURCE, BUILDING};
 
 class Node
 {
@@ -26,6 +26,10 @@ public:
 	bool isVisited() { return *visited; }
 	bool isEnabled() { return *enabled; }
 	bool isOccupied() { return *occupied; }
+	Node* getUp() { return up; }
+	Node* getDown() { return down; }
+	Node* getLeft() { return left; }
+	Node* getRight() { return right; }
 
 	friend class Graph;
 };

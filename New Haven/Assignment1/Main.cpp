@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+
 #include "GBMap.h"
 #include "Resources.h"
 #include "Harvest.h"
@@ -11,12 +12,14 @@
 #include "Player.h"
 #include "GBMapLoader.h"
 #include "TileNode.h"
+#include "VGMap.h"
+#include "VGMapLoader.h"
 
 /* Global Variables for the game*/
 static int numberOfPlayers;
 static std::string mapFileName = "";
 static GBMap* gb_map = new GBMap();
-
+static VGMap* vg_map = new VGMap();
 static HarvestDeck harvestDeck;
 static BuildingDeck buildingDeck;
 
@@ -33,20 +36,16 @@ int initialize() {
 
 	// Switch statement assigns a string to fileName
 	switch(numberOfPlayers){
-	case 0:
-		mapFileName = "GBA_2Players_resourceTest.gbmap";
-		break;
 	case 2:
-		mapFileName = "GBA_2Players.gbmap";
+		//mapFileName = "GBA_2Players.gbmap";
+		mapFileName = "GBA_2Players_resourceTest.gbmap";
+		//mapFileName = "GBA_2Players_invalid.gbmap";
 		break;
 	case 3:
 		mapFileName = "GBA_3Players.gbmap";
 		break;
 	case 4:
 		mapFileName = "GBA_4Players.gbmap";
-		break;
-	case 666:
-		mapFileName = "GBA_2Players_invalid.gbmap";
 		break;
 	default:
 		std::cout << std::endl;
@@ -57,9 +56,9 @@ int initialize() {
 		return 666;
 	}
 
-	loadMap(mapFileName, *gb_map);
+	loadGBMap(mapFileName, *gb_map);
 	// Display which map was loaded
-	std::cout << "Map has been created from " << mapFileName << "." << std::endl;
+	std::cout << "GB Map has been created from " << mapFileName << "." << std::endl;
 	std::cout << std::endl; 
 
 	for (int i = 0; i < numberOfPlayers; ++i) {
@@ -127,6 +126,25 @@ int testGBMap() {
 	std::cout << std::endl;
 
 	return 0;
+}
+
+int testVGMap() {
+	std::string vgFileName = "Stratford_example.vgmap";
+
+	loadVGMap(vgFileName, *vg_map);
+
+	std::cout << "VG Map has been created from " << vgFileName << "." << std::endl;
+
+	std::cout << std::endl;
+
+	vg_map->getBuildingGraph()->printGridGraph(false);
+
+	std::cout << "Is VGMap connected? " << std::boolalpha << vg_map->getBuildingGraph()->isConnected_DFS(vg_map->getBuildingGraph()->getNode(7)) << std::endl;
+	std::cout << std::endl;
+
+	vg_map->getBuildingGraph()->printGridGraph(true);
+
+	return 0; 
 }
 
 int testHarvestDeck() {
@@ -245,9 +263,18 @@ int testPlayer() {
 	std::cout << "Placing a Harvest Tile on the game board" << std::endl;
 	test->PlaceHarvestTile(gb_map);
 	std::cout << "Placing a Building Tile on the Village board" << std::endl;
-	//TODO: implement place building tile on VG board
-	return 0;
+	test->PlaceBuildingTile(test->getVGMap());
+	test->show();
 
+	std::cout << "NUMBER OF POINTS IS: " << test->getVGMap()->calculatePoints() << std::endl;
+
+	return 0;
+}
+
+void printAllGraphs() {
+	gb_map->getTileGraph()->printGridGraph(true);
+	gb_map->getResourceGraph()->printGridGraph(true);
+	players[0].getVGMap()->getBuildingGraph()->printGridGraph(true);
 }
 
 int main() {
@@ -302,14 +329,28 @@ int main() {
 		testResourceCount(); 
 		std::cout << "<----------------->" << std::endl;
 	}
+	// Enable Test for VGMap
+	bool testVG = false;
+	if (testVG) {
+		testVGMap();
+		std::cout << "<----------------->" << std::endl;
+	}
+	//-----------------------------------------
 
   // Enable Test for Player
-	bool testPlayerObj = true;
+	bool testPlayerObj = false;
 	if (testPlayerObj) {
 		testPlayer();
 		std::cout << "<----------------->" << std::endl;
 	}
-  
+
+	// Enable Test to print all graphs (GBMap tiles and resources, and VGMap Buildings)
+	bool testAllMaps = false;
+	if (testAllMaps) {
+		printAllGraphs();
+		std::cout << "<----------------->" << std::endl;
+	}
+
 	std::cout << "-- Done Testing --" << std::endl;
 	//-----------------------------------------
 	return 0;

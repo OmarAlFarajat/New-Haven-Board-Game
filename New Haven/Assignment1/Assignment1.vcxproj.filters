@@ -9,15 +9,8 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\Player %28P4%29">
       <UniqueIdentifier>{6d55571a-e5ce-45d1-8bfa-78ed15e787b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Resources %28P5%29">
-      <UniqueIdentifier>{4642472b-00f5-425d-b41f-c4d46795bff6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\GBMap %28P1%29">
       <UniqueIdentifier>{c7368aae-66c4-45ef-8351-6ec8b446dc9e}</UniqueIdentifier>
@@ -28,14 +21,8 @@
     <Filter Include="Header Files\VGMap %28P2%29">
       <UniqueIdentifier>{9214aa79-3a0a-4451-96aa-f7bae0ad8dbf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Resources Gathered %28P6%29">
-      <UniqueIdentifier>{d5f609e5-e029-4166-8e9a-c16ddcfbc3fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Player %28P4%29">
       <UniqueIdentifier>{deeefcc7-502e-43a2-8081-ab556f96e47b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Resources %28P5%29">
-      <UniqueIdentifier>{02bef6d6-728e-4cdc-9a98-8889df16ef11}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\GBMap %28P1%29">
       <UniqueIdentifier>{a6700b18-1170-49fe-99ee-9d8b64ebdd3a}</UniqueIdentifier>
@@ -46,8 +33,11 @@
     <Filter Include="Source Files\VGMap %28P2%29">
       <UniqueIdentifier>{6d963b38-9517-4d81-8d91-06c8e537de7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Resources Gathered %28P6%29">
-      <UniqueIdentifier>{5a990f89-93ce-4ae4-95ec-fceb026be398}</UniqueIdentifier>
+    <Filter Include="Source Files\Resources %28P5%29 %28P6%29">
+      <UniqueIdentifier>{02bef6d6-728e-4cdc-9a98-8889df16ef11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources %28P5%29 %28P6%29">
+      <UniqueIdentifier>{4642472b-00f5-425d-b41f-c4d46795bff6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,16 +45,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Building.cpp">
-      <Filter>Source Files\Resources %28P5%29</Filter>
+      <Filter>Source Files\Resources %28P5%29 %28P6%29</Filter>
     </ClCompile>
     <ClCompile Include="Hand.cpp">
-      <Filter>Source Files\Resources %28P5%29</Filter>
+      <Filter>Source Files\Resources %28P5%29 %28P6%29</Filter>
     </ClCompile>
     <ClCompile Include="Harvest.cpp">
-      <Filter>Source Files\Resources %28P5%29</Filter>
+      <Filter>Source Files\Resources %28P5%29 %28P6%29</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
-      <Filter>Source Files\Resources %28P5%29</Filter>
+      <Filter>Source Files\Resources %28P5%29 %28P6%29</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Player %28P4%29</Filter>
@@ -87,19 +77,22 @@
     <ClCompile Include="VGMapLoader.cpp">
       <Filter>Source Files\Maps Loader %28P3%29</Filter>
     </ClCompile>
+    <ClCompile Include="VGMap.cpp">
+      <Filter>Source Files\VGMap %28P2%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Building.h">
-      <Filter>Header Files\Resources %28P5%29</Filter>
+      <Filter>Header Files\Resources %28P5%29 %28P6%29</Filter>
     </ClInclude>
     <ClInclude Include="Harvest.h">
-      <Filter>Header Files\Resources %28P5%29</Filter>
+      <Filter>Header Files\Resources %28P5%29 %28P6%29</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">
-      <Filter>Header Files\Resources %28P5%29</Filter>
+      <Filter>Header Files\Resources %28P5%29 %28P6%29</Filter>
     </ClInclude>
     <ClInclude Include="Hand.h">
-      <Filter>Header Files\Resources %28P5%29</Filter>
+      <Filter>Header Files\Resources %28P5%29 %28P6%29</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\Player %28P4%29</Filter>
@@ -121,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="GBMapLoader.h">
       <Filter>Header Files\Maps Loader %28P3%29</Filter>
+    </ClInclude>
+    <ClInclude Include="VGMap.h">
+      <Filter>Header Files\VGMap %28P2%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

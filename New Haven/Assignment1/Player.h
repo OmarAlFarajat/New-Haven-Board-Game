@@ -5,6 +5,7 @@
 #include "Building.h"
 #include "Hand.h"
 #include "Resources.h"
+#include "VGMap.h"
 
 class Player {
 public:
@@ -12,9 +13,10 @@ public:
 	~Player();
 
 	void PlaceHarvestTile(GBMap* gb_map);
+	void PlaceBuildingTile(VGMap* vg_map);
 	void DrawBuilding(BuildingDeck* deck);
 	void DrawHarvestTile(HarvestDeck* deck);
-	
+	VGMap* getVGMap() {	return vg_map; }
 	void ResourceTracker();
 	void BuildVillage();
 	void CalculateResources();
@@ -24,9 +26,6 @@ public:
 private:
     Hand* mine;
 	std::string* name;
-
-	/*
-	Player owns a VG board
-	*/
+	VGMap* vg_map; 
 
 };
