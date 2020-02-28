@@ -109,7 +109,8 @@ void Hand::exchange(GBMap* gb_map, TileNode* location)
 {
     std::map<ResourceType , int> generatedResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
 	gb_map->calcResourceAdjacencies(location, generatedResources);
-	// TODO: Set generated resources on GBMap
+	gb_map->setResourceTracker(&generatedResources);
+	gb_map->displayResourceTracker();
 }
 
 int Hand::playHarvest(GBMap* gb_map) {

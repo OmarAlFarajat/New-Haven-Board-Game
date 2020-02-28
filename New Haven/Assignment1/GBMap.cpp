@@ -7,10 +7,7 @@ GBMap::GBMap()
 	resourceGraph = new Graph(); 
 
 	resourceTracker = new std::map<ResourceType,int>;
-	resourceTracker[0][ResourceType::SHEEP]		= 0;
-	resourceTracker[0][ResourceType::TIMBER]	= 0;
-	resourceTracker[0][ResourceType::STONE]		= 0;
-	resourceTracker[0][ResourceType::WHEAT]		= 0;
+	resourceTracker[0] = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
 
 	buildingsAvailable[0] = new BuildingTile();
 	buildingsAvailable[1] = new BuildingTile();
@@ -22,6 +19,25 @@ GBMap::GBMap()
 
 GBMap::~GBMap()
 {
+}
+
+void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
+{
+	resourceTracker[0][ResourceType::SHEEP] = inTracker[0][ResourceType::SHEEP];
+	resourceTracker[0][ResourceType::STONE] = inTracker[0][ResourceType::STONE];
+	resourceTracker[0][ResourceType::TIMBER] = inTracker[0][ResourceType::TIMBER];
+	resourceTracker[0][ResourceType::WHEAT] = inTracker[0][ResourceType::WHEAT];
+
+}
+
+void GBMap::displayResourceTracker()
+{
+	std::cout << "GBMap RESOURCE TRACKER: " << std::endl;
+	std::cout << "SHEEP: " << resourceTracker[0][ResourceType::SHEEP] << std::endl;
+	std::cout << "TIMBER: " << resourceTracker[0][ResourceType::TIMBER] << std::endl;;
+	std::cout << "STONE: " << resourceTracker[0][ResourceType::STONE] << std::endl;;
+	std::cout << "WHEAT: " << resourceTracker[0][ResourceType::WHEAT] << std::endl;;
+
 }
 
 void GBMap::calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int> &output)

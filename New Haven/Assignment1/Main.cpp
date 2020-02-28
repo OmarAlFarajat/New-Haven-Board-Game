@@ -38,8 +38,8 @@ int initialize() {
 	// Switch statement assigns a string to fileName
 	switch(numberOfPlayers){
 	case 2:
-		mapFileName = "GBA_2Players.gbmap";
-		//mapFileName = "GBA_2Players_resourceTest.gbmap";
+		//mapFileName = "GBA_2Players.gbmap";
+		mapFileName = "GBA_2Players_resourceTest.gbmap";
 		//mapFileName = "GBA_2Players_invalid.gbmap";
 		break;
 	case 3:
