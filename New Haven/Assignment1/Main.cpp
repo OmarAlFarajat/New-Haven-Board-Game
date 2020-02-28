@@ -272,6 +272,12 @@ int testPlayer() {
 	return 0;
 }
 
+void printAllGraphs() {
+	gb_map->getTileGraph()->printGridGraph(true);
+	gb_map->getResourceGraph()->printGridGraph(true);
+	players[0].getVGMap()->getBuildingGraph()->printGridGraph(true);
+}
+
 int main() {
 	/*
 	Generate a randomize seed according to the current machine time
@@ -334,12 +340,19 @@ int main() {
 
 
   // Enable Test for Player
-	bool testPlayerObj = true;
+	bool testPlayerObj = false;
 	if (testPlayerObj) {
 		testPlayer();
 		std::cout << "<----------------->" << std::endl;
 	}
-  
+
+	// Enable Test to print all graphs (GBMap tiles and resources, and VGMap Buildings)
+	bool testAllMaps = false;
+	if (testAllMaps) {
+		printAllGraphs();
+		std::cout << "<----------------->" << std::endl;
+	}
+
 	std::cout << "-- Done Testing --" << std::endl;
 	//-----------------------------------------
 	return 0;

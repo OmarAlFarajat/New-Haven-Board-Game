@@ -177,7 +177,7 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 			nodes[0][i]->addEdge(nodes[0][I + length], Direction::DOWN);
 		if (i - 1 >= 0 && i % length != 0)
 			nodes[0][i]->addEdge(nodes[0][I - 1], Direction::LEFT);
-		if (i + 1 <= totalNodes - 1 && (I - (static_cast<size_t>(length) - 1)) % length != 0)
+		if (i + 1 <= totalNodes - 1 && (I - (static_cast<size_t>(length) - 1)) % length != 0 || i == 3)			
 			nodes[0][i]->addEdge(nodes[0][I + 1], Direction::RIGHT);
 	}
 
@@ -191,7 +191,7 @@ void Graph::printGridGraph(bool verbose)
 	int totalNodes = *this->length * *this->height;
 
 	for (int i = 0; i < totalNodes - *this->length + 1; i += *this->length) {
-		// Format id(up, down, left, right, visited, enabled)
+		// Format id(left, up, down, right, visited, enabled)
 		for (int j = 0; j < *this->length; j++) {
 			size_t I = static_cast<size_t>(i);
 
@@ -211,13 +211,13 @@ void Graph::printGridGraph(bool verbose)
 			// Print more information per node is verbose is enabled.
 			if (verbose) {
 				temp = std::to_string(*nodes[0][I + j]->id) + " ("
-					+ up + ","
-					+ right + ","
-					+ down + ","
 					+ left + ","
+					+ up + ","
+					+ down + ","
+					+ right /*+ ","
 					+ visited + ","
-					+ enabled + ")";
-				printElement(temp, 21);
+					+ enabled*/ + ")";
+				printElement(temp, 23);
 			}
 			else {
 				temp = std::to_string(*nodes[0][I + j]->id) + "";
