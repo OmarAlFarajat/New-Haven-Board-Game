@@ -1,7 +1,7 @@
 #include<algorithm>
 #include <vector>
 #include "Building.h"
-#include <time.h>
+
 BuildingTile::BuildingTile()
 {
 	this->value = new int(0);
