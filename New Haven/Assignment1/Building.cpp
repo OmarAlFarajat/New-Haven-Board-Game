@@ -57,25 +57,25 @@ BuildingDeck::BuildingDeck()
 	};
 
 	/*
-	Create a pointer of iterator type for building type
 	Loop one color in colorLib one at a time
 	Assign a value in range 1 -> 6 for each tile
 	There are 36 tiles of one color (6 rows)
 	There are 4 colors
 	=> 36 * 4 = 144 tiles in the deck
 	*/
-	
-	for(ResourceType x : typeLib)
-	for (std::vector<ResourceType>::iterator typeIT = typeLib.begin(); typeIT != typeLib.end(); ++typeIT) {
-		int row = 1;
-		while (row <= 6) {
-			for (int value = 1; value <= 6; ++value) {
-				BuildingTile newTile(*typeIT, value);
+
+	int numOfaType = 36;
+	for (ResourceType type : typeLib) {
+		for(int i = 0; i < numOfaType; ++i) {
+			int count = 1;
+			while(count <= 6) {
+				BuildingTile newTile(type, count);
 				this->deck.push_back(newTile);
+				count++;
 			}
-			row++;
 		}
 	}
+
 	std::random_shuffle(deck.begin(), deck.end()); //random shuffle the deck
 	tileIndex = new int(numOfTiles);
 }
@@ -92,7 +92,7 @@ BuildingTile* BuildingDeck::draw()
 		return &deck[*tileIndex];
 	}
 	else {
-		return NULL;
+		return nullptr;
 	}
 
 }
@@ -104,7 +104,7 @@ std::ostream& operator<<(std::ostream& os, BuildingTile& bt)
 	int value = bt.getValue();
 	os << "Details of Building Tile:" << std::endl;
 	os << "+ Type: " << type << std::endl;
-	os << "+ Value: " << *bt.value << std::endl;
+	os << "+ Value: " << value << std::endl;
 
 	return os;
 }

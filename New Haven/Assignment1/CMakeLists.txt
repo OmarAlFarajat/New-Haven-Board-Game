@@ -28,5 +28,7 @@ add_executable(NewHaven
         Resources.h
         TileNode.cpp
         TileNode.h
+        VGMap.cpp
+        VGMap.h
         VGMapLoader.cpp
         VGMapLoader.h)

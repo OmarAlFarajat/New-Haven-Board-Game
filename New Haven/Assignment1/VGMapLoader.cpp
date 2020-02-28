@@ -73,10 +73,7 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 		}else if (results[0].compare("BUILDING") == 0) {
 			buildingContainer[std::stoi(results[1])].type = resourceStringToType(results[2]); 
 			buildingContainer[std::stoi(results[1])].value = std::stoi(results[3]);
-			if (results[4].compare("UP") == 0)
-				buildingContainer[std::stoi(results[1])].faceUp = true;
-			else
-				buildingContainer[std::stoi(results[1])].faceUp = false;
+            buildingContainer[std::stoi(results[1])].faceUp = results[4].compare("UP") == 0;
 
 		}
 

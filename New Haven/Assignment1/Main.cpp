@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <stdlib.h> 
 #include <vector>
 #include <cstdlib>
 #include <ctime>
@@ -331,7 +330,6 @@ int main() {
 		std::cout << "<----------------->" << std::endl;
 	}
 	//-----------------------------------------
-
 
   // Enable Test for Player
 	bool testPlayerObj = true;
