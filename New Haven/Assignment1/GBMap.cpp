@@ -19,6 +19,11 @@ GBMap::GBMap()
 
 GBMap::~GBMap()
 {
+	delete tileGraph;
+	delete resourceGraph;
+	delete resourceTracker; 
+	delete[] buildingsAvailable;
+
 }
 
 void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)

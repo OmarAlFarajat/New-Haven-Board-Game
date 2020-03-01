@@ -22,6 +22,10 @@ Graph::Graph()
 
 Graph::~Graph()
 {
+	for (auto n : *nodes)
+		delete n;
+	nodes->clear();
+	delete nodes;
 }
 
 // A recursive depth-first search that visits all nodes from the passed root node to check if the graph is connected

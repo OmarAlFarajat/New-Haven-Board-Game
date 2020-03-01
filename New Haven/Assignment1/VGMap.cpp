@@ -8,6 +8,8 @@ VGMap::VGMap()
 
 VGMap::~VGMap()
 {
+	delete name;
+	delete buildingGraph;
 }
 
 void VGMap::initTileValues() {
