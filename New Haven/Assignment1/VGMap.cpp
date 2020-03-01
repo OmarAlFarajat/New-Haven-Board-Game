@@ -11,6 +11,7 @@ VGMap::~VGMap()
 }
 
 void VGMap::initTileValues() {
+
 	for (Node* x : buildingGraph->getNodes()[0]){
 		if (x->getID() < 5)
 			static_cast<BuildingTile*>(x)->setValue(6);
@@ -72,6 +73,7 @@ int VGMap::calculatePoints() {
 	int points = 0; 
 	int buildingCount = 0; 
 
+	//// Calculate points for each row
 	bool perfectRow = true; 
 	int colonistRowValue[6] = {6,5,4,3,2,1};
 
@@ -81,10 +83,12 @@ int VGMap::calculatePoints() {
 		// i is the column number respective to each row.
 		for (int i = 0; i < buildingGraph->getLength(); i++) {
 
-			if (buildingGraph->getNode(i + j* buildingGraph->getLength())->isOccupied())
+			int calculatedID = i + j * buildingGraph->getLength(); 
+
+			if (buildingGraph->getNode(calculatedID)->isOccupied())
 				buildingCount++;
 
-			if (!static_cast<BuildingTile*>(buildingGraph->getNode(i + j * buildingGraph->getLength()))->getFaceUp())
+			if (!static_cast<BuildingTile*>(buildingGraph->getNode(calculatedID))->getFaceUp())
 				perfectRow = false;
 
 			if (buildingCount == buildingGraph->getLength()) 
@@ -103,6 +107,7 @@ int VGMap::calculatePoints() {
 		buildingCount = 0; 
 	}
 
+	//// Calculate points for each column
 	bool perfectColumn = true;
 	int colonistColumnValue[5] = { 5,4,3,4,5 };
 
@@ -111,10 +116,13 @@ int VGMap::calculatePoints() {
 
 		// i is the row number respective to each column.
 		for (int i = 0; i < buildingGraph->getHeight(); i++) {
-			if (buildingGraph->getNode(j + i * buildingGraph->getLength())->isOccupied())
+
+			int calculatedID = j + i * buildingGraph->getLength();
+
+			if (buildingGraph->getNode(calculatedID)->isOccupied())
 				buildingCount++;
 
-			if (!static_cast<BuildingTile*>(buildingGraph->getNode(j + i * buildingGraph->getLength()))->getFaceUp())
+			if (!static_cast<BuildingTile*>(buildingGraph->getNode(calculatedID))->getFaceUp())
 				perfectRow = false;
 
 			if (buildingCount == buildingGraph->getHeight())
@@ -126,9 +134,7 @@ int VGMap::calculatePoints() {
 					std::cout << "~~~ Found an imperfect column! " << colonistColumnValue[j] << std::endl;
 					points += colonistColumnValue[j];
 				}
-
 		}
-
 		perfectRow = true;
 		buildingCount = 0;
 	}

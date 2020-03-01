@@ -29,9 +29,10 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 	// Reading from file
 	while (inFile) {
 
+		// Read the next line and store in lineRead for parsing
 		getline(inFile, lineRead);
 
-		// Checking for whitespace and empty strings to skip. 
+		// Checking lineRead for whitespace and empty strings to skip. 
 		bool whiteSpaced = true;
 		for (int i = 0; i < lineRead.length(); i++)
 			if (!isspace(lineRead.at(i))) {
@@ -49,6 +50,7 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 		std::istream_iterator<std::string> end; 
 		std::vector<std::string> results(it, end);
 
+		// Data from file is stored in the containers here
 		if (results[0].compare("#") == 0)
 			continue;
 		else if (results[0].compare("LENGTH") == 0) 
@@ -63,6 +65,7 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 			disableData.push_back(std::stoi(results[1]));
 		}
 	}
+	// 	Finished reading from file
 	inFile.close();
 
 	// Create the graphs using the length and height data from the file
@@ -70,11 +73,10 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 	gb_map.getResourceGraph()->makeGridGraph(length * 2, height * 2, NodeType::RESOURCE);
 	gb_map.getTileGraph()->linkResourceNodes(gb_map.getResourceGraph());
 
-	// Iterate through the disableData and update gb_map's tile graph. 
+	// Iterate through the containers and use the appropriate setters.
 	for (int i = 0; i < disableData.size(); i++)
 		gb_map.getTileGraph()->disableNode(disableData[i]);
 
-	// Iterate through the resourceData and update gb_map's tile graph. 
 	for (int i = 0; i < resourceIndices.size(); i++) {
 		static_cast<TileNode*>(gb_map.getTileGraph()->getNode(resourceIndices[i]))->getResourceNodes()[0]->setType(resourceData[resourceIndices[i]][0]);
 		static_cast<TileNode*>(gb_map.getTileGraph()->getNode(resourceIndices[i]))->getResourceNodes()[1]->setType(resourceData[resourceIndices[i]][1]);

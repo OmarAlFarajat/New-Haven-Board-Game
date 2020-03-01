@@ -74,7 +74,7 @@ int testGBMap() {
 	std::cout << std::endl;
 	gb_map->getTileGraph()->printGridGraph(false);
 	gb_map->getTileGraph()->printGridGraph(true);
-	std::cout << "Is connected? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getRootNode()) << std::endl;
+	std::cout << "Is connected? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getNode(0)) << std::endl;
 	std::cout << std::endl;
 	
 	// Disable nodes 1 and 5. In a 2-player or 3-player game, this will make node 0 disconnected from the rest of the nodes.

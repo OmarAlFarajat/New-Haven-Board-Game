@@ -129,7 +129,7 @@ void Graph::linkResourceNodes(Graph* resourceGraph)
 
 		// Resources on Harvest tile: 
 		//	|0|1|
-		//	|2|3|
+		//	|3|2|
 		// Calculate the first Resource id number based on the Tile 
 		int firstResource = (i * 2) + (*this->length*rowValue*2);
 

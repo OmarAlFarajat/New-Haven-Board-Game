@@ -34,15 +34,15 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 		int value;
 		bool faceUp;
 	};
-
 	std::map<int, buildingData> buildingContainer; 
-
+	
+	// Reading from file
 	while (inFile) {
 
 		// Read the next line and store in lineRead for parsing
 		getline(inFile, lineRead);
 
-		// Checking for whitespace and empty strings to skip. 
+		// Checking lineRead for whitespace and empty strings to skip. 
 		bool whiteSpaced = true;
 		for (int i = 0; i < lineRead.length(); i++) 
 			if (!isspace(lineRead.at(i))) {
@@ -60,6 +60,7 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 		std::istream_iterator<std::string> end;
 		std::vector<std::string> results(it, end);
 
+		// Data from file is stored in the containers here
 		if (results[0].compare("#") == 0)
 			continue;
 		else if (results[0].compare("NAME") == 0)
@@ -74,22 +75,20 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 			buildingContainer[std::stoi(results[1])].type = resourceStringToType(results[2]); 
 			buildingContainer[std::stoi(results[1])].value = std::stoi(results[3]);
             buildingContainer[std::stoi(results[1])].faceUp = results[4].compare("UP") == 0;
-
 		}
-
 	}
 	inFile.close();
 
+	// Produce the grid graph of VGMap and initialize the Building "costs", i.e. values, for each row.
 	vg_map.getBuildingGraph()->makeGridGraph(length, height, NodeType::BUILDING);
-
 	vg_map.initTileValues();
 
-	// Iterate through the disableData and update gb_map's tile graph. 
+	// Iterate through the containers and use the appropriate setters.
+
 	for (int i = 0; i < disableData.size(); i++)
 		vg_map.getBuildingGraph()->disableNode(disableData[i]);
 
 	std::map<int, buildingData>::iterator it;
-
 	for (it = buildingContainer.begin(); it != buildingContainer.end(); it++)
 	{
 		static_cast<BuildingTile*>(vg_map.getBuildingGraph()->getNode(it->first))->setType(it->second.type);
