@@ -22,6 +22,14 @@ Player::~Player()
 	delete name;
 }
 
+/*
+The two functions PlaceHarvestTile and PlaceBuildingTile will start a playing session for
+the corresponding type.
+The two functions were defined inside Hand
+
+The "Player" uses "Hand" to "Place Harvest Tile"
+The "Player" uses "Hand" to "Place Building Tile"
+*/
 void Player::PlaceHarvestTile(GBMap* gb_map)
 {
 	this->mine->playHarvest(gb_map);
@@ -32,6 +40,12 @@ void Player::PlaceBuildingTile(VGMap* vg_map)
 	this->mine->playBuilding(vg_map);
 }
 
+/*
+The two functions DrawBuilding and DrawHarvestTile
+will call function draw from the player's hand. 
+After drawing the card, the functions in hand will put 
+the drawn card on hand.
+*/
 void Player::DrawBuilding(BuildingDeck* deck)
 {
 	if (deck->getNumOfRemain() <= 0) {
@@ -52,6 +66,14 @@ void Player::DrawHarvestTile(HarvestDeck* deck)
 	}
 }
 
+/*
+The 3 below methods are not implemented since the team decided to change the design, different from 
+the assignment handout.
+Instead of tracking resources in Player, the team decided to include the resource trackers in the Gameboard (GBMap)
+The decision was rational since the physical board game has the resource trackers on the board.
+All related calculating functions were moved to GBMap file.
+
+*/
 void Player::ResourceTracker()
 {
 
@@ -67,6 +89,6 @@ void Player::CalculateResources()
 
 void Player::show()
 {
-	// Showing Hand
+	// Showing all the cards currently on Hand
 	this->mine->showHand();
 }
