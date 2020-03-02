@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cstdlib>
-#include <crtdbg.h>
 #include <ctime>
 
 #include "GBMap.h"
@@ -16,17 +14,6 @@
 #include "VGMap.h"
 #include "VGMapLoader.h"
 
-// debug_new.cpp
-// compile by using: cl /EHsc /W4 /D_DEBUG /MDd debug_new.cpp
-#define _CRTDBG_MAP_ALLOC
-
-#ifdef _DEBUG
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-// Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
-// allocations to be of _CLIENT_BLOCK type
-#else
-#define DBG_NEW new
-#endif
 
 /* Global Variables for the game*/
 static int numberOfPlayers;
@@ -291,6 +278,8 @@ int main() {
 	//testPlayer();
 	//printAllGraphs();
 
-	_CrtDumpMemoryLeaks();
+	delete gb_map;
+	delete vg_map;
+
 	return 0;
-	}
+}

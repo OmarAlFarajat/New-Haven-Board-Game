@@ -26,6 +26,9 @@ Graph::~Graph()
 		delete n;
 	nodes->clear();
 	delete nodes;
+	delete numEnabledNodes;
+	delete length;
+	delete height;
 }
 
 // A recursive depth-first search that visits all nodes from the passed root node to check if the graph is connected

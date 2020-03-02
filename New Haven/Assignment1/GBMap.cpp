@@ -22,7 +22,8 @@ GBMap::~GBMap()
 	delete tileGraph;
 	delete resourceGraph;
 	delete resourceTracker; 
-	delete[] buildingsAvailable;
+	// TODO: Causes errors
+	//delete[] buildingsAvailable;
 
 }
 
