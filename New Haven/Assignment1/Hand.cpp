@@ -10,15 +10,14 @@ Hand::Hand()
 
 Hand::~Hand()
 {
-	for (int i = 0; i < *numOfHarvest; ++i) {
-		delete harvestHold[0][i];
-	}
-	delete[] harvestHold;
+	// TODO: Creates errors!! 
+	//for (auto n : *harvestHold)
+	//	delete n;
+	//harvestHold->clear();
 
-	for (int i = 0; i < *numOfBuilding; ++i) {
-		delete buildingHold[0][i];
-	}
-	delete[] buildingHold;
+	//for (auto n : *buildingHold)
+	//	delete n;
+	//buildingHold->clear();
 
 	delete numOfHarvest;
 	delete numOfBuilding;
