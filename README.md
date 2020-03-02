@@ -55,8 +55,8 @@ The project is about writing a C++ computer game that allows the user to play a 
 | List |
 | --------------- |
 | Duc Nguyen      |
-| Omar Al Farajar |
-| Luiz            |
+| Omar Al-Farajat |
+| Luiz Gonçalves  |
 
 
 
