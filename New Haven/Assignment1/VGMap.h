@@ -11,10 +11,30 @@ class VGMap
 public:
 	VGMap();
 	~VGMap();
-	Graph* getBuildingGraph() {	return buildingGraph; }
+
+	// Helper to Hand::playBuilding(). Checks if building tile placement is valid.
 	bool isValid(BuildingTile* fromHand, BuildingTile* toBoard);
-	void placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard);
-	int calculatePoints(); 
+
+	// Calculates and returns the number of points based on the building placement on the VGMap
+	int calculatePoints();
+
+	// Setters
+
+	/*	Sets the Building "cost" for each building tile in VGMap. 
+	*(!)HACK:
+	*	initTileValues() is hardcoded assuming that the VGMap is always 5x6.
+	*	Having a variable size VGMap isn't neccesary for the game itself.
+	*	But, it could be a nice feature to implement for custom games.	*/
 	void initTileValues();
+
+	/*	Helper to Hand::PlayBuilding().	
+	*	Sets the member data of BuildingTile fromHand to that of toBoard.
+	*(!)This behaves like a setter.		*/
+	void placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard);
+
+	// Getters
+	Graph* getBuildingGraph() {	return buildingGraph; }
+
+
 };
 

@@ -48,16 +48,17 @@ void GBMap::displayResourceTracker()
 
 void GBMap::calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int> &output)
 {
+	// Recursive calls
 	resourceGraph->DFS_ByType(root->getResourceNodes()[0]);
 	resourceGraph->DFS_ByType(root->getResourceNodes()[1]);
 	resourceGraph->DFS_ByType(root->getResourceNodes()[2]);
 	resourceGraph->DFS_ByType(root->getResourceNodes()[3]);
 
-
-
+	// Iterates through all Resource nodes in the resource graph
 		for (int i = 0; i < resourceGraph->getNumEnabledNodes(); i++) {
+			// If the node is marked as visited...
 			if (resourceGraph->getNode(i)->isVisited()) {
-
+				// ...then increment the amount accumulated of the given ResourceType
 				switch (static_cast<Resource*>(resourceGraph->getNode(i))->getType()) {
 
 				case ResourceType::SHEEP:
@@ -76,9 +77,7 @@ void GBMap::calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int> 
 			}
 
 		}
-	
-
-
+	// Reset the state of all nodes to unvisited
 	resourceGraph->resetAllVisited();
 }
 

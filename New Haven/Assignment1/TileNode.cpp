@@ -1,12 +1,13 @@
 #include "TileNode.h"
 
+// TODO: Consider making all of this header-only? 
+
 TileNode::TileNode()
 {
 	resources[0] = NULL;
 	resources[1] = NULL;
 	resources[2] = NULL;
 	resources[3] = NULL;
-
 }
 
 TileNode::~TileNode()
@@ -16,7 +17,6 @@ TileNode::~TileNode()
 
 void TileNode::linkResourceNode(Resource* resource, int index)
 {
-	
 	resources[index] = resource; 
 }
 

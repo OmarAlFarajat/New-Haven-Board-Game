@@ -11,5 +11,6 @@
 #include "Resources.h"
 #include "TileNode.h"
 
+// TODO: Consider making all of this header-only?  
 void loadGBMap(std::string& filename, GBMap& gb_map);
 
