@@ -10,6 +10,18 @@ Hand::Hand()
 
 Hand::~Hand()
 {
+	for (int i = 0; i < *numOfHarvest; ++i) {
+		delete harvestHold[0][i];
+	}
+	delete[] harvestHold;
+
+	for (int i = 0; i < *numOfBuilding; ++i) {
+		delete buildingHold[0][i];
+	}
+	delete[] buildingHold;
+
+	delete numOfHarvest;
+	delete numOfBuilding;
 }
 
 void Hand::showHand()
