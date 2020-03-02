@@ -14,6 +14,12 @@ Player::Player()
 
 Player::~Player()
 {
+	vg_map = nullptr;
+	mine = nullptr;
+	name = nullptr;
+	delete vg_map;
+	delete mine;
+	delete name;
 }
 
 void Player::PlaceHarvestTile(GBMap* gb_map)

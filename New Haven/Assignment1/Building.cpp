@@ -18,6 +18,12 @@ BuildingTile::BuildingTile(ResourceType type, int value)
 
 BuildingTile::~BuildingTile()
 {
+	value = nullptr;
+	type = nullptr;
+	faceUp = nullptr;
+	delete value;
+	delete type;
+	delete faceUp;
 }
 
 ResourceType* BuildingTile::getBuildingType()
@@ -82,6 +88,8 @@ BuildingDeck::BuildingDeck()
 
 BuildingDeck::~BuildingDeck()
 {
+	tileIndex = nullptr;
+	delete tileIndex;
 }
 
 // Draw a tile out of the deck
