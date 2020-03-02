@@ -10,7 +10,7 @@ Hand::Hand()
 
 Hand::~Hand()
 {
-	// TODO: Creates errors!! 
+	// TODO:!! 
 	//for (auto n : *harvestHold)
 	//	delete n;
 	//harvestHold->clear();
@@ -49,6 +49,12 @@ void Hand::addBuildingTile(BuildingTile* bt)
 	*numOfBuilding = *numOfBuilding + 1;
 }
 
+/*
+2 functions getNodeID and getNodeID_VG
+were used to get the corresponding node ID on the map
+of the provided location and the map itself
+*/
+
 int Hand::getNodeID(GBMap* gb_map, int row, int col)
 {
 	int length = gb_map->getTileGraph()->getLength();
@@ -61,6 +67,9 @@ int Hand::getNodeID_VG(VGMap* vg_map, int row, int col)
 	return (row * length + col);
 }
 
+/*
+A function asking and validating user's prefered orientation of the Harvest Tile they are playing
+*/
 bool Hand::requestRotate(HarvestTile* target)
 {
 	std::cout << "\n---Start rotating session---" << std::endl;
@@ -116,6 +125,11 @@ bool Hand::requestRotate(HarvestTile* target)
 
 }
 
+/*
+Function exchange will calculate the generated resources from a player's move
+Then, set the Resource Tracker (located on the GBMap).
+Finally, display the generated resources.
+*/
 void Hand::exchange(GBMap* gb_map, TileNode* location)
 {
     std::map<ResourceType , int> generatedResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
@@ -124,6 +138,9 @@ void Hand::exchange(GBMap* gb_map, TileNode* location)
 	gb_map->displayResourceTracker();
 }
 
+/*
+Function to start playing Harvest Tile and placing the tile on the board if it is valid
+*/
 int Hand::playHarvest(GBMap* gb_map) {
 	std::cout << "\n----PLAYING HARVEST TILE----" << std::endl;
 	while (true) {
@@ -202,7 +219,9 @@ int Hand::playHarvest(GBMap* gb_map) {
 	return 0;
 }
 
-
+/*
+A function to ask and validate player's request on flipping the Building Tile or not
+*/
 bool Hand::requestFlip(BuildingTile* target) {
     std::cout << "\n---Start flipping---" << std::endl;
 
@@ -274,6 +293,10 @@ bool Hand::requestFlip(BuildingTile* target) {
 
 }
 
+/*
+Function to start playing Building Tile and placing the tile on the village board if it is valid
+(build village)
+*/
 void Hand::playBuilding(VGMap* vg_map) {
 	std::cout << "\n----PLAYING BUILDING TILE----" << std::endl;
 	while (true) {

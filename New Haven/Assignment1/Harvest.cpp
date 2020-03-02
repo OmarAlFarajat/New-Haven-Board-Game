@@ -30,7 +30,8 @@ HarvestTile::HarvestTile()
 	+ Create a new Resource with the ResourceType of the picked index
 	+ Push the new Resource into the container of the Tile.
 	+ Erase the picked resource out of typeLib
-	=> Perform 4 times to get 4 resources for a tile
+	=> Perform 4 times to get 4 resources for a tile 
+	=> Avoid having a Harvest Tile with 4 of the same resources.
 	*/
 	for (int i = 0; i < numOfResource; ++i) {
 		int randNum = (rand() % typeLib.size())+ 0;

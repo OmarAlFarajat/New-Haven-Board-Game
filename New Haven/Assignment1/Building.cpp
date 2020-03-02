@@ -63,14 +63,14 @@ BuildingDeck::BuildingDeck()
 	};
 
 	/*
-	Loop one color in colorLib one at a time
-	Assign a value in range 1 -> 6 for each tile
-	There are 36 tiles of one color (6 rows)
-	There are 4 colors
+	Construct a building deck:
+	Loop through each ResourceType inside typeLib at a time
+	There are 36 tiles of one resourceType
+	There are 4 kind of Resource
 	=> 36 * 4 = 144 tiles in the deck
 	*/
 
-	int numOfaType = 36;
+	const int numOfaType = 36;
 	for (ResourceType type : typeLib) {
 		for(int i = 0; i < numOfaType; ++i) {
 			int count = 1;
@@ -81,9 +81,10 @@ BuildingDeck::BuildingDeck()
 			}
 		}
 	}
-
-	std::random_shuffle(deck.begin(), deck.end()); //random shuffle the deck
-	tileIndex = new int(numOfTiles);
+	
+	//After constructing a deck, shuffle every element to make the drawing unpredictable.
+	std::random_shuffle(deck.begin(), deck.end()); 
+	tileIndex = new int(numOfTiles); 
 }
 
 BuildingDeck::~BuildingDeck()
@@ -95,6 +96,7 @@ BuildingDeck::~BuildingDeck()
 // Draw a tile out of the deck
 BuildingTile* BuildingDeck::draw()
 {
+	//since the deck was shuffled at the beginning, simply draw the tile on top
 	if (*tileIndex >= 0) {
 		*tileIndex = *tileIndex - 1;
 		return &deck[*tileIndex];
