@@ -9,6 +9,7 @@ Resource::Resource() : Node()
 
 Resource::~Resource()
 {
+	delete type;
 }
 
 std::string Resource::getTypeAsString()

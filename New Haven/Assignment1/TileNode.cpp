@@ -11,6 +11,7 @@ TileNode::TileNode()
 
 TileNode::~TileNode()
 {
+	delete[] resources;
 }
 
 void TileNode::linkResourceNode(Resource* resource, int index)

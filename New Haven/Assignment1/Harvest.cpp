@@ -110,6 +110,7 @@ HarvestDeck::HarvestDeck()
 
 HarvestDeck::~HarvestDeck()
 {
+	delete tileIndex;
 }
 
 HarvestTile* HarvestDeck::draw()

@@ -10,6 +10,17 @@ Hand::Hand()
 
 Hand::~Hand()
 {
+	// TODO: Creates errors!! 
+	//for (auto n : *harvestHold)
+	//	delete n;
+	//harvestHold->clear();
+
+	//for (auto n : *buildingHold)
+	//	delete n;
+	//buildingHold->clear();
+
+	delete numOfHarvest;
+	delete numOfBuilding;
 }
 
 void Hand::showHand()

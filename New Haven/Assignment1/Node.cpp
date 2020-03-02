@@ -15,6 +15,21 @@ Node::Node()
 
 Node::~Node()
 {
+	// TODO: Causes errors
+	id = nullptr;
+	visited = nullptr;
+	enabled = nullptr;
+	occupied = nullptr;
+
+	delete id;
+	delete visited;
+	delete enabled;
+	delete occupied;
+
+	//delete up;
+	//delete down;
+	//delete left;
+	//delete right;
 }
 
 void Node::addEdge(Node* node, Direction direction)

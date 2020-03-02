@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cstdlib>
 #include <ctime>
 
 #include "GBMap.h"
@@ -15,6 +14,7 @@
 #include "VGMap.h"
 #include "VGMapLoader.h"
 
+
 /* Global Variables for the game*/
 static int numberOfPlayers;
 static std::string mapFileName = "";
@@ -26,7 +26,7 @@ static BuildingDeck buildingDeck;
 static std::vector<Player> players;
 /*-------------------------------*/
 
-int initialize() {
+void initialize() {
 	std::cout << "Initialize global variables::" << std::endl;
 
 	// User prompted for number of players
@@ -48,12 +48,7 @@ int initialize() {
 		mapFileName = "GBA_4Players.gbmap";
 		break;
 	default:
-		std::cout << std::endl;
-		std::cout << std::endl;
 		std::cout << "* YOU ENTERED AN INVALID NUMBER OF PLAYERS. GOODBYE! *" << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		return 666;
 	}
 
 	loadGBMap(mapFileName, *gb_map);
@@ -64,17 +59,15 @@ int initialize() {
 	for (int i = 0; i < numberOfPlayers; ++i) {
 		players.push_back(Player());
 	}
-
-	return 0;
 }
 
-int testGBMap() {
+void testGBMap() {
 	// Print a verbose and non-verbose grid-graph of the tile map and check if it's connected.
 	std::cout << "Initial tile graph state. The format is id(up, right, down, left, visited, enabled). " << gb_map->getTileGraph()->getNumEnabledNodes() << " active nodes." << std::endl;
 	std::cout << std::endl;
 	gb_map->getTileGraph()->printGridGraph(false);
 	gb_map->getTileGraph()->printGridGraph(true);
-	std::cout << "Is connected? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getRootNode()) << std::endl;
+	std::cout << "Is connected? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getNode(0)) << std::endl;
 	std::cout << std::endl;
 	
 	// Disable nodes 1 and 5. In a 2-player or 3-player game, this will make node 0 disconnected from the rest of the nodes.
@@ -90,7 +83,7 @@ int testGBMap() {
 
 	// After disabling the above nodes, the graph will not be connected and this output will show false.
 	// Print the graph to show how the graph has become disconnected (missing edges)
-	std::cout << "Is connected? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getNode(23)) << std::endl;
+	std::cout << "Is connected and valid? " << std::boolalpha << gb_map->getTileGraph()->isConnected_DFS(gb_map->getTileGraph()->getNode(23)) << std::endl;
 	std::cout << std::endl;
 	// This demonstrates how a tile node can be linked to its four Resource nodes in the resource graph.
 	std::cout << "The following are the four Resource nodes (by ID) linked to TileNode 0:" << std::endl;
@@ -124,11 +117,9 @@ int testGBMap() {
 		std::cout << str << " | ";
 	}
 	std::cout << std::endl;
-
-	return 0;
 }
 
-int testVGMap() {
+void testVGMap() {
 	std::string vgFileName = "Stratford_example.vgmap";
 
 	loadVGMap(vgFileName, *vg_map);
@@ -143,11 +134,9 @@ int testVGMap() {
 	std::cout << std::endl;
 
 	vg_map->getBuildingGraph()->printGridGraph(true);
-
-	return 0; 
 }
 
-int testHarvestDeck() {
+void testHarvestDeck() {
 	std::cout << "Enter testing for Harvest" << std::endl;
 	std::cout << "Creating a random HarvestTile" << std::endl;
 	HarvestTile randomHT;
@@ -164,11 +153,9 @@ int testHarvestDeck() {
 	}
 
 	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << harvestDeck.getNumOfRemain() << std::endl;
-
-	return 0;
 }
 
-int testBuildingDeck() {
+void testBuildingDeck() {
 	std::cout << "Enter testing for Building Deck" << std::endl;
 
 	const int loopCtr = 5; //Change the number of time drawing a tile 
@@ -180,11 +167,9 @@ int testBuildingDeck() {
 	}
 
 	std::cout << "NUMBER OF REMAINNING CARD IN THE DECK: " << buildingDeck.getNumOfRemain() << std::endl;
-
-	return 0;
 }
 
-int testHandObj() {
+void testHandObj() {
 	std::cout << "Enter testing for Hand Object" << std::endl;
 	Hand mine;
 	std::cout << "Testing for ability to hold objects" << std::endl;
@@ -198,11 +183,9 @@ int testHandObj() {
 
 	std::cout << "Test a turn of playing Harvest Tile" << std::endl;
 	mine.playHarvest(gb_map);
-
-	return 0;
 }
 
-int testResourceCount() {
+void testResourceCount() {
 	std::map<ResourceType, int> resourcesCollected = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
 
 	// We use tile node 0 as an example. In the game, it will be the tile placed down by the player. 
@@ -235,11 +218,9 @@ int testResourceCount() {
 	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
 	std::cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << std::endl;
 	std::cout << "WHEAT: " << resourcesCollected[ResourceType::WHEAT] << std::endl;
-
-	return 0;
 }
 
-int testPlayer() {
+void testPlayer() {
 	std::cout << "Enter testing for Player Object" << std::endl;
 	Player* test = &players[0];
 
@@ -267,8 +248,6 @@ int testPlayer() {
 	test->show();
 
 	std::cout << "NUMBER OF POINTS IS: " << test->getVGMap()->calculatePoints() << std::endl;
-
-	return 0;
 }
 
 void printAllGraphs() {
@@ -282,76 +261,25 @@ int main() {
 	Generate a randomize seed according to the current machine time
 	-- Need to be placed at the beginning of main to avoid bias for rand()
 	*/
-
 	srand(time(nullptr));
 
-	//Initialize global variables
-	if (initialize() != 0) {
-		return 1;
-	}
+	// Always leave uncommented. This initializes intended for most of the test functions below. 
+	initialize();
 	
-	/*
-	Enable boolean values to display/debug parts
-	--> Always set the boolean values to false before commiting
-	*/
+	/*	Uncomment any of the test functions below as desired. 
+	*	It may be best to only test one at a time for clarity.*/
 
-	// Enable Test for Gameboard map
-	bool testGameboard= false;
-	if (testGameboard) {
-		testGBMap();
-		std::cout << "<----------------->" << std::endl;
-	}
+	//testGBMap();
+	//testHarvestDeck();
+	//testBuildingDeck();
+	//testHandObj();
+	//testResourceCount(); 	
+	//testVGMap();
+	//testPlayer();
+	//printAllGraphs();
 
-	// Enable Test for Harvest
-	bool testHarvest= false;
-	if (testHarvest) {
-		testHarvestDeck();
-		std::cout << "<----------------->" << std::endl;
-	}
+	delete gb_map;
+	delete vg_map;
 
-	// Enable Test for Building
-	bool testBuilding = false;
-	if (testBuilding) {
-		testBuildingDeck();
-		std::cout << "<----------------->" << std::endl;
-	}
-
-	// Enable Test for Hand Obj
-	bool testHand = false;
-	if (testHand) {
-		testHandObj();
-		std::cout << "<----------------->" << std::endl;
-	}
-
-	// Enable Test for Resources Collected
-	bool testResource = false;
-	if (testResource) {
-		testResourceCount(); 
-		std::cout << "<----------------->" << std::endl;
-	}
-	// Enable Test for VGMap
-	bool testVG = false;
-	if (testVG) {
-		testVGMap();
-		std::cout << "<----------------->" << std::endl;
-	}
-	//-----------------------------------------
-
-  // Enable Test for Player
-	bool testPlayerObj = false;
-	if (testPlayerObj) {
-		testPlayer();
-		std::cout << "<----------------->" << std::endl;
-	}
-
-	// Enable Test to print all graphs (GBMap tiles and resources, and VGMap Buildings)
-	bool testAllMaps = false;
-	if (testAllMaps) {
-		printAllGraphs();
-		std::cout << "<----------------->" << std::endl;
-	}
-
-	std::cout << "-- Done Testing --" << std::endl;
-	//-----------------------------------------
 	return 0;
-	}
+}
