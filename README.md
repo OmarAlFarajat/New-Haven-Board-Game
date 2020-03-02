@@ -7,9 +7,9 @@
 The project is about writing a C++ computer game that allows the user to play a reasonable version of the New Haven game. The New Haven is a “tactical” game, the gaming rules are given in. The three assignments will be about the development of different parts of a project. Thus, every assignment will build upon code developed in the previous assignments. 
 
 ## Parts:
-+ [Part 1](../New\ Haven/Assignment1): Setting up basic game components.
-+ Part 2:
-+ Part 3:
++ [Part 1]: Setting up basic game components.
++ [Part 2]:
++ [Part 3:]:
 
 ## Requirements:
 ### Windows:
