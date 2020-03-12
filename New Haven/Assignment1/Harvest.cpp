@@ -1,9 +1,6 @@
-#include <vector>
 #include <string>
-#include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "Resources.h"
 #include "Harvest.h"
 
 HarvestTile::HarvestTile()
@@ -112,6 +109,7 @@ HarvestDeck::HarvestDeck()
 HarvestDeck::~HarvestDeck()
 {
 	delete tileIndex;
+	tileIndex = nullptr;
 }
 
 HarvestTile* HarvestDeck::draw()
@@ -121,12 +119,7 @@ HarvestTile* HarvestDeck::draw()
 		return &deck[*tileIndex];
 	}
 	else { //Deck is empty
-		return NULL;
+		return nullptr;
 	}
-}
-
-int HarvestDeck::getNumOfRemain() const
-{
-	return *this->tileIndex;
 }
 

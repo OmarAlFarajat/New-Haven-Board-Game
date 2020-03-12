@@ -8,24 +8,22 @@
 #include "VGMap.h"
 
 class Player {
+    Hand* myHand;
+	std::string* name;
+	VGMap* vg_map; 
+
 public:
 	Player();
 	~Player();
 
 	void PlaceHarvestTile(GBMap* gb_map);
 	void PlaceBuildingTile(VGMap* vg_map);
+
 	void DrawBuilding(BuildingDeck* deck);
 	void DrawHarvestTile(HarvestDeck* deck);
-	VGMap* getVGMap() {	return vg_map; }
-	void ResourceTracker();
-	void BuildVillage();
-	void CalculateResources();
+
+	VGMap* getVGMap();
 
 	void show();
-
-private:
-    Hand* mine;
-	std::string* name;
-	VGMap* vg_map; 
-
 };
+inline VGMap* Player::getVGMap() {	return vg_map; }

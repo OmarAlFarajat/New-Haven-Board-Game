@@ -9,22 +9,27 @@
 // Hand Object 
 class Hand 
 {
+	int* numOfHarvest;
+	int* numOfBuilding;
+	std::vector<HarvestTile*>* harvestHold;
+	std::vector<BuildingTile*>* buildingHold;
+
 	public:
 	Hand();
 	~Hand();
-	//Inline getters
-	int getRemainHarvest() {return *this->numOfHarvest;}
-	int getRemainBuilding() {return *this->numOfBuilding;}
-	bool hasNoHarvest() {return (*this->numOfHarvest == 0);}
-	bool hasNoBuilding() { return (*this->numOfBuilding == 0);}
 
-	HarvestTile* getHarvestTile(int index) {return this->harvestHold[0][index];}
-	BuildingTile* getBuildingTile(int index) { return this->buildingHold[0][index]; }
+	int getRemainHarvest();
+	int getRemainBuilding();
+	bool hasNoHarvest();
+	bool hasNoBuilding();
+
+	HarvestTile* getHarvestTile(int index);
+	BuildingTile* getBuildingTile(int index);
 
 	void showHand();
 	void addHarvestTile(HarvestTile* ht);
 	void addBuildingTile(BuildingTile* bt);
-	int getNodeID(GBMap* gb_map, int row, int col);
+	int getNodeID_GB(GBMap* gb_map, int row, int col);
 	int getNodeID_VG(VGMap* vg_map, int row, int col);
 
     void exchange(GBMap* gb_map, TileNode*);
@@ -33,11 +38,13 @@ class Hand
 
 	bool requestFlip(BuildingTile* target);
 	void playBuilding(VGMap* vg_map);
-private:
-	int* numOfHarvest;
-	int* numOfBuilding;
-	std::vector<HarvestTile*>* harvestHold;
-	std::vector<BuildingTile*>* buildingHold;
 };
 
+inline int Hand::getRemainHarvest() {return *numOfHarvest;}
+inline int Hand::getRemainBuilding() {return *numOfBuilding;}
+inline bool Hand::hasNoHarvest() {return (*numOfHarvest == 0);}
+inline bool Hand::hasNoBuilding() { return (*numOfBuilding == 0);}
+
+inline HarvestTile* Hand::getHarvestTile(int index) {return harvestHold[0][index];}
+inline BuildingTile* Hand::getBuildingTile(int index) { return buildingHold[0][index]; }
 

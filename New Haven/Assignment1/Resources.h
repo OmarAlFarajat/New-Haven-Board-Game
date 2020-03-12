@@ -8,13 +8,15 @@ enum class ResourceType {TIMBER, STONE, WHEAT, SHEEP, NONE};
 class Resource : public Node
 {
 	ResourceType* type;
+
 public:
 	Resource();
 	~Resource();
-	void setType(ResourceType type) {
-		*this->type = type;
-	}
-	ResourceType getType() { return *type; }
+	void setType(ResourceType type);
+	ResourceType getType();
 	std::string getTypeAsString();
 };
+
+inline void Resource::setType(ResourceType type) { *this->type = type; }
+inline ResourceType Resource::getType() { return *type; }
 

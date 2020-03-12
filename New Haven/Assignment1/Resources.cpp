@@ -1,5 +1,4 @@
 #include "Resources.h"
-#include "GBMap.h"
 
 Resource::Resource() : Node()
 {
@@ -10,6 +9,7 @@ Resource::Resource() : Node()
 Resource::~Resource()
 {
 	delete type;
+	type = nullptr;
 }
 
 std::string Resource::getTypeAsString()

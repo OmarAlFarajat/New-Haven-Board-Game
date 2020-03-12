@@ -1,15 +1,14 @@
 #include<algorithm>
-#include <vector>
 #include "Building.h"
 
 BuildingTile::BuildingTile()
 {
-	this->value = new int(0);
-	this->type = new ResourceType(ResourceType::NONE);
-	this->faceUp = new bool(true);
+	value = new int(0);
+	type = new ResourceType(ResourceType::NONE);
+	faceUp = new bool(true);
 }
 
-BuildingTile::BuildingTile(ResourceType type, int value)
+BuildingTile::BuildingTile(ResourceType type, int value) 
 {
 	this->value = new int(value);
 	this->type = new ResourceType(type); 
@@ -18,17 +17,14 @@ BuildingTile::BuildingTile(ResourceType type, int value)
 
 BuildingTile::~BuildingTile()
 {
-	value = nullptr;
-	type = nullptr;
-	faceUp = nullptr;
-	delete value;
+	/*
 	delete type;
+	type = nullptr;
+    delete value;
+	value = nullptr;
 	delete faceUp;
-}
-
-ResourceType* BuildingTile::getBuildingType()
-{
-	return this->type;
+	faceUp = nullptr;
+	*/
 }
 
 std::string BuildingTile::typeToString()
@@ -89,8 +85,8 @@ BuildingDeck::BuildingDeck()
 
 BuildingDeck::~BuildingDeck()
 {
-	tileIndex = nullptr;
 	delete tileIndex;
+	tileIndex = nullptr;
 }
 
 // Draw a tile out of the deck

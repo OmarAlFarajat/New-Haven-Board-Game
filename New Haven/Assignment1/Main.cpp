@@ -275,7 +275,7 @@ int main() {
 	//testHandObj();
 	//testResourceCount(); 	
 	//testVGMap();
-	//testPlayer();
+	testPlayer();
 	//printAllGraphs();
 
 	delete gb_map;

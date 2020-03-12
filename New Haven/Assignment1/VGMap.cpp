@@ -33,7 +33,7 @@ void VGMap::initTileValues() {
 bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
 
 	// If playing face down, only check if space is not occupied, and the node is enabled.
-	if (!fromHand->getFaceUp())
+	if (!fromHand->isFaceUp())
 		return !toBoard->isOccupied() && toBoard->isEnabled();
 
 	// The rest of the logic assumes that the building requesting to be played is face up
@@ -66,7 +66,7 @@ bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
 void VGMap::placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard) {
 	toBoard->setValue(fromHand->getValue());
 	toBoard->setType (fromHand->getType());
-	toBoard->setFaceUp(fromHand->getFaceUp());	
+	toBoard->setFaceUp(fromHand->isFaceUp());	
 	toBoard->setOccupied(true);
 }
 
@@ -90,7 +90,7 @@ int VGMap::calculatePoints() {
 			if (buildingGraph->getNode(calculatedID)->isOccupied())
 				buildingCount++;
 
-			if (!static_cast<BuildingTile*>(buildingGraph->getNode(calculatedID))->getFaceUp())
+			if (!static_cast<BuildingTile*>(buildingGraph->getNode(calculatedID))->isFaceUp())
 				perfectRow = false;
 
 			if (buildingCount == buildingGraph->getLength()) 
@@ -124,7 +124,7 @@ int VGMap::calculatePoints() {
 			if (buildingGraph->getNode(calculatedID)->isOccupied())
 				buildingCount++;
 
-			if (!static_cast<BuildingTile*>(buildingGraph->getNode(calculatedID))->getFaceUp())
+			if (!static_cast<BuildingTile*>(buildingGraph->getNode(calculatedID))->isFaceUp())
 				perfectRow = false;
 
 			if (buildingCount == buildingGraph->getHeight())
