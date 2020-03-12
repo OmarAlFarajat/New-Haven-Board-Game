@@ -7,9 +7,17 @@
 The project is about writing a C++ computer game that allows the user to play a reasonable version of the New Haven game. The New Haven is a “tactical” game, the gaming rules are given in. The three assignments will be about the development of different parts of a project. Thus, every assignment will build upon code developed in the previous assignments. 
 
 ## Parts:
-+ [Part 1]: Setting up basic game components.
-+ [Part 2]:
-+ [Part 3:]:
+**The project is divided into 3 phases. Each phase is designed and built on top of the previous one. Altogether makes a complete game**
+
+### Part 1: Setting up game components:
+> Part 1 is a getting started of the project where the team has to design and implement all the needed game components. This part is only for testing, and does not contain any game play yet.
+
+
++ `main` method is designed for easy-testing. Uncomment the test you want to test, and run the program.
+
+### Part 2:
+
+### Part 3: 
 
 ## Requirements:
 ### Windows:
@@ -29,7 +37,7 @@ The project is about writing a C++ computer game that allows the user to play a 
 
 ### Visual Studio 2019:
 + **Clone/download** the project
-+ Run `NewHaven.sln`. This will automatically load the project on Visual Studio
++ Run `NewHaven.sln`. This will automatically load the project on Visual Studio. In addition, the files were grouped together in containers if started as `solution`.
 + Click on **Local Window Debugger** to start the program
 
 
@@ -54,9 +62,7 @@ The project is about writing a C++ computer game that allows the user to play a 
 ## Contributors:
 | List |
 | --------------- |
-| Duc Nguyen      |
-| Omar Al-Farajat |
-| Luiz Gonçalves  |
-
-
+| [Duc Nguyen](https://github.com/DukeNgn)      |
+| [Omar Al-Farajat](https://github.com/OmarAlFarajat) |
+| [Luiz Gonçalves](https://github.com/lgonc)  |
 
