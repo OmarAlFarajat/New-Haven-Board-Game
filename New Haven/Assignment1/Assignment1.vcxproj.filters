@@ -80,6 +80,9 @@
     <ClCompile Include="VGMap.cpp">
       <Filter>Source Files\VGMap %28P2%29</Filter>
     </ClCompile>
+    <ClCompile Include="MapDrawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Building.h">
@@ -117,6 +120,12 @@
     </ClInclude>
     <ClInclude Include="VGMap.h">
       <Filter>Header Files\VGMap %28P2%29</Filter>
+    </ClInclude>
+    <ClInclude Include="CImg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapDrawer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@
 #include "TileNode.h"
 #include "VGMap.h"
 #include "VGMapLoader.h"
+#include "MapDrawer.h"
 
 using std::cin;
 using std::cout;
@@ -277,7 +278,9 @@ int main() {
 
 	// Always leave uncommented. This initializes intended for most of the test functions below. 
 	initialize();
-	
+	gb_map->getTileGraph()->printGridGraph(true);
+	drawGBMap(*gb_map);
+
 	/*	Uncomment any of the test functions below as desired. 
 	*	It may be best to only test one at a time for clarity.*/
 

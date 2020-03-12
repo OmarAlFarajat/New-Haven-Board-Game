@@ -130,6 +130,7 @@
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Harvest.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MapDrawer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Resources.cpp" />
@@ -139,11 +140,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Building.h" />
+    <ClInclude Include="CImg.h" />
     <ClInclude Include="GBMap.h" />
     <ClInclude Include="GBMapLoader.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="Harvest.h" />
+    <ClInclude Include="MapDrawer.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resources.h" />

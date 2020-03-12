@@ -172,6 +172,7 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 {
 	// First create all the nodes
 	int totalNodes = length * height;
+
 	for (int i = 0; i < totalNodes; i++) {
 		switch (nodeType) {
 		case NodeType::RESOURCE:
@@ -189,16 +190,31 @@ void Graph::makeGridGraph(int length, int height, NodeType nodeType)
 	// Create all the edges
 	for (int i = 0; i < totalNodes; i++)
 	{
-		size_t I = static_cast<size_t>(i);
 		// Calculations based on the node id are used to ensure connections form a grid-shaped graph. 
+
 		if (i - length >= 0)
-			nodes[0][i]->addEdge(nodes[0][I - length], Direction::UP);
+			nodes[0][i]->addEdge(nodes[0][i - length], Direction::UP);
+
 		if (i + length <= totalNodes - 1)
-			nodes[0][i]->addEdge(nodes[0][I + length], Direction::DOWN);
+			nodes[0][i]->addEdge(nodes[0][i + length], Direction::DOWN);
+
 		if (i - 1 >= 0 && i % length != 0)
-			nodes[0][i]->addEdge(nodes[0][I - 1], Direction::LEFT);
-		if (i + 1 <= totalNodes - 1 && (I - (static_cast<size_t>(length) - 1)) % length != 0 || i == 3)			
-			nodes[0][i]->addEdge(nodes[0][I + 1], Direction::RIGHT);
+			nodes[0][i]->addEdge(nodes[0][i - 1], Direction::LEFT);
+
+		if (i + 1 <= totalNodes - 1 && (i+1)%length != 0)			
+			nodes[0][i]->addEdge(nodes[0][i + 1], Direction::RIGHT);
+
+		//if (i - length >= 0)
+		//	nodes[0][i]->addEdge(nodes[0][i - length], Direction::UP);
+
+		//if (i + length <= totalNodes - 1)
+		//	nodes[0][i]->addEdge(nodes[0][i + length], Direction::DOWN);
+
+		//if (i - 1 >= 0 && i % length != 0)
+		//	nodes[0][i]->addEdge(nodes[0][i - 1], Direction::LEFT);
+
+		//if (i + 1 <= totalNodes - 1 && (i - length - 1) % length != 0)
+		//	nodes[0][i]->addEdge(nodes[0][i + 1], Direction::RIGHT);
 	}
 
 	*this->length = length;
@@ -220,13 +236,14 @@ void Graph::printGridGraph(bool verbose)
 			*	Will print each node's connected nodes if verbose is enabled.
 			*	If no connection exists, then an 'x' is put in place.
 			*	Prints if the node has been visited and enabled. */
-			string up = (nodes[0][I + j]->up && *nodes[0][I + j]->enabled && *nodes[0][I + j]->up->enabled) ? std::to_string(*nodes[0][I + j]->up->id) : "x";
-			string down = (nodes[0][I + j]->down && *nodes[0][I + j]->enabled && *nodes[0][I + j]->down->enabled) ? std::to_string(*nodes[0][I + j]->down->id) : "x";
-			string left = (nodes[0][I + j]->left && *nodes[0][I + j]->enabled && *nodes[0][I + j]->left->enabled) ? std::to_string(*nodes[0][I + j]->left->id) : "x";
-			string right = (nodes[0][I + j]->right && *nodes[0][I + j]->enabled && *nodes[0][I + j]->right->enabled) ? std::to_string(*nodes[0][I + j]->right->id) : "x";
-			string visited = *nodes[0][I + j]->visited ? "Y" : "N";
-			string enabled = *nodes[0][I + j]->enabled ? "Y" : "N";
-			string temp = "";
+
+			std::string up = (nodes[0][I + j]->up /*&& *nodes[0][I + j]->enabled && *nodes[0][I + j]->up->enabled*/) ? std::to_string(*nodes[0][I + j]->up->id) : "x";
+			std::string down = (nodes[0][I + j]->down /*&& *nodes[0][I + j]->enabled && *nodes[0][I + j]->down->enabled*/) ? std::to_string(*nodes[0][I + j]->down->id) : "x";
+			std::string left = (nodes[0][I + j]->left /*&& *nodes[0][I + j]->enabled && *nodes[0][I + j]->left->enabled*/) ? std::to_string(*nodes[0][I + j]->left->id) : "x";
+			std::string right = (nodes[0][I + j]->right /*&& *nodes[0][I + j]->enabled && *nodes[0][I + j]->right->enabled*/) ? std::to_string(*nodes[0][I + j]->right->id) : "x";
+			std::string visited = *nodes[0][I + j]->visited ? "Y" : "N";
+			std::string enabled = *nodes[0][I + j]->enabled ? "Y" : "N";
+			std::string temp = "";
 
 			// Print more information per node is verbose is enabled.
 			if (verbose) {
@@ -234,9 +251,9 @@ void Graph::printGridGraph(bool verbose)
 					+ left + ","
 					+ up + ","
 					+ down + ","
-					+ right /*+ ","
-					+ visited + ","
-					+ enabled*/ + ")";
+					+ right + ","
+					/*+ visited + ","*/
+					+ enabled + ")";
 				printElement(temp, 23);
 			}
 			else {
