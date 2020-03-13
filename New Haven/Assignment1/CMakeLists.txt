@@ -1,34 +1,22 @@
 cmake_minimum_required(VERSION 3.15)
-project(NewHaven)
+project(NewHaven VERSION 1.0
+    DESCRIPTION "A playable version of the board game New Haven" LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(.)
+file(GLOB driver Main.cpp)
 
-add_executable(NewHaven
-        Building.cpp
-        Building.h
-        CMakeLists.txt
-        GBMap.cpp
-        GBMap.h
-        GBMapLoader.cpp
-        GBMapLoader.h
-        Graph.cpp
-        Graph.h
-        Hand.cpp
-        Hand.h
-        Harvest.cpp
-        Harvest.h
-        Main.cpp
-        Node.cpp
-        Node.h
-        Player.cpp
-        Player.h
-        Resources.cpp
-        Resources.h
-        TileNode.cpp
-        TileNode.h
-        VGMap.cpp
-        VGMap.h
-        VGMapLoader.cpp
-        VGMapLoader.h)
+file(GLOB resources Resources.cpp Resources.h)
+file(GLOB building Building.cpp Building.h)
+file(GLOB harvest Harvest.cpp Harvest.h)
+file(GLOB player Player.cpp Player.h Hand.cpp Hand.h)
+
+file(GLOB node Node.cpp Node.h TileNode.cpp TileNode.h)
+file(GLOB graph Graph.cpp Graph.h)
+file(GLOB GBmap GBmap.cpp GBmap.h GBMapLoader.cpp GBMapLoader.h)
+file(GLOB VGMap VGMap.cpp VGMap.h VGMapLoader.cpp VGMapLoader.h)
+
+add_executable(NewHaven ${graph} ${node}
+    ${building} ${harvest} ${resources} ${player} ${GBMap} ${VGMap} ${driver})
+
+install(TARGETS NewHaven)
