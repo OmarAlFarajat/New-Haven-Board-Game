@@ -24,7 +24,7 @@ class Hand
 	int getRemainBuilding();
 	bool hasNoHarvest();
 	bool hasNoBuilding();
-
+	vector<HarvestTile*>* getHarvestHold();
 	HarvestTile* getHarvestTile(int index);
 	BuildingTile* getBuildingTile(int index);
 
@@ -34,7 +34,7 @@ class Hand
 	int getNodeID_GB(GBMap* gb_map, int row, int col);
 	int getNodeID_VG(VGMap* vg_map, int row, int col);
 
-  void exchange(GBMap* gb_map, TileNode*);
+	void exchange(GBMap* gb_map, TileNode*);
 	bool requestRotate(HarvestTile* target);
 	int playHarvest(GBMap* gb_map);
 
@@ -43,10 +43,11 @@ class Hand
 
 };
 
-inline int Hand::getRemainHarvest() {return *numOfHarvest;}
-inline int Hand::getRemainBuilding() {return *numOfBuilding;}
+inline int Hand::getRemainHarvest() const {return *numOfHarvest;}
+inline int Hand::getRemainBuilding() const {return *numOfBuilding;}
 inline bool Hand::hasNoHarvest() {return (*numOfHarvest == 0);}
 inline bool Hand::hasNoBuilding() { return (*numOfBuilding == 0);}
+inline vector<HarvestTile*>* Hand::getHarvestHold() const { return harvestHold; }
 
 inline HarvestTile* Hand::getHarvestTile(int index) {return harvestHold[0][index];}
 inline BuildingTile* Hand::getBuildingTile(int index) { return buildingHold[0][index]; }

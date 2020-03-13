@@ -1,7 +1,7 @@
 #include "MapDrawer.h"
-
 using std::cout;
 using std::endl; 
+using std::vector;
 
 CImg<unsigned char> ResourceToBMP(ResourceType type) {
     CImg<unsigned char> SHEEP("Sheep.BMP");
@@ -23,17 +23,20 @@ CImg<unsigned char> ResourceToBMP(ResourceType type) {
     }
 }
 
-void drawGBMap(GBMap& gb_map)
+void drawGBMap(GBMap& const gb_map, Player& const player)
 {
     CImg<unsigned char> MAP_TILE("TileNode.BMP");
     CImg<unsigned char> DISABLED_TILE("DisabledTile.BMP");
     CImg<unsigned char> RESOURCE_TRACKER("ResourceTracker.BMP");
     CImg<unsigned char> AVAILABLE_BUILDINGS("AvailableBuildings.BMP");
 
+
     CImg<unsigned char> GREY_TRACKER("GreyTracker.BMP");
     CImg<unsigned char> RED_TRACKER("RedTracker.BMP");
     CImg<unsigned char> YELLOW_TRACKER("YellowTracker.BMP");
     CImg<unsigned char> GREEN_TRACKER("GreenTracker.BMP");
+
+
 
 
     CImg<unsigned char> GRID;
@@ -104,6 +107,40 @@ void drawGBMap(GBMap& gb_map)
             break;
         }
     }
+
+    // Add hand info to bottom of grid
+    CImg<unsigned char> HAND("Hand.BMP");
+    CImg<unsigned char> Harvest_Tiles;
+    CImg<unsigned char> tile = MAP_TILE;
+    vector<HarvestTile*> tiles = player.getHand()->getHarvestHold()[0];
+
+    for(int j = 0; j < tiles.size(); j++){
+
+        for (int i = 0; i < 4; i++) {
+
+            CImg<unsigned char> resource = ResourceToBMP(tiles[j]->getResources()[i]);
+            switch (i) {
+            case 0:
+                tile.draw_image(0, 0, 0, resource, 100);
+                break;
+            case 1:
+                tile.draw_image(50, 0, 0, resource, 100);
+                break;
+            case 2:
+                tile.draw_image(50, 50, 0, resource, 100);
+                break;
+            case 3:
+                tile.draw_image(0, 50, 0, resource, 100);
+                break;
+            }
+        }
+        HAND.draw_image(125*j,25,0,tile,100);
+    }
+    //HAND.draw_image(50,50,0,Harvest_Tiles,100);
+
+    GRID.append(HAND, 'y');;
+
+
     int stone = gb_map.getResourceTracker()[0][ResourceType::STONE];
     int timber = gb_map.getResourceTracker()[0][ResourceType::TIMBER];
     int wheat = gb_map.getResourceTracker()[0][ResourceType::WHEAT];

@@ -236,7 +236,7 @@ void testResourceCount() {
 void testPlayer() {
 	cout << "Enter testing for Player Object" << endl;
 	Player* test = &players[0];
-
+	
 	int drawHarvest = 2;
 	cout << "Drawing " << drawHarvest << " Harvest Tiles" << endl;
 	for (int i = 0; i < drawHarvest; ++i) {
@@ -254,17 +254,17 @@ void testPlayer() {
 	test->show();
 
 	std::cout << "\n==============================" << std::endl;
-	drawGBMap(*gb_map);
+	drawGBMap(*gb_map, *test);
 
 	cout << "Placing a Harvest Tile on the game board" << endl;
 	test->PlaceHarvestTile(gb_map);
-	drawGBMap(*gb_map);
+	drawGBMap(*gb_map, *test);
 
 	std::cout << "Placing a Building Tile on the Village board" << std::endl;
 	
 	test->PlaceBuildingTile(test->getVGMap());
 	test->show();
-	drawGBMap(*gb_map);
+	drawGBMap(*gb_map, *test);
 
 
 	cout << "NUMBER OF POINTS IS: " << test->getVGMap()->calculatePoints() << endl;

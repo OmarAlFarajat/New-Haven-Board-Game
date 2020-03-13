@@ -24,9 +24,12 @@ public:
 	void DrawBuilding(BuildingDeck* deck);
 	void DrawHarvestTile(HarvestDeck* deck);
 
+	Hand* getHand();
 	VGMap* getVGMap();
 	void show();
   
 };
 inline VGMap* Player::getVGMap() {	return vg_map; }
+inline Hand* Player::getHand() { return mine; }
+
 
