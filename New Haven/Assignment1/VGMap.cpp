@@ -9,7 +9,9 @@ VGMap::VGMap()
 VGMap::~VGMap()
 {
 	delete name;
+	name = nullptr;
 	delete buildingGraph;
+	buildingGraph = nullptr;
 }
 
 void VGMap::initTileValues() {

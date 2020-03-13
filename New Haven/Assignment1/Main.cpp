@@ -218,6 +218,11 @@ void testResourceCount() {
 	std::cout << "STONE: " << resourcesCollected[ResourceType::STONE] << std::endl;
 	std::cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << std::endl;
 	std::cout << "WHEAT: " << resourcesCollected[ResourceType::WHEAT] << std::endl;
+
+	delete node7;
+	node7 = nullptr;
+	delete node12;
+	node12 = nullptr;
 }
 
 void testPlayer() {
@@ -275,11 +280,13 @@ int main() {
 	//testHandObj();
 	//testResourceCount(); 	
 	//testVGMap();
-	testPlayer();
+	//testPlayer();
 	//printAllGraphs();
 
 	delete gb_map;
+	gb_map = nullptr;
 	delete vg_map;
+	vg_map = nullptr;
 
 	return 0;
 }

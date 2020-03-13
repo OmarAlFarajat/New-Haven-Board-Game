@@ -20,8 +20,15 @@ GBMap::GBMap()
 GBMap::~GBMap()
 {
 	delete tileGraph;
+	tileGraph = nullptr;
 	delete resourceGraph;
+	resourceGraph = nullptr;
 	delete resourceTracker; 
+	resourceTracker = nullptr;
+	for (auto each : buildingsAvailable) {
+		delete each;
+		each = nullptr;
+	}
 	// TODO: Causes errors
 	//delete[] buildingsAvailable;
 
