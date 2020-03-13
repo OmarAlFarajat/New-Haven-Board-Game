@@ -252,13 +252,20 @@ void testPlayer() {
 	cout << "\n==============================" << endl;
 	cout << " SHOWING HAND AFTER DRAWING " << endl;
 	test->show();
-	cout << "\n==============================" << endl;
+
+	std::cout << "\n==============================" << std::endl;
+	drawGBMap(*gb_map);
 
 	cout << "Placing a Harvest Tile on the game board" << endl;
 	test->PlaceHarvestTile(gb_map);
-	cout << "Placing a Building Tile on the Village board" << endl;
+	drawGBMap(*gb_map);
+
+	std::cout << "Placing a Building Tile on the Village board" << std::endl;
+	
 	test->PlaceBuildingTile(test->getVGMap());
 	test->show();
+	drawGBMap(*gb_map);
+
 
 	cout << "NUMBER OF POINTS IS: " << test->getVGMap()->calculatePoints() << endl;
 }
@@ -279,7 +286,7 @@ int main() {
 	// Always leave uncommented. This initializes intended for most of the test functions below. 
 	initialize();
 	gb_map->getTileGraph()->printGridGraph(true);
-	drawGBMap(*gb_map);
+
 
 	/*	Uncomment any of the test functions below as desired. 
 	*	It may be best to only test one at a time for clarity.*/
@@ -290,7 +297,7 @@ int main() {
 	//testHandObj();
 	//testResourceCount(); 	
 	//testVGMap();
-	//testPlayer();
+	testPlayer();
 	//printAllGraphs();
 
 	delete gb_map;

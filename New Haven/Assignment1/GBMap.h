@@ -41,6 +41,8 @@ public:
 	// Getters
 	Graph* getTileGraph() { return tileGraph; }
 	Graph* getResourceGraph() { return resourceGraph; }
+	std::map<ResourceType, int>* getResourceTracker() { return resourceTracker; }
+
 };
 
 

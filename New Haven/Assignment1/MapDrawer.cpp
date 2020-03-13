@@ -30,6 +30,12 @@ void drawGBMap(GBMap& gb_map)
     CImg<unsigned char> RESOURCE_TRACKER("ResourceTracker.BMP");
     CImg<unsigned char> AVAILABLE_BUILDINGS("AvailableBuildings.BMP");
 
+    CImg<unsigned char> GREY_TRACKER("GreyTracker.BMP");
+    CImg<unsigned char> RED_TRACKER("RedTracker.BMP");
+    CImg<unsigned char> YELLOW_TRACKER("YellowTracker.BMP");
+    CImg<unsigned char> GREEN_TRACKER("GreenTracker.BMP");
+
+
     CImg<unsigned char> GRID;
     CImg<unsigned char> GBMAP;
     Node* m = gb_map.getTileGraph()->getNode(0);
@@ -98,6 +104,17 @@ void drawGBMap(GBMap& gb_map)
             break;
         }
     }
+    int stone = gb_map.getResourceTracker()[0][ResourceType::STONE];
+    int timber = gb_map.getResourceTracker()[0][ResourceType::TIMBER];
+    int wheat = gb_map.getResourceTracker()[0][ResourceType::WHEAT];
+    int sheep = gb_map.getResourceTracker()[0][ResourceType::SHEEP];
+
+    RESOURCE_TRACKER.draw_image(16, 670 - 33 * stone, GREY_TRACKER, 100); 
+    RESOURCE_TRACKER.draw_image(35, 670 - 33 * timber, RED_TRACKER, 100);
+    RESOURCE_TRACKER.draw_image(70, 670 - 33 * wheat, YELLOW_TRACKER, 100);
+    RESOURCE_TRACKER.draw_image(91, 670 - 33 * sheep, GREEN_TRACKER, 100);
+
+
     GBMAP = RESOURCE_TRACKER.append(GRID).append(AVAILABLE_BUILDINGS);
     GBMAP.display();
 }
