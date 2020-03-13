@@ -1,7 +1,9 @@
+#include <string> 
 #include "MapDrawer.h"
 using std::cout;
 using std::endl; 
 using std::vector;
+using std::to_string;
 
 CImg<unsigned char> ResourceToBMP(ResourceType type) {
     CImg<unsigned char> SHEEP("Sheep.BMP");
@@ -42,12 +44,18 @@ void drawGBMap(GBMap& const gb_map, Player& const player)
     CImg<unsigned char> GRID;
     CImg<unsigned char> GBMAP;
     Node* m = gb_map.getTileGraph()->getNode(0);
-
+    int rowCount = 0; 
     while(true){
 
         Node* n = m; 
-        CImg<unsigned char> row; 
 
+        CImg<unsigned char> row("Row.BMP");
+
+        unsigned char black[] = { 0,0,0 };
+        unsigned char vagueBrown[] = { 224,192,128 };
+
+        row.draw_text(8,50, to_string(rowCount).c_str(),black,vagueBrown,1.0f,22);
+        rowCount++;
 
         while (true) {
             CImg<unsigned char> tile;
@@ -107,6 +115,22 @@ void drawGBMap(GBMap& const gb_map, Player& const player)
             break;
         }
     }
+    
+
+    CImg<unsigned char> columns;
+    columns = CImg<unsigned char>(25, 25, 1, 3, 0);
+    
+
+    for (int i = 0; i < gb_map.getTileGraph()->getLength(); i++) {
+        CImg<unsigned char> column("Column.BMP");
+
+        unsigned char black[] = { 0,0,0 };
+        unsigned char vagueBrown[] = { 224,192,128 };
+        column.draw_text(50, 1, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
+
+        columns.append(column);
+    }
+    GRID.append(columns, 'y');
 
     // Add hand info to bottom of grid
     CImg<unsigned char> HAND("Hand.BMP");
@@ -136,7 +160,6 @@ void drawGBMap(GBMap& const gb_map, Player& const player)
         }
         HAND.draw_image(125*j,25,0,tile,100);
     }
-    //HAND.draw_image(50,50,0,Harvest_Tiles,100);
 
     GRID.append(HAND, 'y');;
 
