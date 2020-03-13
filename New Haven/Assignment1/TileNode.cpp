@@ -4,10 +4,10 @@
 
 TileNode::TileNode()
 {
-	resources[0] = NULL;
-	resources[1] = NULL;
-	resources[2] = NULL;
-	resources[3] = NULL;
+	resources[0] = nullptr;
+	resources[1] = nullptr;
+	resources[2] = nullptr;
+	resources[3] = nullptr;
 }
 
 TileNode::~TileNode()
