@@ -2,6 +2,12 @@
 #include <cctype>
 #include <map>
 
+using std::vector;
+using std::string;
+using std::ifstream;
+using std::istream_iterator;
+using std::stringstream;
+
 ResourceType resourceStringToType(std::string str)
 {
 
@@ -19,8 +25,8 @@ ResourceType resourceStringToType(std::string str)
 }
 
 void loadVGMap(std::string& fileName, VGMap& vg_map) {
-	std::ifstream inFile(fileName, std::ios::in);
-	std::string lineRead;
+	ifstream inFile(fileName, std::ios::in);
+	string lineRead;
 
 	// The containers below store the data read from the file.
 	// The graphs are only created and updated after the file is closed. 
@@ -55,10 +61,10 @@ void loadVGMap(std::string& fileName, VGMap& vg_map) {
 
 		// String tokenizing code used for parsing the loaded map file 
 		// Source: https://stackoverflow.com/a/53921
-		std::stringstream strstr(lineRead);
-		std::istream_iterator<std::string> it(strstr);
-		std::istream_iterator<std::string> end;
-		std::vector<std::string> results(it, end);
+		stringstream strstr(lineRead);
+		istream_iterator<string> it(strstr);
+		istream_iterator<string> end;
+		vector<string> results(it, end);
 
 		// Data from file is stored in the containers here
 		if (results[0].compare("#") == 0)

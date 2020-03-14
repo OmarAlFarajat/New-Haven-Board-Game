@@ -6,10 +6,15 @@
 #include "Resources.h"
 #include "Harvest.h"
 
+using std::vector;
+using std::endl;
+using std::string;
+using std::ostream;
+
 HarvestTile::HarvestTile()
 {
-	std::vector<ResourceType> typeLib;
-	std::vector<ResourceType> resourceList= {
+	vector<ResourceType> typeLib;
+	vector<ResourceType> resourceList= {
 		ResourceType::TIMBER,
 		ResourceType::STONE,
 		ResourceType::WHEAT,
@@ -20,7 +25,7 @@ HarvestTile::HarvestTile()
 	A for loop to iterate over the vector containning the allowed types
 	With each resource type, create 3 instances and push to a temporary vector -- typeLib
 	*/
-	for (std::vector<ResourceType>::iterator it = resourceList.begin(); it != resourceList.end(); ++it) {
+	for (vector<ResourceType>::iterator it = resourceList.begin(); it != resourceList.end(); ++it) {
 		for (int i = 0; i < 3; ++i) {
 			typeLib.push_back(*it);
 		}
@@ -58,15 +63,15 @@ HarvestTile::~HarvestTile()
 }
 
 //Override << operator to print out details of a Harvest Tile for debugging purpose
-std::ostream& operator<<(std::ostream& os, HarvestTile& ht) 
+ostream& operator<<(ostream& os, HarvestTile& ht) 
 {
 	/*
 		TODO: Figure out how to deal with NULL pointer when trying to display 
 		a NULL card <trying to draw when deck is empty>
 	*/
-	std::vector<std::string> output;
+	vector<string> output;
 	// Loop through the container and get the type of Resource in each position
-	for (std::vector<ResourceType>::iterator it = ht.container.begin(); it!= ht.container.end(); ++it) {
+	for (vector<ResourceType>::iterator it = ht.container.begin(); it!= ht.container.end(); ++it) {
 		switch (*it) {
 		case ResourceType::SHEEP:
 			output.push_back("SHEEP");
@@ -93,9 +98,9 @@ std::ostream& operator<<(std::ostream& os, HarvestTile& ht)
 	|| WHEAT || TIMBER ||
 	*/
 	
-	std::string separator = " || ";
-	os << separator << output[0] << separator << output[1] << separator << std::endl;
-	os << separator << output[3] << separator << output[2] << separator << std::endl;
+	string separator = " || ";
+	os << separator << output[0] << separator << output[1] << separator << endl;
+	os << separator << output[3] << separator << output[2] << separator << endl;
 	return os;
 }
 

@@ -6,6 +6,8 @@
 #include "Building.h"
 #include "VGMap.h"
 
+using std::vector;
+
 // Hand Object 
 class Hand 
 {
@@ -36,8 +38,8 @@ class Hand
 private:
 	int* numOfHarvest;
 	int* numOfBuilding;
-	std::vector<HarvestTile*>* harvestHold;
-	std::vector<BuildingTile*>* buildingHold;
+	vector<HarvestTile*>* harvestHold;
+	vector<BuildingTile*>* buildingHold;
 };
 
 

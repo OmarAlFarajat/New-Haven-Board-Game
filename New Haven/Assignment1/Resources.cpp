@@ -1,6 +1,8 @@
 #include "Resources.h"
 #include "GBMap.h"
 
+using std::string;
+
 Resource::Resource() : Node()
 {
 	type = new ResourceType();
@@ -12,9 +14,9 @@ Resource::~Resource()
 	delete type;
 }
 
-std::string Resource::getTypeAsString()
+string Resource::getTypeAsString()
 {
-	std::string str = "";
+	string str = "";
 
 	switch (*this->type) {
 	case ResourceType::WHEAT:

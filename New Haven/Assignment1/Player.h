@@ -7,6 +7,8 @@
 #include "Resources.h"
 #include "VGMap.h"
 
+using std::string;
+
 class Player {
 public:
 	Player();
@@ -25,7 +27,7 @@ public:
 
 private:
     Hand* mine;
-	std::string* name;
+	string* name;
 	VGMap* vg_map; 
 
 };

@@ -4,12 +4,18 @@
 #include "TileNode.h"
 #include "Building.h"
 
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+
+
 // Template for evenly spacing out elements of a table (or a grid in this case)
 // To be used in makeGridGraph()
 // Source: https://stackoverflow.com/a/14796892
 template<typename T> void printElement(T t, const int& width)
 {
-	std::cout << std::left << std::setw(width) << std::setfill(' ') << t;
+	cout << std::left << std::setw(width) << std::setfill(' ') << t;
 }
 
 Graph::Graph()
@@ -207,13 +213,13 @@ void Graph::printGridGraph(bool verbose)
 			*	Will print each node's connected nodes if verbose is enabled.
 			*	If no connection exists, then an 'x' is put in place.
 			*	Prints if the node has been visited and enabled. */
-			std::string up = (nodes[0][I + j]->up && *nodes[0][I + j]->enabled && *nodes[0][I + j]->up->enabled) ? std::to_string(*nodes[0][I + j]->up->id) : "x";
-			std::string down = (nodes[0][I + j]->down && *nodes[0][I + j]->enabled && *nodes[0][I + j]->down->enabled) ? std::to_string(*nodes[0][I + j]->down->id) : "x";
-			std::string left = (nodes[0][I + j]->left && *nodes[0][I + j]->enabled && *nodes[0][I + j]->left->enabled) ? std::to_string(*nodes[0][I + j]->left->id) : "x";
-			std::string right = (nodes[0][I + j]->right && *nodes[0][I + j]->enabled && *nodes[0][I + j]->right->enabled) ? std::to_string(*nodes[0][I + j]->right->id) : "x";
-			std::string visited = *nodes[0][I + j]->visited ? "Y" : "N";
-			std::string enabled = *nodes[0][I + j]->enabled ? "Y" : "N";
-			std::string temp = "";
+			string up = (nodes[0][I + j]->up && *nodes[0][I + j]->enabled && *nodes[0][I + j]->up->enabled) ? std::to_string(*nodes[0][I + j]->up->id) : "x";
+			string down = (nodes[0][I + j]->down && *nodes[0][I + j]->enabled && *nodes[0][I + j]->down->enabled) ? std::to_string(*nodes[0][I + j]->down->id) : "x";
+			string left = (nodes[0][I + j]->left && *nodes[0][I + j]->enabled && *nodes[0][I + j]->left->enabled) ? std::to_string(*nodes[0][I + j]->left->id) : "x";
+			string right = (nodes[0][I + j]->right && *nodes[0][I + j]->enabled && *nodes[0][I + j]->right->enabled) ? std::to_string(*nodes[0][I + j]->right->id) : "x";
+			string visited = *nodes[0][I + j]->visited ? "Y" : "N";
+			string enabled = *nodes[0][I + j]->enabled ? "Y" : "N";
+			string temp = "";
 
 			// Print more information per node is verbose is enabled.
 			if (verbose) {
@@ -233,7 +239,7 @@ void Graph::printGridGraph(bool verbose)
 
 
 		}
-		std::cout << std::endl;
+		cout << endl;
 	}
-	std::cout << std::endl;
+	cout << endl;
 }

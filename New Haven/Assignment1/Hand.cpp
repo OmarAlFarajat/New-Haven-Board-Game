@@ -1,11 +1,19 @@
 #include "Hand.h"
 
+using std::vector;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+using std::ostream;
+using std::exception;
+
 Hand::Hand()
 {
 	numOfHarvest = new int(0);
 	numOfBuilding = new int(0);
-	harvestHold = new std::vector<HarvestTile*>(0);
-	buildingHold = new std::vector<BuildingTile*>(0);
+	harvestHold = new vector<HarvestTile*>(0);
+	buildingHold = new vector<BuildingTile*>(0);
 }
 
 Hand::~Hand()
@@ -25,14 +33,14 @@ Hand::~Hand()
 
 void Hand::showHand()
 {
-	std::cout << "Showing cards on hand:" << std::endl;
+	cout << "Showing cards on hand:" << endl;
 	for (int i = 0; i < this->getRemainHarvest(); ++i) {
-		std::cout << "Harvest Tile no." << i << std::endl;
-		std::cout << *harvestHold[0][i] << std::endl;
+		cout << "Harvest Tile no." << i << endl;
+		cout << *harvestHold[0][i] << endl;
 	}
 	for (int i = 0; i < this->getRemainBuilding(); ++i) {
-		std::cout << "Building Tile no." << i << std::endl;
-		std::cout << *buildingHold[0][i] << std::endl;
+		cout << "Building Tile no." << i << endl;
+		cout << *buildingHold[0][i] << endl;
 	}
 
 }
@@ -72,7 +80,7 @@ A function asking and validating user's prefered orientation of the Harvest Tile
 */
 bool Hand::requestRotate(HarvestTile* target)
 {
-	std::cout << "\n---Start rotating session---" << std::endl;
+	cout << "\n---Start rotating session---" << endl;
 
 	char input;
 	char back = 'b';
@@ -80,44 +88,44 @@ bool Hand::requestRotate(HarvestTile* target)
 	char rotate = 'r';
 
 	while (true) {
-		std::cout << "\n---------------" << std::endl;
-		std::cout << "Your Harvest Tile:" << std::endl;
-		std::cout << *target << std::endl;
-		std::cout << "---------------" << std::endl;
+		cout << "\n---------------" << endl;
+		cout << "Your Harvest Tile:" << endl;
+		cout << *target << endl;
+		cout << "---------------" << endl;
 		
-		std::cout << "+ Rotate the Tile: r" << std::endl;
-		std::cout << "+ End rotating the Tile: e" << std::endl;
-		std::cout << "+ Choose another Tile: b" << std::endl;
-		std::vector<ResourceType>* container = target->getContainer();
+		cout << "+ Rotate the Tile: r" << endl;
+		cout << "+ End rotating the Tile: e" << endl;
+		cout << "+ Choose another Tile: b" << endl;
+		vector<ResourceType>* container = target->getContainer();
 
 		try {
-			std::cin >> input;
+			cin >> input;
 
 			if (input == back) {
 				return false;
 			}
 
 			if (input == end) {
-				std::cout << "------------------------------------------" << std::endl;
-				std::cout << "Placing Tile on the gameboard" << std::endl;
-				std::cout << "------------------------------------------" << std::endl;
+				cout << "------------------------------------------" << endl;
+				cout << "Placing Tile on the gameboard" << endl;
+				cout << "------------------------------------------" << endl;
 				return true;
 
 			}
 
 			if (input == rotate) {
 				// Mimic a deque for rotating clockwise 
-				std::cout << "Rotating ..." << std::endl;
+				cout << "Rotating ..." << endl;
 				ResourceType temp = container[0][3];
 				container[0].insert(container[0].begin(), temp);
 				container[0].erase(container[0].end() - 1);
 				continue;
 			}
 
-			throw std::exception();
+			throw exception();
 		}
-		catch (const std::exception & e) {
-			std::cout << "Invalid input. Please try again" << std::endl;
+		catch (const exception & e) {
+			cout << "Invalid input. Please try again" << endl;
 			continue;
 		}
 
@@ -142,10 +150,10 @@ void Hand::exchange(GBMap* gb_map, TileNode* location)
 Function to start playing Harvest Tile and placing the tile on the board if it is valid
 */
 int Hand::playHarvest(GBMap* gb_map) {
-	std::cout << "\n----PLAYING HARVEST TILE----" << std::endl;
+	cout << "\n----PLAYING HARVEST TILE----" << endl;
 	while (true) {
 		if (hasNoHarvest()) {
-			std::cout << "There is no Harvest Tile on hand to play" << std::endl;
+			cout << "There is no Harvest Tile on hand to play" << endl;
 			return 1;
 		}
 
@@ -153,39 +161,39 @@ int Hand::playHarvest(GBMap* gb_map) {
 
 		//Ask for choice of Harvest Tile on hand
 		int choice = -1;
-		std::cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << std::endl;
-		std::cout << "Please enter the index of Harvest Tile you want to play" << std::endl;
+		cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << endl;
+		cout << "Please enter the index of Harvest Tile you want to play" << endl;
 		try {
-            std::cin >> choice;
+            cin >> choice;
             if (choice < 0 || choice >= this->getRemainHarvest()) {
-                throw std::exception();
+                throw exception();
             }
 
-		} catch (const std::exception& e) {
-		    std::cout << "Invalid choice. Please try again." << std::endl;
+		} catch (const exception& e) {
+		    cout << "Invalid choice. Please try again." << endl;
 		    continue;
 		}
 
 		HarvestTile* target = getHarvestTile(choice);
 
 		//Ask for position on the map to place tile
-		std::cout << "\n---Select position to place Tile---" << std::endl;
+		cout << "\n---Select position to place Tile---" << endl;
 		int row, col;
 		try {
-			std::cout << "Enter the index of row:" << std::endl;
-			std::cin >> row;
+			cout << "Enter the index of row:" << endl;
+			cin >> row;
 			if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
-				throw std::exception();
+				throw exception();
 			}
 
-			std::cout << "Enter the index of column:" << std::endl;
-			std::cin >> col;
+			cout << "Enter the index of column:" << endl;
+			cin >> col;
 			if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
-				throw std::exception();
+				throw exception();
 			}
 		}
-		catch (const std::exception & e) {
-			std::cout << "Invalid position input. Please try again" << std::endl;
+		catch (const exception & e) {
+			cout << "Invalid position input. Please try again" << endl;
 			continue;
 		}
 
@@ -199,7 +207,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 			if (requestRotate(target)) {
 				// User satisfies with their choice of rotation, process to place HarvestTile
 				gb_map->placeHarvestTile(target, location);
-				std::cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << std::endl;
+				cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << endl;
 				exchange(gb_map, location);
 				harvestHold->erase(harvestHold[0].begin() + choice); //Remove the tile from hand after placement
 				*numOfHarvest = *numOfHarvest - 1;
@@ -208,10 +216,10 @@ int Hand::playHarvest(GBMap* gb_map) {
 
 		}
 		else {
-			std::cout << "\n------------------------------------------" << std::endl;
-			std::cout << "The position is either occupied or invalid" << std::endl;
-			std::cout << "Please try again." << std::endl;
-			std::cout << "------------------------------------------\n" << std::endl;
+			cout << "\n------------------------------------------" << endl;
+			cout << "The position is either occupied or invalid" << endl;
+			cout << "Please try again." << endl;
+			cout << "------------------------------------------\n" << endl;
 			continue;
 		}
 	}
@@ -223,7 +231,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 A function to ask and validate player's request on flipping the Building Tile or not
 */
 bool Hand::requestFlip(BuildingTile* target) {
-    std::cout << "\n---Start flipping---" << std::endl;
+    cout << "\n---Start flipping---" << endl;
 
     char input;
     char back = 'b';
@@ -232,60 +240,60 @@ bool Hand::requestFlip(BuildingTile* target) {
     char question = '?';
 
     while (true) {
-        std::cout << "\n---------------" << std::endl;
-        std::cout << "Your Building Tile:" << std::endl;
-        std::cout << *target << std::endl;
-        std::cout << "---------------" << std::endl;
+        cout << "\n---------------" << endl;
+        cout << "Your Building Tile:" << endl;
+        cout << *target << endl;
+        cout << "---------------" << endl;
 
-        std::cout << "+ Flip the Tile: f" << std::endl;
-        std::cout << "+ End flipping the Tile: e" << std::endl;
-        std::cout << "+ Choose another Tile: b" << std::endl;
-        std::cout << "+ Trade-of of flipping request: ?" << std::endl;
+        cout << "+ Flip the Tile: f" << endl;
+        cout << "+ End flipping the Tile: e" << endl;
+        cout << "+ Choose another Tile: b" << endl;
+        cout << "+ Trade-of of flipping request: ?" << endl;
 
         try {
-            std::cin >> input;
+            cin >> input;
 
             if (input == back) {
                 return false;
             }
 
             if (input == end) {
-                std::cout << "------------------------------------------" << std::endl;
-                std::cout << "Validating the request" << std::endl;
-                std::cout << "------------------------------------------" << std::endl;
+                cout << "------------------------------------------" << endl;
+                cout << "Validating the request" << endl;
+                cout << "------------------------------------------" << endl;
                 return true;
 
             }
 
             if(input == question) {
-                std::cout << "----OVERVIEW----" << std::endl;
-                std::cout << "\nBuildings may only be played face up if the number on the\n"
-                             "\t space matches the number showing on the Building." << std::endl;
-                std::cout << "\nBuildings may be played face down onto any number space,\n"
-                             "\t regardless of the number on the Building." << std::endl;
-                std::cout << "\nThe value of each row and column is the number\n"
+                cout << "----OVERVIEW----" << endl;
+                cout << "\nBuildings may only be played face up if the number on the\n"
+                             "\t space matches the number showing on the Building." << endl;
+                cout << "\nBuildings may be played face down onto any number space,\n"
+                             "\t regardless of the number on the Building." << endl;
+                cout << "\nThe value of each row and column is the number\n"
                              "of Colonists shown at the right or bottom. BUT! The value of a row or column is doubled if every\n"
-                             "Building played on that row or column is face up!" << std::endl;
+                             "Building played on that row or column is face up!" << endl;
                 continue;
             }
 
             if(input == flip) {
-                std::cout << "\nFlipping the tile" << std::endl;
+                cout << "\nFlipping the tile" << endl;
                 target->setFaceUp(!target->getFaceUp());
                 if(target->getFaceUp()) {
-                    std::cout << "The Building Tile is faced up." << std::endl;
-                    std::cout << "You CAN earn double points if you complete the whole column or row corresponding to the position of this card" << std::endl;
+                    cout << "The Building Tile is faced up." << endl;
+                    cout << "You CAN earn double points if you complete the whole column or row corresponding to the position of this card" << endl;
                 } else {
-                    std::cout << "The Building Tile is faced down." << std::endl;
-                    std::cout << "You CANNOT earn double points if you complete the whole column or row corresponding to the position of this card" << std::endl;
+                    cout << "The Building Tile is faced down." << endl;
+                    cout << "You CANNOT earn double points if you complete the whole column or row corresponding to the position of this card" << endl;
                 }
                 continue;
             }
 
-            throw std::exception();
+            throw exception();
         }
-        catch (const std::exception & e) {
-            std::cout << "Invalid input. Please try again" << std::endl;
+        catch (const exception & e) {
+            cout << "Invalid input. Please try again" << endl;
             continue;
         }
 
@@ -298,49 +306,49 @@ Function to start playing Building Tile and placing the tile on the village boar
 (build village)
 */
 void Hand::playBuilding(VGMap* vg_map) {
-	std::cout << "\n----PLAYING BUILDING TILE----" << std::endl;
+	cout << "\n----PLAYING BUILDING TILE----" << endl;
 	while (true) {
 		if (hasNoBuilding()) 
-			std::cout << "There is no Building Tile on hand to play" << std::endl;
+			cout << "There is no Building Tile on hand to play" << endl;
 		
 		showHand();
 
 		//Ask for choice of Building Tile from hand
 		int choice = -1;
-		std::cout << "\nCurrently, you have " << getRemainBuilding() << " Building tiles in your hand" << std::endl;
-		std::cout << "Please enter the index of Building Tile you want to play" << std::endl;
+		cout << "\nCurrently, you have " << getRemainBuilding() << " Building tiles in your hand" << endl;
+		cout << "Please enter the index of Building Tile you want to play" << endl;
 		try {
-			std::cin >> choice;
+			cin >> choice;
 			if (choice < 0 || choice >= this->getRemainBuilding()) {
-				throw std::exception();
+				throw exception();
 			}
 
 		}
-		catch (const std::exception & e) {
-			std::cout << "Invalid choice. Please try again." << std::endl;
+		catch (const exception & e) {
+			cout << "Invalid choice. Please try again." << endl;
 			continue;
 		}
 
 		BuildingTile* target = getBuildingTile(choice);
 
 		//Ask for position on the map to place tile
-		std::cout << "\n---Select position to place Tile---" << std::endl;
+		cout << "\n---Select position to place Tile---" << endl;
 		int row, col;
 		try {
-			std::cout << "Enter the index of row:" << std::endl;
-			std::cin >> row;
+			cout << "Enter the index of row:" << endl;
+			cin >> row;
 			if (row < 0 || row >= vg_map->getBuildingGraph()->getHeight()) {
-				throw std::exception();
+				throw exception();
 			}
 
-			std::cout << "Enter the index of column:" << std::endl;
-			std::cin >> col;
+			cout << "Enter the index of column:" << endl;
+			cin >> col;
 			if (col < 0 || col >= vg_map->getBuildingGraph()->getLength()) {
-				throw std::exception();
+				throw exception();
 			}
 		}
-		catch (const std::exception & e) {
-			std::cout << "Invalid position input. Please try again" << std::endl;
+		catch (const exception & e) {
+			cout << "Invalid position input. Please try again" << endl;
 			continue;
 		}
 
@@ -353,15 +361,15 @@ void Hand::playBuilding(VGMap* vg_map) {
 		if (requestFlip(target)) {
 		    if(vg_map->isValid(target, location)) {
                 vg_map->placeBuildingTile(target, location);
-                std::cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << std::endl;
+                cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << endl;
                 buildingHold->erase(buildingHold[0].begin() + choice); //Remove the tile from hand after placement
                 *numOfBuilding = *numOfBuilding - 1;
                 break;
 		    } else {
-                std::cout << "\n------------------------------------------" << std::endl;
-                std::cout << "The position is either occupied or invalid flipping request" << std::endl;
-                std::cout << "Please try again." << std::endl;
-                std::cout << "------------------------------------------\n" << std::endl;
+                cout << "\n------------------------------------------" << endl;
+                cout << "The position is either occupied or invalid flipping request" << endl;
+                cout << "Please try again." << endl;
+                cout << "------------------------------------------\n" << endl;
                 continue;
             }
 		}

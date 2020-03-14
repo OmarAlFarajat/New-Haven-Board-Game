@@ -2,6 +2,11 @@
 #include <vector>
 #include "Building.h"
 
+using std::string;
+using std::ostream;
+using std::vector;
+using std::endl;
+
 BuildingTile::BuildingTile()
 {
 	this->value = new int(0);
@@ -31,9 +36,9 @@ ResourceType* BuildingTile::getBuildingType()
 	return this->type;
 }
 
-std::string BuildingTile::typeToString()
+string BuildingTile::typeToString()
 {
-	std::string output;
+	string output;
 	switch (*(this->type)) {
 	case ResourceType::TIMBER:
 		output = "TIMBER";
@@ -55,7 +60,7 @@ std::string BuildingTile::typeToString()
 
 BuildingDeck::BuildingDeck()
 { 
-	std::vector<ResourceType> typeLib = {
+	vector<ResourceType> typeLib = {
 		ResourceType::SHEEP,
 		ResourceType::STONE,
 		ResourceType::TIMBER,
@@ -83,7 +88,7 @@ BuildingDeck::BuildingDeck()
 	}
 	
 	//After constructing a deck, shuffle every element to make the drawing unpredictable.
-	std::random_shuffle(deck.begin(), deck.end()); 
+	random_shuffle(deck.begin(), deck.end()); 
 	tileIndex = new int(numOfTiles); 
 }
 
@@ -108,13 +113,13 @@ BuildingTile* BuildingDeck::draw()
 }
 
 //Override operator to print out the details of building tile
-std::ostream& operator<<(std::ostream& os, BuildingTile& bt)
+ostream& operator<<(ostream& os, BuildingTile& bt)
 {
-	std::string type = bt.typeToString();
+	string type = bt.typeToString();
 	int value = bt.getValue();
-	os << "Details of Building Tile:" << std::endl;
-	os << "+ Type: " << type << std::endl;
-	os << "+ Value: " << value << std::endl;
+	os << "Details of Building Tile:" << endl;
+	os << "+ Type: " << type << endl;
+	os << "+ Value: " << value << endl;
 
 	return os;
 }

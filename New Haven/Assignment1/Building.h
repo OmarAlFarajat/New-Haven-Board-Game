@@ -4,6 +4,11 @@
 #include<vector>
 #include "Node.h"
 #include "Resources.h"
+
+using std::string;
+using std::ostream;
+using std::vector;
+
 class BuildingTile : public Node
 {
 public:
@@ -11,8 +16,8 @@ public:
 	BuildingTile(ResourceType type, int value);
 	~BuildingTile();
 	ResourceType* getBuildingType();
-	friend std::ostream& operator<<(std::ostream& os, BuildingTile& bt);
-	std::string typeToString();
+	friend ostream& operator<<(ostream& os, BuildingTile& bt);
+	string typeToString();
 	// Inline getters
 	int getValue() const { return *value; };
 	ResourceType getType() const { return *type; };
@@ -48,7 +53,7 @@ public:
 private:
 	const static int numOfTiles = 144; // 144 buildings
 	int* tileIndex;
-	std::vector<BuildingTile> deck;
+	vector<BuildingTile> deck;
 
 };
 
