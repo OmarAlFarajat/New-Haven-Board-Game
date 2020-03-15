@@ -6,10 +6,8 @@
 #include "Resources.h"
 #include "Harvest.h"
 
-using std::vector;
 using std::endl;
 using std::string;
-using std::ostream;
 
 HarvestTile::HarvestTile()
 {

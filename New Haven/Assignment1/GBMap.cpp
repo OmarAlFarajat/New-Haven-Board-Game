@@ -42,7 +42,7 @@ void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 
 void GBMap::displayResourceTracker()
 {
-	cout << "GBMap RESOURCE TRACKER: " << std::endl;
+	cout << "GBMap RESOURCE TRACKER: " << endl;
 	cout << "SHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
 	cout << "TIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
 	cout << "STONE: " << resourceTracker[0][ResourceType::STONE] << endl;;

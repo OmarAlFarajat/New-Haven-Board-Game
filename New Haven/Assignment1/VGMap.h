@@ -3,10 +3,12 @@
 #include "Graph.h"
 #include "Building.h"
 
+using std::string;
+
 class VGMap
 {
 	Graph* buildingGraph;
-	std::string* name;
+	string* name;
 
 public:
 	VGMap();

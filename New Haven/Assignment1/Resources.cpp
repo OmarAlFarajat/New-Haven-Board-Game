@@ -1,8 +1,6 @@
 #include "Resources.h"
 #include "GBMap.h"
 
-using std::string;
-
 Resource::Resource() : Node()
 {
 	type = new ResourceType();

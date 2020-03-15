@@ -2,9 +2,6 @@
 #include <vector>
 #include "Building.h"
 
-using std::string;
-using std::ostream;
-using std::vector;
 using std::endl;
 
 BuildingTile::BuildingTile()

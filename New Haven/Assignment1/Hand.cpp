@@ -1,6 +1,5 @@
 #include "Hand.h"
 
-using std::vector;
 using std::cout;
 using std::cin;
 using std::endl;
