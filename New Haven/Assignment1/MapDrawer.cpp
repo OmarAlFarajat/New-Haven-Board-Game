@@ -6,11 +6,11 @@ using std::vector;
 using std::to_string;
 
 CImg<unsigned char> ResourceToBMP(ResourceType type) {
-    CImg<unsigned char> SHEEP("Sheep.BMP");
-    CImg<unsigned char> STONE("Stone.BMP");
-    CImg<unsigned char> TIMBER("Timber.BMP");
-    CImg<unsigned char> WHEAT("Wheat.BMP");
-    CImg<unsigned char> NONE("None.BMP");
+    CImg<unsigned char> SHEEP("./Images/Sheep.BMP");
+    CImg<unsigned char> STONE("./Images/Stone.BMP");
+    CImg<unsigned char> TIMBER("./Images/Timber.BMP");
+    CImg<unsigned char> WHEAT("./Images/Wheat.BMP");
+    CImg<unsigned char> NONE("./Images/None.BMP");
     switch (type) {
     case ResourceType::NONE:
         return NONE;
@@ -25,23 +25,43 @@ CImg<unsigned char> ResourceToBMP(ResourceType type) {
     }
 }
 
-void drawGBMap(GBMap& const gb_map, Player& const player)
+CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
 {
-    CImg<unsigned char> MAP_TILE("TileNode.BMP");
-    CImg<unsigned char> DISABLED_TILE("DisabledTile.BMP");
-    CImg<unsigned char> RESOURCE_TRACKER("ResourceTracker.BMP");
-    CImg<unsigned char> AVAILABLE_BUILDINGS("AvailableBuildings.BMP");
+    CImg<unsigned char> MAP_TILE("./Images/TileNode.BMP");
+    CImg<unsigned char> DISABLED_TILE("./Images/DisabledTile.BMP");
+    CImg<unsigned char> RESOURCE_TRACKER("./Images/ResourceTracker.BMP");
+    CImg<unsigned char> AVAILABLE_BUILDINGS("./Images/AvailableBuildings.BMP");
 
+    CImg<unsigned char> GREY_TRACKER("./Images/GreyTracker.BMP");
+    CImg<unsigned char> RED_TRACKER("./Images/RedTracker.BMP");
+    CImg<unsigned char> YELLOW_TRACKER("./Images/YellowTracker.BMP");
+    CImg<unsigned char> GREEN_TRACKER("./Images/GreenTracker.BMP");
+   
+    CImg<unsigned char> GREY_BUILDING("./Images/GreyBuilding.BMP");
+    CImg<unsigned char> RED_BUILDING("./Images/RedBuilding.BMP");
+    CImg<unsigned char> YELLOW_BUILDING("./Images/YellowBuilding.BMP");
+    CImg<unsigned char> GREEN_BUILDING("./Images/GreenBuilding.BMP");
 
-    CImg<unsigned char> GREY_TRACKER("GreyTracker.BMP");
-    CImg<unsigned char> RED_TRACKER("RedTracker.BMP");
-    CImg<unsigned char> YELLOW_TRACKER("YellowTracker.BMP");
-    CImg<unsigned char> GREEN_TRACKER("GreenTracker.BMP");
-
-
-
+    CImg<unsigned char> VGMAP("./Images/VGMap.BMP");
 
     CImg<unsigned char> GRID;
+
+    CImg<unsigned char> columns;
+    columns = CImg<unsigned char>(25, 25, 1, 3, 0);
+
+
+    for (int i = 0; i < gb_map.getTileGraph()->getLength(); i++) {
+        CImg<unsigned char> column("./Images/Column.BMP");
+
+        unsigned char black[] = { 0,0,0 };
+        unsigned char vagueBrown[] = { 224,192,128 };
+        column.draw_text(50, 1, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
+
+        columns.append(column);
+    }
+    GRID = columns;
+
+
     CImg<unsigned char> GBMAP;
     Node* m = gb_map.getTileGraph()->getNode(0);
     int rowCount = 0; 
@@ -49,7 +69,7 @@ void drawGBMap(GBMap& const gb_map, Player& const player)
 
         Node* n = m; 
 
-        CImg<unsigned char> row("Row.BMP");
+        CImg<unsigned char> row("./Images/Row.BMP");
 
         unsigned char black[] = { 0,0,0 };
         unsigned char vagueBrown[] = { 224,192,128 };
@@ -115,28 +135,13 @@ void drawGBMap(GBMap& const gb_map, Player& const player)
             break;
         }
     }
-    
-
-    CImg<unsigned char> columns;
-    columns = CImg<unsigned char>(25, 25, 1, 3, 0);
-    
-
-    for (int i = 0; i < gb_map.getTileGraph()->getLength(); i++) {
-        CImg<unsigned char> column("Column.BMP");
-
-        unsigned char black[] = { 0,0,0 };
-        unsigned char vagueBrown[] = { 224,192,128 };
-        column.draw_text(50, 1, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
-
-        columns.append(column);
-    }
-    GRID.append(columns, 'y');
 
     // Add hand info to bottom of grid
-    CImg<unsigned char> HAND("Hand.BMP");
+    CImg<unsigned char> HAND("./Images/Hand.BMP");
     CImg<unsigned char> Harvest_Tiles;
     CImg<unsigned char> tile = MAP_TILE;
     vector<HarvestTile*> tiles = player.getHand()->getHarvestHold()[0];
+    vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
 
     for(int j = 0; j < tiles.size(); j++){
 
@@ -161,6 +166,10 @@ void drawGBMap(GBMap& const gb_map, Player& const player)
         HAND.draw_image(125*j,25,0,tile,100);
     }
 
+    for (int i = 0; i < buildings.size(); i++) {
+
+    }
+
     GRID.append(HAND, 'y');;
 
 
@@ -175,8 +184,9 @@ void drawGBMap(GBMap& const gb_map, Player& const player)
     RESOURCE_TRACKER.draw_image(91, 670 - 33 * sheep, GREEN_TRACKER, 100);
 
 
-    GBMAP = RESOURCE_TRACKER.append(GRID).append(AVAILABLE_BUILDINGS);
-    GBMAP.display();
+    GBMAP = RESOURCE_TRACKER.append(GRID).append(AVAILABLE_BUILDINGS).append(VGMAP);
+
+    return GBMAP;
 }
 
 

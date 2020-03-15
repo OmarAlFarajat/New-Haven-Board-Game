@@ -22,6 +22,7 @@ using std::string;
 using std::vector;
 
 
+
 /* Global Variables for the game*/
 static int numberOfPlayers;
 static string mapFileName = "";
@@ -234,40 +235,46 @@ void testResourceCount() {
 }
 
 void testPlayer() {
-	cout << "Enter testing for Player Object" << endl;
+
+	//std::cout << "Enter testing for Player Object" << std::endl;
 	Player* test = &players[0];
 	
 	int drawHarvest = 2;
-	cout << "Drawing " << drawHarvest << " Harvest Tiles" << endl;
+	//std::cout << "Drawing " << drawHarvest << " Harvest Tiles" << std::endl;
 	for (int i = 0; i < drawHarvest; ++i) {
 		test->DrawHarvestTile(&harvestDeck);
 	}
 
 	int drawBuilding = 4;
-	cout << "Drawing " << drawBuilding << " Building Tiles" << endl;
+
+	//std::cout << "Drawing " << drawBuilding << " Building Tiles" << std::endl;
 	for (int i = 0; i < drawBuilding; ++i) {
 		test->DrawBuilding(&buildingDeck);
 	}
 
-	cout << "\n==============================" << endl;
-	cout << " SHOWING HAND AFTER DRAWING " << endl;
-	test->show();
+	cimg_library::CImgDisplay main_disp;
 
-	std::cout << "\n==============================" << std::endl;
-	drawGBMap(*gb_map, *test);
+	while (true)
+	{
+		//std::cout << "\n==============================" << std::endl;
+		//std::cout << " SHOWING HAND AFTER DRAWING " << std::endl;
+		test->show();
+		//std::cout << "\n==============================" << std::endl;
+		main_disp = cimg_library::CImgDisplay(drawGBMap(*gb_map, *test),"cstr?");
 
-	cout << "Placing a Harvest Tile on the game board" << endl;
-	test->PlaceHarvestTile(gb_map);
-	drawGBMap(*gb_map, *test);
+		//std::cout << "Placing a Harvest Tile on the game board" << std::endl;
+		test->PlaceHarvestTile(gb_map);
+		main_disp = cimg_library::CImgDisplay(drawGBMap(*gb_map, *test), "cstr?");
 
-	std::cout << "Placing a Building Tile on the Village board" << std::endl;
-	
-	test->PlaceBuildingTile(test->getVGMap());
-	test->show();
-	drawGBMap(*gb_map, *test);
+		//std::cout << "Placing a Building Tile on the Village board" << std::endl;
+		test->PlaceBuildingTile(test->getVGMap());
+		test->show();
+		main_disp = cimg_library::CImgDisplay(drawGBMap(*gb_map, *test), "cstr?");
+		main_disp.wait();
+	}
 
 
-	cout << "NUMBER OF POINTS IS: " << test->getVGMap()->calculatePoints() << endl;
+	//std::cout << "NUMBER OF POINTS IS: " << test->getVGMap()->calculatePoints() << std::endl;
 }
 
 void printAllGraphs() {

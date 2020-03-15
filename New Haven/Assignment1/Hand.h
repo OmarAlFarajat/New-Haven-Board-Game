@@ -25,6 +25,7 @@ class Hand
 	bool hasNoHarvest();
 	bool hasNoBuilding();
 	vector<HarvestTile*>* getHarvestHold();
+	vector<BuildingTile*>* getBuildingHold();
 	HarvestTile* getHarvestTile(int index);
 	BuildingTile* getBuildingTile(int index);
 
@@ -48,6 +49,7 @@ inline int Hand::getRemainBuilding() const {return *numOfBuilding;}
 inline bool Hand::hasNoHarvest() {return (*numOfHarvest == 0);}
 inline bool Hand::hasNoBuilding() { return (*numOfBuilding == 0);}
 inline vector<HarvestTile*>* Hand::getHarvestHold() const { return harvestHold; }
+inline vector<BuildingTile*>* Hand::getBuildingHold() const { return buildingHold; }
 
 inline HarvestTile* Hand::getHarvestTile(int index) {return harvestHold[0][index];}
 inline BuildingTile* Hand::getBuildingTile(int index) { return buildingHold[0][index]; }
