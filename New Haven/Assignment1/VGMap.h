@@ -21,7 +21,7 @@ public:
 	int calculatePoints();
 
 	// Setters
-
+	void setName(std::string name) { *this->name = name; }
 	/*	Sets the Building "cost" for each building tile in VGMap. 
 	*(!)HACK:
 	*	initTileValues() is hardcoded assuming that the VGMap is always 5x6.
@@ -36,6 +36,7 @@ public:
 
 	// Getters
 	Graph* getBuildingGraph() {	return buildingGraph; }
+	std::string getName() { return *name; }
 
 
 };

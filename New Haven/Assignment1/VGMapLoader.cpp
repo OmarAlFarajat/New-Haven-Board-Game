@@ -85,6 +85,8 @@ void loadVGMap(string& fileName, VGMap& vg_map) {
 	}
 	inFile.close();
 
+	vg_map.setName(name);
+
 	// Produce the grid graph of VGMap and initialize the Building "costs", i.e. values, for each row.
 	vg_map.getBuildingGraph()->makeGridGraph(length, height, NodeType::BUILDING);
 	vg_map.initTileValues();

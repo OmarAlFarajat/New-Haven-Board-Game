@@ -271,6 +271,11 @@ void testPlayer() {
 		test->show();
 		main_disp = cimg_library::CImgDisplay(drawGBMap(*gb_map, *test), "cstr?");
 		main_disp.wait();
+
+		// Trying to see if we can get the image to "refresh" whenever input is made into the console... 
+		//if (main_disp.button())
+		//	main_disp = cimg_library::CImgDisplay(drawGBMap(*gb_map, *test), "cstr?");
+
 	}
 
 

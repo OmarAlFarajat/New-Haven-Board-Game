@@ -25,8 +25,33 @@ CImg<unsigned char> ResourceToBMP(ResourceType type) {
     }
 }
 
+CImg<unsigned char> BuildingToBMP(ResourceType type) {
+    CImg<unsigned char> SHEEP("./Images/GreenBuilding.BMP");
+    CImg<unsigned char> STONE("./Images/GreyBuilding.BMP");
+    CImg<unsigned char> TIMBER("./Images/RedBuilding.BMP");
+    CImg<unsigned char> WHEAT("./Images/YellowBuilding.BMP");
+    CImg<unsigned char> NONE("./Images/None.BMP");
+
+    switch (type) {
+    case ResourceType::NONE:
+        return NONE;
+    case ResourceType::SHEEP:
+        return SHEEP;
+    case ResourceType::STONE:
+        return STONE;
+    case ResourceType::WHEAT:
+        return WHEAT;
+    case ResourceType::TIMBER:
+        return TIMBER;
+    }
+}
+
 CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
 {
+    unsigned char black[] = { 0,0,0 };
+    unsigned char white[] = { 1,1,1 };
+    unsigned char vagueBrown[] = { 224,192,128 };
+
     CImg<unsigned char> MAP_TILE("./Images/TileNode.BMP");
     CImg<unsigned char> DISABLED_TILE("./Images/DisabledTile.BMP");
     CImg<unsigned char> RESOURCE_TRACKER("./Images/ResourceTracker.BMP");
@@ -52,11 +77,7 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
 
     for (int i = 0; i < gb_map.getTileGraph()->getLength(); i++) {
         CImg<unsigned char> column("./Images/Column.BMP");
-
-        unsigned char black[] = { 0,0,0 };
-        unsigned char vagueBrown[] = { 224,192,128 };
         column.draw_text(50, 1, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
-
         columns.append(column);
     }
     GRID = columns;
@@ -70,9 +91,6 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
         Node* n = m; 
 
         CImg<unsigned char> row("./Images/Row.BMP");
-
-        unsigned char black[] = { 0,0,0 };
-        unsigned char vagueBrown[] = { 224,192,128 };
 
         row.draw_text(8,50, to_string(rowCount).c_str(),black,vagueBrown,1.0f,22);
         rowCount++;
@@ -135,13 +153,27 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
             break;
         }
     }
+    
+    std::vector<Node*> vgNodes = player.getVGMap()->getBuildingGraph()->getNodes()[0];
+    
+    //18,23	return (row * length + col);
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 6; j++) {
+
+            CImg<unsigned char> buildingTile;
+            buildingTile = BuildingToBMP(static_cast<BuildingTile*>(vgNodes[j*5 +i])->getType());
+            buildingTile.draw_text(3, 20, to_string(static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getValue()).c_str(), black, 1, 1.0f, 40);
+            VGMAP.draw_image(18+93*i,23+93*j, 0, buildingTile, 100);
+        }
+    }
+    // 235, 655
+    VGMAP.draw_text(235, 655, player.getVGMap()->getName().c_str(), black, 1, 1.0f, 30);
 
     // Add hand info to bottom of grid
     CImg<unsigned char> HAND("./Images/Hand.BMP");
-    CImg<unsigned char> Harvest_Tiles;
     CImg<unsigned char> tile = MAP_TILE;
     vector<HarvestTile*> tiles = player.getHand()->getHarvestHold()[0];
-    vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
 
     for(int j = 0; j < tiles.size(); j++){
 
@@ -164,10 +196,16 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
             }
         }
         HAND.draw_image(125*j,25,0,tile,100);
+        HAND.draw_text(125 * j, 25, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
     }
 
-    for (int i = 0; i < buildings.size(); i++) {
+    vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
 
+    for (int i = 0; i < buildings.size(); i++) {
+        CImg<unsigned char> building = BuildingToBMP(buildings[i]->getType());
+        building.draw_text(5, 30, to_string(buildings[i]->getValue()).c_str(), black, 1, 1.0f, 40);
+        HAND.draw_image(100 * i, 135, 0, building, 100);
+        HAND.draw_text(100* i, 135, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
     }
 
     GRID.append(HAND, 'y');;
@@ -187,6 +225,8 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
     GBMAP = RESOURCE_TRACKER.append(GRID).append(AVAILABLE_BUILDINGS).append(VGMAP);
 
     return GBMAP;
+
+
 }
 
 
