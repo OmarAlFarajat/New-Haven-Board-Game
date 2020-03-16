@@ -2,12 +2,15 @@
 #include "Player.h"
 #include "VGMapLoader.h"
 
+using std::cout;
+using std::endl;
+
 Player::Player()
 {
-	name = new std::string("Mike");
+	name = new string("Mike");
 	mine = new Hand;
 	vg_map = new VGMap();
-	std::string vgMapName = "Stratford_example.vgmap";
+	string vgMapName = "Stratford_example.vgmap";
 	loadVGMap(vgMapName, *vg_map);
 
 }
@@ -49,7 +52,7 @@ the drawn card on hand.
 void Player::DrawBuilding(BuildingDeck* deck)
 {
 	if (deck->getNumOfRemain() <= 0) {
-		std::cout << "There is no more Building Tile in the Deck to draw" << std::endl;
+		cout << "There is no more Building Tile in the Deck to draw" << std::endl;
 	}
 	else {
 		mine->addBuildingTile(deck->draw());
@@ -59,7 +62,7 @@ void Player::DrawBuilding(BuildingDeck* deck)
 void Player::DrawHarvestTile(HarvestDeck* deck)
 {
 	if (deck->getNumOfRemain() <= 0) {
-		std::cout << "There is no more Harvest Tile in the Deck to draw" << std::endl;
+		cout << "There is no more Harvest Tile in the Deck to draw" << std::endl;
 	} 
 	else {
 		mine->addHarvestTile(deck->draw());

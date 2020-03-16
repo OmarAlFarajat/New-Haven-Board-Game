@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Resources.h"
 
+using std::vector;
+using std::ostream;
+
 // Harvest tile class (extends Node)
 class HarvestTile
 {
@@ -10,13 +13,13 @@ public:
 	HarvestTile();
 	HarvestTile(ResourceType[4]);
 	~HarvestTile();
-	friend std::ostream& operator<<(std::ostream& os, HarvestTile& ht);
-	std::vector<ResourceType> getResources() { return container; }
-	std::vector<ResourceType>* getContainer() { return &container; } // Return a reference to the container
+	friend ostream& operator<<(ostream& os, HarvestTile& ht);
+	vector<ResourceType> getResources() { return container; }
+	vector<ResourceType>* getContainer() { return &container; } // Return a reference to the container
 
 private:
 	const int numOfResource = 4;
-	std::vector<ResourceType> container;
+	vector<ResourceType> container;
 };
 
 // The Deck of Harvest Tiles Object
@@ -31,6 +34,6 @@ public:
 private:
 	const static int numOfTiles = 60; // 60 Harvest Tiles in a Deck
 	int *tileIndex;  // keep track of the number of remainning tiles inside the deck to be drawed
-	std::vector<HarvestTile> deck;
+	vector<HarvestTile> deck;
 
 };

@@ -1,6 +1,10 @@
 #include "GBMap.h"
 #include "Harvest.h"
 
+using std::cout;
+using std::cin;
+using std::endl;
+
 GBMap::GBMap()
 {
 	tileGraph = new Graph();
@@ -38,11 +42,11 @@ void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 
 void GBMap::displayResourceTracker()
 {
-	std::cout << "GBMap RESOURCE TRACKER: " << std::endl;
-	std::cout << "SHEEP: " << resourceTracker[0][ResourceType::SHEEP] << std::endl;
-	std::cout << "TIMBER: " << resourceTracker[0][ResourceType::TIMBER] << std::endl;;
-	std::cout << "STONE: " << resourceTracker[0][ResourceType::STONE] << std::endl;;
-	std::cout << "WHEAT: " << resourceTracker[0][ResourceType::WHEAT] << std::endl;;
+	cout << "GBMap RESOURCE TRACKER: " << endl;
+	cout << "SHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
+	cout << "TIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
+	cout << "STONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
+	cout << "WHEAT: " << resourceTracker[0][ResourceType::WHEAT] << endl;;
 
 }
 

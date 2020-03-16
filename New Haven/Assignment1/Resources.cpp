@@ -12,9 +12,9 @@ Resource::~Resource()
 	delete type;
 }
 
-std::string Resource::getTypeAsString()
+string Resource::getTypeAsString()
 {
-	std::string str = "";
+	string str = "";
 
 	switch (*this->type) {
 	case ResourceType::WHEAT:

@@ -1,8 +1,11 @@
 #include "VGMap.h"
 
+using std::cout;
+using std::endl;
+
 VGMap::VGMap()
 {
-	name = new std::string();
+	name = new string();
 	buildingGraph = new Graph();
 }
 
@@ -37,23 +40,23 @@ bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
 		return !toBoard->isOccupied() && toBoard->isEnabled();
 
 	// The rest of the logic assumes that the building requesting to be played is face up
-	std::cout << ">>> Building is face up... " << std::endl;
+	cout << ">>> Building is face up... " << endl;
 
 	// Check all building nodes to see if this type of building has been placed before. 
 	bool firstPlacementOfType = true; 
 	for (Node* x : buildingGraph->getNodes()[0]) 
 		if (static_cast<BuildingTile*>(x)->getType() == fromHand->getType()) {
-			std::cout << ">>> Not the first placement... " << std::endl;
+			cout << ">>> Not the first placement... " << endl;
 			firstPlacementOfType = false;
 		}
 	// If it is the first placement, then check if enabled and not occupied and the value of the building matches the value of the space
 	if (firstPlacementOfType) {
-		std::cout << ">>> First placement of type, checking if same value..." << std::endl;
+		cout << ">>> First placement of type, checking if same value..." << endl;
 		return !toBoard->isOccupied() && toBoard->isEnabled() && (toBoard->getValue() == fromHand->getValue());
 	}
 	// If it is not the first placement of that type, then check that at least one adjacent node is of the same type
 	else {
-		std::cout << ">>> Not first placement of type, checking if adjacent..." << std::endl; 
+		cout << ">>> Not first placement of type, checking if adjacent..." << endl; 
 		return !toBoard->isOccupied() && toBoard->isEnabled() && (toBoard->getValue() == fromHand->getValue()) &&
 				// Edge exists (not null)		... the neighbouring node is of the board space has a building that is of the same type as that being placed from the hand
 			(	(toBoard->getUp()		&&		static_cast<BuildingTile*>(toBoard->getUp())->getType() == fromHand->getType())		||
@@ -95,11 +98,11 @@ int VGMap::calculatePoints() {
 
 			if (buildingCount == buildingGraph->getLength()) 
 				if (perfectRow) {
-					std::cout << "~~~ Found a perfect row! " << 2 * colonistRowValue[j] << std::endl;
+					cout << "~~~ Found a perfect row! " << 2 * colonistRowValue[j] << endl;
 					points += 2 * colonistRowValue[j];
 				}
 				else {
-					std::cout << "~~~ Found an imperfect row! " << colonistRowValue[j] << std::endl;
+					cout << "~~~ Found an imperfect row! " << colonistRowValue[j] << endl;
 					points += colonistRowValue[j];
 				}
 			
@@ -129,11 +132,11 @@ int VGMap::calculatePoints() {
 
 			if (buildingCount == buildingGraph->getHeight())
 				if (perfectRow) {
-					std::cout << "~~~ Found a perfect column! " << 2 * colonistColumnValue[j] << std::endl;
+					cout << "~~~ Found a perfect column! " << 2 * colonistColumnValue[j] << endl;
 					points += 2 * colonistColumnValue[j];
 				}
 				else {
-					std::cout << "~~~ Found an imperfect column! " << colonistColumnValue[j] << std::endl;
+					cout << "~~~ Found an imperfect column! " << colonistColumnValue[j] << endl;
 					points += colonistColumnValue[j];
 				}
 		}

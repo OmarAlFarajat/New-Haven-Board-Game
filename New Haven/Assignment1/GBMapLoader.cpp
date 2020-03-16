@@ -1,5 +1,12 @@
 #include "GBMapLoader.h"
 
+using std::vector;
+using std::string;
+using std::map;
+using std::ifstream;
+using std::istream_iterator;
+using std::stringstream;
+
 ResourceType strToEnum(std::string str) {
 	if (str.compare("SHEEP") == 0)
 		return ResourceType::SHEEP;
@@ -15,16 +22,16 @@ ResourceType strToEnum(std::string str) {
 
 void loadGBMap(std::string& fileName, GBMap& gb_map)
 {
-	std::ifstream inFile(fileName, std::ios::in);
-	std::string lineRead;
+	ifstream inFile(fileName, std::ios::in);
+	string lineRead;
 
 	// The containers below store the data read from the file.
 	// The graphs are only created and updated after the file is closed.
 	int length = 0;
 	int height = 0;
-	std::map<int, std::vector<ResourceType>> resourceData;
-	std::vector<int> resourceIndices; 
-	std::vector<int> disableData;
+	map<int, vector<ResourceType>> resourceData;
+	vector<int> resourceIndices; 
+	vector<int> disableData;
 
 	// Reading from file
 	while (inFile) {
@@ -45,10 +52,10 @@ void loadGBMap(std::string& fileName, GBMap& gb_map)
 
 		// String tokenizing code used for parsing the loaded map file 
 		// Source: https://stackoverflow.com/a/53921
-		std::stringstream strstr(lineRead);
-		std::istream_iterator<std::string> it(strstr);
-		std::istream_iterator<std::string> end; 
-		std::vector<std::string> results(it, end);
+		stringstream strstr(lineRead);
+		istream_iterator<string> it(strstr);
+		istream_iterator<string> end; 
+		vector<string> results(it, end);
 
 		// Data from file is stored in the containers here
 		if (results[0].compare("#") == 0)
