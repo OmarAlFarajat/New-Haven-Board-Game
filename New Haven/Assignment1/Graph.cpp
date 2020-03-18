@@ -23,7 +23,7 @@ Graph::Graph()
 	length = new int(0);
 	height = new int(0);
 	numEnabledNodes = new int(0);
-	nodes = new std::vector<Node*>;
+	nodes = new vector<Node*>;
 }
 
 Graph::~Graph()

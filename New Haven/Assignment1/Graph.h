@@ -5,9 +5,11 @@
 #include "Node.h"
 #include "Resources.h"
 
+using std::vector;
+
 class Graph
 {
-	std::vector<Node*>* nodes;
+	vector<Node*>* nodes;
 	int* numEnabledNodes;
 	int* length;
 	int* height;
@@ -62,7 +64,7 @@ public:
 
 	// Getters
 	Node* getNode(int index) { return nodes[0][index]; }
-	std::vector<Node*>* getNodes() { return nodes; }
+	vector<Node*>* getNodes() { return nodes; }
 	int getNumEnabledNodes() { return *numEnabledNodes; }
 	int getLength() { return *length; }
 	int getHeight() { return *height; }
