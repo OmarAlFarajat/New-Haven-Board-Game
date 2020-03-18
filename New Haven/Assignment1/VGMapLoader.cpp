@@ -8,7 +8,7 @@ using std::ifstream;
 using std::istream_iterator;
 using std::stringstream;
 
-ResourceType resourceStringToType(std::string str)
+ResourceType resourceStringToType(string str)
 {
 
 	if (str.compare("SHEEP") == 0)
@@ -24,16 +24,16 @@ ResourceType resourceStringToType(std::string str)
 		return ResourceType::WHEAT;
 }
 
-void loadVGMap(std::string& fileName, VGMap& vg_map) {
+void loadVGMap(string& fileName, VGMap& vg_map) {
 	ifstream inFile(fileName, std::ios::in);
 	string lineRead;
 
 	// The containers below store the data read from the file.
 	// The graphs are only created and updated after the file is closed. 
-	std::string name = "";
+	string name = "";
 	int length = 0;
 	int height = 0;
-	std::vector<int> disableData;
+	vector<int> disableData;
 
 	struct buildingData {
 		ResourceType type;

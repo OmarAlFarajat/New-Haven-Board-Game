@@ -1,13 +1,12 @@
 #include "GBMapLoader.h"
 
 using std::vector;
-using std::string;
 using std::map;
 using std::ifstream;
 using std::istream_iterator;
 using std::stringstream;
 
-ResourceType strToEnum(std::string str) {
+ResourceType strToEnum(string str) {
 	if (str.compare("SHEEP") == 0)
 		return ResourceType::SHEEP;
 	else if (str.compare("TIMBER") == 0)
@@ -20,7 +19,7 @@ ResourceType strToEnum(std::string str) {
 		return ResourceType::NONE;
 }
 
-void loadGBMap(std::string& fileName, GBMap& gb_map)
+void loadGBMap(string& fileName, GBMap& gb_map)
 {
 	ifstream inFile(fileName, std::ios::in);
 	string lineRead;

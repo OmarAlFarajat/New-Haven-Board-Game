@@ -17,17 +17,15 @@ Hand::Hand()
 
 Hand::~Hand()
 {
-	// TODO:!! 
-	//for (auto n : *harvestHold)
-	//	delete n;
-	//harvestHold->clear();
-
-	//for (auto n : *buildingHold)
-	//	delete n;
-	//buildingHold->clear();
-
 	delete numOfHarvest;
+	numOfHarvest = nullptr;
 	delete numOfBuilding;
+	numOfBuilding = nullptr;
+	delete harvestHold;
+	harvestHold = nullptr;
+	delete buildingHold;
+	buildingHold = nullptr;
+
 }
 
 void Hand::showHand()
@@ -62,7 +60,7 @@ were used to get the corresponding node ID on the map
 of the provided location and the map itself
 */
 
-int Hand::getNodeID(GBMap* gb_map, int row, int col)
+int Hand::getNodeID_GB(GBMap* gb_map, int row, int col)
 {
 	int length = gb_map->getTileGraph()->getLength();
 	return (row * length + col);
@@ -92,10 +90,11 @@ bool Hand::requestRotate(HarvestTile* target)
 		cout << *target << endl;
 		cout << "---------------" << endl;
 		
+
 		cout << "+ Rotate the Tile: r" << endl;
 		cout << "+ End rotating the Tile: e" << endl;
-		cout << "+ Choose another Tile: b" << endl;
-		vector<ResourceType>* container = target->getContainer();
+	  cout << "+ Choose another Tile: b" << endl;
+		vector<ResourceType>* container = target->getContainerPointer();
 
 		try {
 			cin >> input;
@@ -200,7 +199,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 		=> process to rotate the Tile as requested
 		=> Place Tile on the map and calculate resources by exchange
 		*/
-		int nodeID = this->getNodeID(gb_map, row, col);
+		int nodeID = this->getNodeID_GB(gb_map, row, col);
 		TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
 		if (gb_map->isValid(location)) {
 			if (requestRotate(target)) {
@@ -238,12 +237,15 @@ bool Hand::requestFlip(BuildingTile* target) {
     char flip = 'f';
     char question = '?';
 
+	  string faceStatus;
     while (true) {
         cout << "\n---------------" << endl;
         cout << "Your Building Tile:" << endl;
         cout << *target << endl;
+		    faceStatus = target->isFaceUp() ? " Up" : " Down";
+		    cout << "+ facing: " << faceStatus << endl;
         cout << "---------------" << endl;
-
+      
         cout << "+ Flip the Tile: f" << endl;
         cout << "+ End flipping the Tile: e" << endl;
         cout << "+ Choose another Tile: b" << endl;
@@ -278,8 +280,8 @@ bool Hand::requestFlip(BuildingTile* target) {
 
             if(input == flip) {
                 cout << "\nFlipping the tile" << endl;
-                target->setFaceUp(!target->getFaceUp());
-                if(target->getFaceUp()) {
+                target->setFaceUp(!target->isFaceUp());
+                if(target->isFaceUp()) {
                     cout << "The Building Tile is faced up." << endl;
                     cout << "You CAN earn double points if you complete the whole column or row corresponding to the position of this card" << endl;
                 } else {

@@ -224,6 +224,12 @@ void testResourceCount() {
 	cout << "STONE: " << resourcesCollected[ResourceType::STONE] << endl;
 	cout << "TIMBER: " << resourcesCollected[ResourceType::TIMBER] << endl;
 	cout << "WHEAT: " << resourcesCollected[ResourceType::WHEAT] << endl;
+
+	delete node7;
+	node7 = nullptr;
+	delete node12;
+	node12 = nullptr;
+
 }
 
 void testPlayer() {
@@ -285,7 +291,9 @@ int main() {
 	//printAllGraphs();
 
 	delete gb_map;
+	gb_map = nullptr;
 	delete vg_map;
+	vg_map = nullptr;
 
 	return 0;
 }

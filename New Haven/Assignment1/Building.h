@@ -11,21 +11,6 @@ using std::vector;
 
 class BuildingTile : public Node
 {
-public:
-	BuildingTile();
-	BuildingTile(ResourceType type, int value);
-	~BuildingTile();
-	ResourceType* getBuildingType();
-	friend ostream& operator<<(ostream& os, BuildingTile& bt);
-	string typeToString();
-	// Inline getters
-	int getValue() const { return *value; };
-	ResourceType getType() const { return *type; };
-	bool getFaceUp() const { return *faceUp; };
-	void setValue(int value) { *this->value = value; }
-	void setType(ResourceType type) { *this->type = type;  }
-	void setFaceUp(bool faceUp) { *this->faceUp = faceUp; }
-private:
 	/*
 	NOTE:
 	The team decided to have an attribute "type" is of ResourceType
@@ -39,21 +24,43 @@ private:
 	int* value;    // 1 to 6
 	bool* faceUp; 
 
+public:
+	BuildingTile();
+	BuildingTile(ResourceType type, int value);
+	~BuildingTile();
+
+	friend ostream& operator<<(ostream& os, BuildingTile& bt);
+	string typeToString();
+
+	ResourceType* getBuildingTypePointer();
+	int getValue() const;
+	ResourceType getType() const;
+	bool isFaceUp() const;
+	void setValue(int value);
+	void setType(ResourceType type);
+	void setFaceUp(bool faceUp);
+
 };
+
+inline ResourceType* BuildingTile::getBuildingTypePointer() { return type; }
+inline int BuildingTile::getValue() const { return *value; };
+inline ResourceType BuildingTile::getType() const { return *type; };
+inline bool BuildingTile::isFaceUp() const { return *faceUp; };
+inline void BuildingTile::setValue(int value) { *this->value = value; }
+inline void BuildingTile::setType(ResourceType type) { *this->type = type;  }
+inline void BuildingTile::setFaceUp(bool faceUp) { *this->faceUp = faceUp; }
 
 // The Deck of Building Object
 class BuildingDeck
 {
-public:
-	BuildingDeck();
-	~BuildingDeck();
-	BuildingTile* draw();
-	int getNumOfRemain() const { return *this->tileIndex;  };
-
-private:
 	const static int numOfTiles = 144; // 144 buildings
 	int* tileIndex;
 	vector<BuildingTile> deck;
 
+public:
+	BuildingDeck();
+	~BuildingDeck();
+	BuildingTile* draw();
+	int getNumOfRemain() const;
 };
-
+inline int BuildingDeck::getNumOfRemain() const { return *this->tileIndex;  };

@@ -9,31 +9,36 @@ using std::ostream;
 // Harvest tile class (extends Node)
 class HarvestTile
 {
+	const int numOfResource = 4;
+	vector<ResourceType> container;
+
 public:
 	HarvestTile();
 	HarvestTile(ResourceType[4]);
 	~HarvestTile();
-	friend ostream& operator<<(ostream& os, HarvestTile& ht);
-	vector<ResourceType> getResources() { return container; }
-	vector<ResourceType>* getContainer() { return &container; } // Return a reference to the container
 
-private:
-	const int numOfResource = 4;
-	vector<ResourceType> container;
+	friend ostream& operator<<(ostream& os, HarvestTile& ht);
+	vector<ResourceType> getContainer();
+	vector<ResourceType>* getContainerPointer();
+
 };
+inline vector<ResourceType> HarvestTile::getContainer() { return container; }
+inline vector<ResourceType>* HarvestTile::getContainerPointer() { return &container; } 
 
 // The Deck of Harvest Tiles Object
 class HarvestDeck
 {
+	const static int numOfTiles = 60; 
+	int *tileIndex;  
+	vector<HarvestTile> deck;
+
 public:
 	HarvestDeck();
 	~HarvestDeck();
-	HarvestTile* draw();
-	int getNumOfRemain() const; // get the number of remaining card
 
-private:
-	const static int numOfTiles = 60; // 60 Harvest Tiles in a Deck
-	int *tileIndex;  // keep track of the number of remainning tiles inside the deck to be drawed
-	vector<HarvestTile> deck;
+
+	HarvestTile* draw();
+	int getNumOfRemain() const; 
 
 };
+inline int HarvestDeck::getNumOfRemain() const {return *tileIndex;}

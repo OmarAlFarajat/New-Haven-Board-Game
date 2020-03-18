@@ -8,7 +8,8 @@ using std::endl;
 Player::Player()
 {
 	name = new string("Mike");
-	mine = new Hand;
+	myHand = new Hand;
+
 	vg_map = new VGMap();
 	string vgMapName = "Stratford_example.vgmap";
 	loadVGMap(vgMapName, *vg_map);
@@ -18,10 +19,10 @@ Player::Player()
 Player::~Player()
 {
 	vg_map = nullptr;
-	mine = nullptr;
+	myHand = nullptr;
 	name = nullptr;
 	delete vg_map;
-	delete mine;
+	delete myHand;
 	delete name;
 }
 
@@ -35,12 +36,12 @@ The "Player" uses "Hand" to "Place Building Tile"
 */
 void Player::PlaceHarvestTile(GBMap* gb_map)
 {
-	this->mine->playHarvest(gb_map);
+	this->myHand->playHarvest(gb_map);
 }
 
 void Player::PlaceBuildingTile(VGMap* vg_map)
 {
-	this->mine->playBuilding(vg_map);
+	this->myHand->playBuilding(vg_map);
 }
 
 /*
@@ -52,46 +53,24 @@ the drawn card on hand.
 void Player::DrawBuilding(BuildingDeck* deck)
 {
 	if (deck->getNumOfRemain() <= 0) {
-		cout << "There is no more Building Tile in the Deck to draw" << std::endl;
+		cout << "There is no more Building Tile in the Deck to draw" << endl;
 	}
 	else {
-		mine->addBuildingTile(deck->draw());
+		myHand->addBuildingTile(deck->draw());
 	}
 }
 
 void Player::DrawHarvestTile(HarvestDeck* deck)
 {
 	if (deck->getNumOfRemain() <= 0) {
-		cout << "There is no more Harvest Tile in the Deck to draw" << std::endl;
+		cout << "There is no more Harvest Tile in the Deck to draw" << endl;
 	} 
 	else {
-		mine->addHarvestTile(deck->draw());
+		myHand->addHarvestTile(deck->draw());
 	}
-}
-
-/*
-The 3 below methods are not implemented since the team decided to change the design, different from 
-the assignment handout.
-Instead of tracking resources in Player, the team decided to include the resource trackers in the Gameboard (GBMap)
-The decision was rational since the physical board game has the resource trackers on the board.
-All related calculating functions were moved to GBMap file.
-
-*/
-void Player::ResourceTracker()
-{
-
-}
-
-void Player::BuildVillage()
-{
-}
-
-void Player::CalculateResources()
-{
 }
 
 void Player::show()
 {
-	// Showing all the cards currently on Hand
-	this->mine->showHand();
+	this->myHand->showHand();
 }
