@@ -2,6 +2,8 @@
 #include <string>
 #include "Node.h"
 
+using std::string;
+
 enum class ResourceType {TIMBER, STONE, WHEAT, SHEEP, NONE};
 
 // Resource class (extends Node)
@@ -14,7 +16,8 @@ public:
 	~Resource();
 	void setType(ResourceType type);
 	ResourceType getType();
-	std::string getTypeAsString();
+	string getTypeAsString();
+
 };
 
 inline void Resource::setType(ResourceType type) { *this->type = type; }

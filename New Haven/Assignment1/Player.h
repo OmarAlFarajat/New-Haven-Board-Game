@@ -7,9 +7,11 @@
 #include "Resources.h"
 #include "VGMap.h"
 
+using std::string;
+
 class Player {
-    Hand* myHand;
-	std::string* name;
+  Hand* myHand;
+	string* name;
 	VGMap* vg_map; 
 
 public:
@@ -23,7 +25,8 @@ public:
 	void DrawHarvestTile(HarvestDeck* deck);
 
 	VGMap* getVGMap();
-
 	void show();
+  
 };
 inline VGMap* Player::getVGMap() {	return vg_map; }
+

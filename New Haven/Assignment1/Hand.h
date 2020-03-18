@@ -6,13 +6,15 @@
 #include "Building.h"
 #include "VGMap.h"
 
+using std::vector;
+
 // Hand Object 
 class Hand 
 {
 	int* numOfHarvest;
 	int* numOfBuilding;
-	std::vector<HarvestTile*>* harvestHold;
-	std::vector<BuildingTile*>* buildingHold;
+	vector<HarvestTile*>* harvestHold;
+	vector<BuildingTile*>* buildingHold;
 
 	public:
 	Hand();
@@ -32,12 +34,13 @@ class Hand
 	int getNodeID_GB(GBMap* gb_map, int row, int col);
 	int getNodeID_VG(VGMap* vg_map, int row, int col);
 
-    void exchange(GBMap* gb_map, TileNode*);
+  void exchange(GBMap* gb_map, TileNode*);
 	bool requestRotate(HarvestTile* target);
 	int playHarvest(GBMap* gb_map);
 
 	bool requestFlip(BuildingTile* target);
 	void playBuilding(VGMap* vg_map);
+
 };
 
 inline int Hand::getRemainHarvest() {return *numOfHarvest;}

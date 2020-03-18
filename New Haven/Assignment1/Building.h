@@ -5,6 +5,10 @@
 #include "Node.h"
 #include "Resources.h"
 
+using std::string;
+using std::ostream;
+using std::vector;
+
 class BuildingTile : public Node
 {
 	/*
@@ -25,8 +29,8 @@ public:
 	BuildingTile(ResourceType type, int value);
 	~BuildingTile();
 
-	friend std::ostream& operator<<(std::ostream& os, BuildingTile& bt);
-	std::string typeToString();
+	friend ostream& operator<<(ostream& os, BuildingTile& bt);
+	string typeToString();
 
 	ResourceType* getBuildingTypePointer();
 	int getValue() const;
@@ -51,7 +55,7 @@ class BuildingDeck
 {
 	const static int numOfTiles = 144; // 144 buildings
 	int* tileIndex;
-	std::vector<BuildingTile> deck;
+	vector<BuildingTile> deck;
 
 public:
 	BuildingDeck();
