@@ -46,6 +46,27 @@ CImg<unsigned char> BuildingToBMP(ResourceType type) {
     }
 }
 
+CImg<unsigned char> BuildingDownToBMP(ResourceType type) {
+    CImg<unsigned char> SHEEP("./Images/GreenBuildingDown.BMP");
+    CImg<unsigned char> STONE("./Images/GreyBuildingDown.BMP");
+    CImg<unsigned char> TIMBER("./Images/RedBuildingDown.BMP");
+    CImg<unsigned char> WHEAT("./Images/YellowBuildingDown.BMP");
+    CImg<unsigned char> NONE("./Images/None.BMP");
+
+    switch (type) {
+    case ResourceType::NONE:
+        return NONE;
+    case ResourceType::SHEEP:
+        return SHEEP;
+    case ResourceType::STONE:
+        return STONE;
+    case ResourceType::WHEAT:
+        return WHEAT;
+    case ResourceType::TIMBER:
+        return TIMBER;
+    }
+}
+
 CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
 {
     unsigned char black[] = { 0,0,0 };
@@ -162,8 +183,13 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
         for (int j = 0; j < 6; j++) {
 
             CImg<unsigned char> buildingTile;
-            buildingTile = BuildingToBMP(static_cast<BuildingTile*>(vgNodes[j*5 +i])->getType());
-            buildingTile.draw_text(3, 20, to_string(static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getValue()).c_str(), black, 1, 1.0f, 40);
+            if (static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getFaceUp()) {
+                buildingTile = BuildingToBMP(static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getType());
+                buildingTile.draw_text(3, 20, to_string(static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getValue()).c_str(), black, 1, 1.0f, 40);
+            }
+            else
+                buildingTile = BuildingDownToBMP(static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getType());
+
             VGMAP.draw_image(18+93*i,23+93*j, 0, buildingTile, 100);
         }
     }
@@ -195,17 +221,27 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
                 break;
             }
         }
-        HAND.draw_image(125*j,25,0,tile,100);
-        HAND.draw_text(125 * j, 25, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
+        HAND.draw_image(80*j,25,0,tile,100);
+        HAND.draw_text(80*j, 25, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
     }
 
     vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
 
     for (int i = 0; i < buildings.size(); i++) {
-        CImg<unsigned char> building = BuildingToBMP(buildings[i]->getType());
-        building.draw_text(5, 30, to_string(buildings[i]->getValue()).c_str(), black, 1, 1.0f, 40);
-        HAND.draw_image(100 * i, 135, 0, building, 100);
-        HAND.draw_text(100* i, 135, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
+
+
+        CImg<unsigned char> building = BuildingToBMP(buildings[i]->getType())/*.resize_tripleXY().resize_halfXY().resize_halfXY()*/; 
+
+        building.draw_text(4, 20, to_string(buildings[i]->getValue()).c_str(), black, 1, 1.0f, 28);
+
+        int handRow = 0; 
+        if (i > 6 && i < 13)
+            handRow = 1;
+        else if (i >= 23)
+            handRow = 2;
+
+        HAND.draw_image(80 * (i%6), 135 + 93*handRow, 0, building, 100);
+        HAND.draw_text(80* (i%6), 135 + 93*handRow, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
     }
 
     GRID.append(HAND, 'y');;
