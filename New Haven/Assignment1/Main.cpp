@@ -245,7 +245,7 @@ void testPlayer() {
 		test->DrawHarvestTile(&harvestDeck);
 	}
 
-	int drawBuilding = 21;
+	int drawBuilding = 18;
 	//std::cout << "Drawing " << drawBuilding << " Building Tiles" << std::endl;
 	for (int i = 0; i < drawBuilding; ++i) {
 		test->DrawBuilding(&buildingDeck);

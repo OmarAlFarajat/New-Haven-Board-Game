@@ -221,8 +221,8 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
                 break;
             }
         }
-        HAND.draw_image(80*j,25,0,tile,100);
-        HAND.draw_text(80*j, 25, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
+        HAND.draw_image(125*j,25,0,tile,100);
+        HAND.draw_text(125*j, 25, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
     }
 
     vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
@@ -235,9 +235,9 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
         building.draw_text(4, 20, to_string(buildings[i]->getValue()).c_str(), black, 1, 1.0f, 28);
 
         int handRow = 0; 
-        if (i > 6 && i < 13)
+        if (i > 5 && i < 12)
             handRow = 1;
-        else if (i >= 23)
+        else if (i >= 12)
             handRow = 2;
 
         HAND.draw_image(80 * (i%6), 135 + 93*handRow, 0, building, 100);
