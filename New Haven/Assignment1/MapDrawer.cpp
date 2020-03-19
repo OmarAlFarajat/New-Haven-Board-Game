@@ -183,7 +183,7 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
         for (int j = 0; j < 6; j++) {
 
             CImg<unsigned char> buildingTile;
-            if (static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getFaceUp()) {
+            if (static_cast<BuildingTile*>(vgNodes[j * 5 + i])->isFaceUp()) {
                 buildingTile = BuildingToBMP(static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getType());
                 buildingTile.draw_text(3, 20, to_string(static_cast<BuildingTile*>(vgNodes[j * 5 + i])->getValue()).c_str(), black, 1, 1.0f, 40);
             }
@@ -205,7 +205,7 @@ CImg<unsigned char> drawGBMap(GBMap& const gb_map, Player& const player)
 
         for (int i = 0; i < 4; i++) {
 
-            CImg<unsigned char> resource = ResourceToBMP(tiles[j]->getResources()[i]);
+            CImg<unsigned char> resource = ResourceToBMP(tiles[j]->getContainer()[i]);
             switch (i) {
             case 0:
                 tile.draw_image(0, 0, 0, resource, 100);

@@ -10,7 +10,7 @@
 using std::string;
 
 class Player {
-  Hand* myHand;
+	Hand* myHand;
 	string* name;
 	VGMap* vg_map; 
 
@@ -30,6 +30,6 @@ public:
   
 };
 inline VGMap* Player::getVGMap() {	return vg_map; }
-inline Hand* Player::getHand() { return mine; }
+inline Hand* Player::getHand() { return myHand; }
 
 

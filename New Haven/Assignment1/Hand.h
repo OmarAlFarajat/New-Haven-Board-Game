@@ -44,13 +44,12 @@ class Hand
 
 };
 
-inline int Hand::getRemainHarvest() const {return *numOfHarvest;}
-inline int Hand::getRemainBuilding() const {return *numOfBuilding;}
+inline int Hand::getRemainHarvest() {return *numOfHarvest;}
+inline int Hand::getRemainBuilding() {return *numOfBuilding;}
 inline bool Hand::hasNoHarvest() {return (*numOfHarvest == 0);}
 inline bool Hand::hasNoBuilding() { return (*numOfBuilding == 0);}
-inline vector<HarvestTile*>* Hand::getHarvestHold() const { return harvestHold; }
-inline vector<BuildingTile*>* Hand::getBuildingHold() const { return buildingHold; }
-
+inline vector<HarvestTile*>* Hand::getHarvestHold() { return harvestHold; }
+inline vector<BuildingTile*>* Hand::getBuildingHold() { return buildingHold; }
 inline HarvestTile* Hand::getHarvestTile(int index) {return harvestHold[0][index];}
 inline BuildingTile* Hand::getBuildingTile(int index) { return buildingHold[0][index]; }
 
