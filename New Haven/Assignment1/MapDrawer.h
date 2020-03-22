@@ -6,5 +6,5 @@
 using namespace cimg_library;
 
 CImg<unsigned char> ResourceToBMP(ResourceType type);
-CImg<unsigned char> drawGBMap(GBMap& gb_map, Player& player);
+CImg<unsigned char> drawGame(GBMap& gb_map, Player& player);
 
