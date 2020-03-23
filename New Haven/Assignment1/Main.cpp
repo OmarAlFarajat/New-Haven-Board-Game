@@ -254,6 +254,7 @@ void testPlayer() {
 	// CIMG Main Display
 	cimg_library::CImgDisplay main_disp;
 
+	MapDrawer drawer;
 	// CIMG Window Draw Loop
 	while (true)
 	{
@@ -261,23 +262,22 @@ void testPlayer() {
 		//std::cout << " SHOWING HAND AFTER DRAWING " << std::endl;
 		test->show();
 		//std::cout << "\n==============================" << std::endl;
-		main_disp = cimg_library::CImgDisplay(drawGame(*gb_map, *test),"cstr?");
+		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test),"cstr?");
 
 		//std::cout << "Placing a Harvest Tile on the game board" << std::endl;
 		test->PlaceHarvestTile(gb_map);
-		main_disp = cimg_library::CImgDisplay(drawGame(*gb_map, *test), "cstr?");
+		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "cstr?");
 
 		//std::cout << "Placing a Building Tile on the Village board" << std::endl;
 		test->PlaceBuildingTile(test->getVGMap());
 		test->show();
-		main_disp = cimg_library::CImgDisplay(drawGame(*gb_map, *test), "cstr?");
+		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "cstr?");
 
 		main_disp.wait();
 
 		// Trying to see if we can get the image to "refresh" whenever input is made into the console... 
 		//if (main_disp.button())
 		//	main_disp = cimg_library::CImgDisplay(drawGBMap(*gb_map, *test), "cstr?");
-
 	}
 
 

@@ -63,9 +63,14 @@ public:
 	void resetAllVisited();
 
 	// Getters
-	Node* getNode(int index) { return nodes[0][index]; }
-	vector<Node*>* getNodes() { return nodes; }
-	int getNumEnabledNodes() { return *numEnabledNodes; }
-	int getLength() { return *length; }
-	int getHeight() { return *height; }
+	Node* getNode(int index);
+	vector<Node*>* getNodes();
+	int getNumEnabledNodes();
+	int getLength();
+	int getHeight();
 };
+inline Node* Graph::getNode(int index) { return nodes[0][index]; }
+inline vector<Node*>* Graph::getNodes() { return nodes; }
+inline int Graph::getNumEnabledNodes() { return *numEnabledNodes; }
+inline int Graph::getLength() { return *length; }
+inline int Graph::getHeight() { return *height; }

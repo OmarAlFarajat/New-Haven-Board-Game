@@ -39,10 +39,11 @@ public:
 	void setResourceTracker(std::map<ResourceType, int>* inTracker);
 
 	// Getters
-	Graph* getTileGraph() { return tileGraph; }
-	Graph* getResourceGraph() { return resourceGraph; }
-	std::map<ResourceType, int>* getResourceTracker() { return resourceTracker; }
+	Graph* getTileGraph();
+	Graph* getResourceGraph();
+	std::map<ResourceType, int>* getResourceTracker();
 
 };
-
-
+inline Graph* GBMap::getTileGraph() { return tileGraph; }
+inline Graph* GBMap::getResourceGraph() { return resourceGraph; }
+inline std::map<ResourceType, int>* GBMap::getResourceTracker() { return resourceTracker; }

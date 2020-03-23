@@ -4,113 +4,117 @@ using std::cout;
 using std::endl; 
 using std::vector;
 using std::to_string;
+using std::make_unique;
+
+MapDrawer::MapDrawer()
+{
+    MAP_TILE = make_unique<CImg<unsigned char>>("./Images/TileNode.BMP");
+    DISABLED_TILE = make_unique<CImg<unsigned char>>("./Images/DisabledTile.BMP");
+
+    RESOURCE_TRACKER = make_unique<CImg<unsigned char>>("./Images/ResourceTracker.BMP");
+    AVAILABLE_BUILDINGS = make_unique<CImg<unsigned char>>("./Images/AvailableBuildings.BMP");
+
+    NONE = make_unique<CImg<unsigned char>>("./Images/None.BMP");
+
+    SHEEP = make_unique<CImg<unsigned char>>("./Images/Sheep.BMP");
+    STONE = make_unique<CImg<unsigned char>>("./Images/Stone.BMP");
+    WHEAT = make_unique<CImg<unsigned char>>("./Images/Wheat.BMP");
+    TIMBER = make_unique<CImg<unsigned char>>("./Images/Timber.BMP");
+
+    GREEN_TRACKER = make_unique<CImg<unsigned char>>("./Images/GreenTracker.BMP");
+    GREY_TRACKER = make_unique<CImg<unsigned char>>("./Images/GreyTracker.BMP");
+    YELLOW_TRACKER = make_unique<CImg<unsigned char>>("./Images/YellowTracker.BMP");
+    RED_TRACKER = make_unique<CImg<unsigned char>>("./Images/RedTracker.BMP");
+
+    GREEN_BUILDING = make_unique<CImg<unsigned char>>("./Images/GreenBuilding.BMP");
+    GREY_BUILDING = make_unique<CImg<unsigned char>>("./Images/GreyBuilding.BMP");
+    YELLOW_BUILDING = make_unique<CImg<unsigned char>>("./Images/YellowBuilding.BMP");
+    RED_BUILDING = make_unique<CImg<unsigned char>>("./Images/RedBuilding.BMP");
+
+    GREEN_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/GreenBuildingDown.BMP");
+    GREY_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/GreyBuildingDown.BMP");
+    YELLOW_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/YellowBuildingDown.BMP");
+    RED_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/RedBuildingDown.BMP");
+}
 
 // Returns the appropriate resource image based on the passed resource type
-CImg<unsigned char> ResourceToBMP(ResourceType type) {
-    CImg<unsigned char> SHEEP("./Images/Sheep.BMP");
-    CImg<unsigned char> STONE("./Images/Stone.BMP");
-    CImg<unsigned char> TIMBER("./Images/Timber.BMP");
-    CImg<unsigned char> WHEAT("./Images/Wheat.BMP");
-    CImg<unsigned char> NONE("./Images/None.BMP");
+CImg<unsigned char> MapDrawer::ResourceToBMP(ResourceType type) {
     switch (type) {
     case ResourceType::NONE:
-        return NONE;
+        return *NONE;
     case ResourceType::SHEEP:
-        return SHEEP;
+        return *SHEEP;
     case ResourceType::STONE:
-        return STONE;
+        return *STONE;
     case ResourceType::WHEAT:
-        return WHEAT;
+        return *WHEAT;
     case ResourceType::TIMBER:
-        return TIMBER;
+        return *TIMBER;
     }
 }
 
 // Returns the appropriate building image based on the passed resource type
-CImg<unsigned char> BuildingToBMP(ResourceType type) {
-    CImg<unsigned char> SHEEP("./Images/GreenBuilding.BMP");
-    CImg<unsigned char> STONE("./Images/GreyBuilding.BMP");
-    CImg<unsigned char> TIMBER("./Images/RedBuilding.BMP");
-    CImg<unsigned char> WHEAT("./Images/YellowBuilding.BMP");
-    CImg<unsigned char> NONE("./Images/None.BMP");
-
+CImg<unsigned char> MapDrawer::BuildingToBMP(ResourceType type) {
     switch (type) {
     case ResourceType::NONE:
-        return NONE;
+        return *NONE;
     case ResourceType::SHEEP:
-        return SHEEP;
+        return *GREEN_BUILDING;
     case ResourceType::STONE:
-        return STONE;
+        return *GREY_BUILDING;
     case ResourceType::WHEAT:
-        return WHEAT;
+        return *YELLOW_BUILDING;
     case ResourceType::TIMBER:
-        return TIMBER;
+        return *RED_BUILDING;
     }
 }
 
 // Returns the appropriate face-down building image based on the passed resource type
-CImg<unsigned char> BuildingDownToBMP(ResourceType type) {
-    CImg<unsigned char> SHEEP("./Images/GreenBuildingDown.BMP");
-    CImg<unsigned char> STONE("./Images/GreyBuildingDown.BMP");
-    CImg<unsigned char> TIMBER("./Images/RedBuildingDown.BMP");
-    CImg<unsigned char> WHEAT("./Images/YellowBuildingDown.BMP");
-    CImg<unsigned char> NONE("./Images/None.BMP");
-
+CImg<unsigned char> MapDrawer::BuildingDownToBMP(ResourceType type) {
     switch (type) {
     case ResourceType::NONE:
-        return NONE;
+        return *NONE;
     case ResourceType::SHEEP:
-        return SHEEP;
+        return *GREEN_BUILDING_DOWN;
     case ResourceType::STONE:
-        return STONE;
+        return *GREY_BUILDING_DOWN;
     case ResourceType::WHEAT:
-        return WHEAT;
+        return *YELLOW_BUILDING_DOWN;
     case ResourceType::TIMBER:
-        return TIMBER;
+        return *RED_BUILDING_DOWN;
     }
 }
 
-CImg<unsigned char> drawGame(GBMap& const gb_map, Player& const player)
-{
-    unsigned char black[] = { 0,0,0 };
-    unsigned char vagueBrown[] = { 224,192,128 };
-    CImg<unsigned char> GRID;
-
-//// GBMAP
-    CImg<unsigned char> MAP_TILE("./Images/TileNode.BMP");
-    CImg<unsigned char> DISABLED_TILE("./Images/DisabledTile.BMP");
-    CImg<unsigned char> RESOURCE_TRACKER("./Images/ResourceTracker.BMP");
-    CImg<unsigned char> AVAILABLE_BUILDINGS("./Images/AvailableBuildings.BMP");
-
-    CImg<unsigned char> GREY_TRACKER("./Images/GreyTracker.BMP");
-    CImg<unsigned char> RED_TRACKER("./Images/RedTracker.BMP");
-    CImg<unsigned char> YELLOW_TRACKER("./Images/YellowTracker.BMP");
-    CImg<unsigned char> GREEN_TRACKER("./Images/GreenTracker.BMP");
-
+CImg<unsigned char> MapDrawer::drawColumnIndicators(GBMap& const gb_map) {
     // Make the numbered column indicators based on the length of the tile graph
-    CImg<unsigned char> columns;
-    columns = CImg<unsigned char>(25, 25, 1, 3, 0);     // Empty square corner between column and row indicators
+    CImg<unsigned char> columns(25, 25, 1, 3, 0);    // Empty square corner between column and row indicators
 
     // Create the column indicator based on length of tile graph
     for (int i = 0; i < gb_map.getTileGraph()->getLength(); i++) {
-        CImg<unsigned char> column("./Images/Column.BMP");
-        int column_x = 50;
-        int column_y = 1;
-        column.draw_text(column_x, column_y, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
-        columns.append(column);
+        CImg<unsigned char> columnTitle("./Images/Column.BMP");
+        int columnTitle_x = 50;
+        int columnTitle_y = 1;
+        columnTitle.draw_text(columnTitle_x, columnTitle_y, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
+        columns.append(columnTitle);
     }
+    
+    return columns;
+}
 
+CImg<unsigned char> MapDrawer::drawGBMap(GBMap& const gb_map)
+{
+    //// GBMAP
     // GRID is initialized with the numbered columns to start and will gradually be appended with more components
-    GRID = columns;
+    CImg<unsigned char> GRID = MapDrawer::drawColumnIndicators(gb_map);
 
     // Row-by-row traversal of harvest tile graph
     for (int i = 0; i < gb_map.getTileGraph()->getHeight(); i++) {
 
         // Draws the column indicator to the far-left of the row.
-        CImg<unsigned char> row("./Images/Row.BMP");
+        CImg<unsigned char> rowTitle("./Images/Row.BMP");
         int row_x = 8;
         int row_y = 50;
-        row.draw_text(row_x, row_y, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
+        rowTitle.draw_text(row_x, row_y, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
 
         // Traverse the row
         for (int j = 0; j < gb_map.getTileGraph()->getLength(); j++) {
@@ -124,7 +128,7 @@ CImg<unsigned char> drawGame(GBMap& const gb_map, Player& const player)
             // Append the results to the row as is appropriate. 
             if (n->isEnabled()) {
                 // Give the tile a "blank" map tile which will be dressed with resources
-                CImg<unsigned char> tile = MAP_TILE;
+                CImg<unsigned char> tile = *MAP_TILE;
 
                 // For each of the 4 resources that are on a harvest tile
                 for (int k = 0; k < 4; k++) {
@@ -137,33 +141,32 @@ CImg<unsigned char> drawGame(GBMap& const gb_map, Player& const player)
                         tile.draw_image(0, 0, 0, resource, 100);
                         break;
                     case 1:
-                        tile.draw_image(tile.width()/2, 0, 0, resource, 100);
+                        tile.draw_image(tile.width() / 2, 0, 0, resource, 100);
                         break;
                     case 2:
-                        tile.draw_image(0, tile.height()/2, 0, resource, 100);
+                        tile.draw_image(0, tile.height() / 2, 0, resource, 100);
                         break;
                     case 3:
-                        tile.draw_image(tile.width()/2, tile.height()/2, 0, resource, 100);
+                        tile.draw_image(tile.width() / 2, tile.height() / 2, 0, resource, 100);
                         break;
                     }
                 }
-                row = row.append(tile, 'x');
+                rowTitle.append(tile, 'x');
             }
             else
-                row = row.append(DISABLED_TILE, 'x');
+                rowTitle.append(*DISABLED_TILE, 'x');
         }
         // Once the complete row has been drawn, append it in the vertical direction to GRID
-        GRID = GRID.append(row, 'y');
+        GRID = GRID.append(rowTitle, 'y');
     }
 
-//// VGMAP
+    return GRID;
+}
+
+CImg<unsigned char> MapDrawer::drawVGMap(Player& const player)
+{
     CImg<unsigned char> VGMAP("./Images/VGMap.BMP");
-
-    CImg<unsigned char> GREY_BUILDING("./Images/GreyBuilding.BMP");
-    CImg<unsigned char> RED_BUILDING("./Images/RedBuilding.BMP");
-    CImg<unsigned char> YELLOW_BUILDING("./Images/YellowBuilding.BMP");
-    CImg<unsigned char> GREEN_BUILDING("./Images/GreenBuilding.BMP");
-
+    //// VGMAP
     // Add the name of the village to the bottom of the VGMap
     int village_name_x = 235;
     int village_name_y = 655;
@@ -201,17 +204,18 @@ CImg<unsigned char> drawGame(GBMap& const gb_map, Player& const player)
             VGMAP.draw_image(building_x, building_y, 0, buildingTile, 100);
         }
     }
+    return VGMAP;
+}
 
-//// HAND
-    CImg<unsigned char> HAND("./Images/Hand.BMP");
-
+void MapDrawer::drawHarvestOnHand(Player& const player, std::shared_ptr<CImg<unsigned char>> HAND)
+{
     vector<HarvestTile*> tiles = player.getHand()->getHarvestHold()[0];
 
     // HAND: HARVEST TILES
     // Iterate through each harvest tile in the player's hand
-    for(int j = 0; j < tiles.size(); j++){
+    for (int j = 0; j < tiles.size(); j++) {
         // Initialize to a "blank" tile
-        CImg<unsigned char> tile = MAP_TILE;
+        CImg<unsigned char> tile = *MAP_TILE;
         // For each of the 4 resource slots, draw the resource image onto the tile
         for (int i = 0; i < 4; i++) {
 
@@ -221,31 +225,34 @@ CImg<unsigned char> drawGame(GBMap& const gb_map, Player& const player)
                 tile.draw_image(0, 0, 0, resource, 100);
                 break;
             case 1:
-                tile.draw_image(tile.width()/2, 0, 0, resource, 100);
+                tile.draw_image(tile.width() / 2, 0, 0, resource, 100);
                 break;
             case 2:
-                tile.draw_image(tile.width()/2, tile.height()/2, 0, resource, 100);
+                tile.draw_image(tile.width() / 2, tile.height() / 2, 0, resource, 100);
                 break;
             case 3:
-                tile.draw_image(0, tile.height()/2, 0, resource, 100);
+                tile.draw_image(0, tile.height() / 2, 0, resource, 100);
                 break;
             }
         }
         // Once the tile is "dressed", we draw it in the appropriate place in the player's hand
-        int x_offset = tile.width() * 1.25; 
+        int x_offset = tile.width() * 1.25;
         int y_offset = 25;
-        HAND.draw_image(x_offset*j, y_offset, 0, tile, 100);
-        HAND.draw_text(x_offset*j, y_offset, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
+        HAND->draw_image(x_offset * j, y_offset, 0, tile, 100);
+        HAND->draw_text(x_offset * j, y_offset, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
     }
+}
 
+void MapDrawer::drawBuildingsOnHand(Player& const player, std::shared_ptr<CImg<unsigned char>> HAND)
+{
     vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
-    
+
     // HAND: BUILDINGS
     // Iterate through each building in player's hand
     for (int i = 0; i < buildings.size(); i++) {
 
         // Assign "building" the correct image based on building type
-        CImg<unsigned char> building = BuildingToBMP(buildings[i]->getType()); 
+        CImg<unsigned char> building = BuildingToBMP(buildings[i]->getType());
 
         // Draw the building value onto the building image
         int value_x = 4;
@@ -258,18 +265,29 @@ CImg<unsigned char> drawGame(GBMap& const gb_map, Player& const player)
 
         const int number_of_rows = 3;
 
-        int row_size = (buildings.size()+number_of_rows-1)/number_of_rows;
-        int handRow = i/row_size;   // integer division intended
+        int row_size = (buildings.size() + number_of_rows - 1) / number_of_rows;
+        int handRow = i / row_size;   // integer division intended
 
-        int x_offset = HAND.width()/row_size;
+        int x_offset = HAND->width() / row_size;
         int y_offset = 135;
-        HAND.draw_image(x_offset*(i% row_size), y_offset + building.width()*handRow, 0, building, 100);
-        HAND.draw_text(x_offset*(i% row_size), y_offset + building.width()*handRow, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
+        HAND->draw_image(x_offset * (i % row_size), y_offset + building.width() * handRow, 0, building, 100);
+        HAND->draw_text(x_offset * (i % row_size), y_offset + building.width() * handRow, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
     }
+}
 
-    GRID.append(HAND, 'y');
+CImg<unsigned char> MapDrawer::drawHand(Player& const player)
+{
+    //// HAND
+    std::shared_ptr<CImg<unsigned char>> HAND;
+    HAND = std::make_shared<CImg<unsigned char>>("./Images/Hand.BMP");
+    drawHarvestOnHand(player, HAND);
+    drawBuildingsOnHand(player, HAND);
+    return *HAND;
+}
 
-//// RESOURCE TRACKER
+void MapDrawer::drawResourceTracker(GBMap& const gb_map)
+{
+    //// RESOURCE TRACKER
     int stone = gb_map.getResourceTracker()[0][ResourceType::STONE];
     int timber = gb_map.getResourceTracker()[0][ResourceType::TIMBER];
     int wheat = gb_map.getResourceTracker()[0][ResourceType::WHEAT];
@@ -284,16 +302,29 @@ CImg<unsigned char> drawGame(GBMap& const gb_map, Player& const player)
     int resources_y = 670;  // Vertical starting position of resources on the tracker
     int delta_y = 33;    // This is the amount of pixels needed to move up one step in the resource tracker
 
-    RESOURCE_TRACKER.draw_image(stone_x, resources_y - delta_y * stone, GREY_TRACKER, 100); 
-    RESOURCE_TRACKER.draw_image(timber_x, resources_y - delta_y * timber, RED_TRACKER, 100);
-    RESOURCE_TRACKER.draw_image(wheat_x, resources_y - delta_y * wheat, YELLOW_TRACKER, 100);
-    RESOURCE_TRACKER.draw_image(sheep_x, resources_y - delta_y * sheep, GREEN_TRACKER, 100);
+    RESOURCE_TRACKER->draw_image(stone_x, resources_y - delta_y * stone, *GREY_TRACKER, 100);
+    RESOURCE_TRACKER->draw_image(timber_x, resources_y - delta_y * timber, *RED_TRACKER, 100);
+    RESOURCE_TRACKER->draw_image(wheat_x, resources_y - delta_y * wheat, *YELLOW_TRACKER, 100);
+    RESOURCE_TRACKER->draw_image(sheep_x, resources_y - delta_y * sheep, *GREEN_TRACKER, 100);
 
-//// FINAL ASSEMBLY OF ALL BOARD AND PLAYER COMPONENTS
-    return RESOURCE_TRACKER.append(GRID).append(AVAILABLE_BUILDINGS).append(VGMAP);
 }
 
+CImg<unsigned char> MapDrawer::drawGame(GBMap& const gb_map, Player& const player)
+{
+    CImg<unsigned char> gameBoard = drawGBMap(gb_map);
+    
+    CImg<unsigned char> VGMAP = drawVGMap(player);
 
+    CImg<unsigned char> HAND = MapDrawer::drawHand(player);
 
-
+    gameBoard.append(HAND, 'y');
+    drawResourceTracker(gb_map);
+    
+//// FINAL ASSEMBLY OF ALL BOARD AND PLAYER COMPONENTS
+    CImg<unsigned char> SCREEN = *RESOURCE_TRACKER;
+    SCREEN.append(gameBoard);
+    SCREEN.append(*AVAILABLE_BUILDINGS);
+    SCREEN.append(VGMAP);
+    return SCREEN;
+}
 
