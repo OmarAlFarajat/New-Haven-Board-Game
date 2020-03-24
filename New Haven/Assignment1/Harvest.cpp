@@ -44,6 +44,7 @@ HarvestTile::HarvestTile()
 
 	}
 
+	shipmentTile = new bool(false);
 }
 
 HarvestTile::HarvestTile(ResourceType resources[4])
@@ -60,31 +61,35 @@ HarvestTile::~HarvestTile()
 //Override << operator to print out details of a Harvest Tile for debugging purpose
 ostream& operator<<(ostream& os, HarvestTile& ht) 
 {
-	/*
-		TODO: Figure out how to deal with NULL pointer when trying to display 
-		a NULL card <trying to draw when deck is empty>
-	*/
 	vector<string> output;
-	// Loop through the container and get the type of Resource in each position
-	for (vector<ResourceType>::iterator it = ht.container.begin(); it!= ht.container.end(); ++it) {
-		switch (*it) {
-		case ResourceType::SHEEP:
-			output.push_back("SHEEP");
-			break;
-		case ResourceType::STONE:
-			output.push_back("STONE");
-			break;
-		case ResourceType::TIMBER:
-			output.push_back("TIMBER");
-			break;
-		case ResourceType::WHEAT:
-			output.push_back("WHEAT");
-			break;
-		default:
-			output.push_back("INVALID RESOURCE -->>> NEED DEBUG");
-		}
 
-}
+	if (ht.isShipmentTile()) {
+		os << ("SHIPMENT TILE: RESOURCES ARE LOCKED") << endl;
+		for (int i = 0; i < 4; ++i) {
+			output.push_back(" ? ");
+		}
+	}
+	else {
+		// Loop through the container and get the type of Resource in each position
+		for (vector<ResourceType>::iterator it = ht.container.begin(); it!= ht.container.end(); ++it) {
+			switch (*it) {
+			case ResourceType::SHEEP:
+				output.push_back("SHEEP");
+				break;
+			case ResourceType::STONE:
+				output.push_back("STONE");
+				break;
+			case ResourceType::TIMBER:
+				output.push_back("TIMBER");
+				break;
+			case ResourceType::WHEAT:
+				output.push_back("WHEAT");
+				break;
+			default:
+				output.push_back("INVALID RESOURCE -->>> NEED DEBUG");
+			}
+		}
+	}
 
 	// Print out to the screen
 	/* 

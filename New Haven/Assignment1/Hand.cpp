@@ -13,6 +13,8 @@ Hand::Hand()
 	numOfBuilding = new int(0);
 	harvestHold = new vector<HarvestTile*>(0);
 	buildingHold = new vector<BuildingTile*>(0);
+	SHIPMENT_TILE = new HarvestTile();
+	containSHIPMENT = new bool(false);
 }
 
 Hand::~Hand()
@@ -25,21 +27,46 @@ Hand::~Hand()
 	harvestHold = nullptr;
 	delete buildingHold;
 	buildingHold = nullptr;
+	delete SHIPMENT_TILE;
+	SHIPMENT_TILE = nullptr;
+	delete containSHIPMENT;
+	containSHIPMENT = nullptr;
+}
 
+void Hand::showHarvests() {
+	// Showing Harvest cards on Hand, including SHIPMENT TILE (if having)
+	cout << "\nShowing Harvest Tiles on Hand" << endl;
+	for (int i = 0; i < this->getRemainHarvest(); ++i) {
+		cout << "Harvest Tile no." << i << endl;
+		cout << *harvestHold[0][i] << endl;
+	}
+
+	if (hasSHIPMENT_TILE()) {
+		cout << *getSHIPMENT_TILE() << endl;
+	}
+}
+
+void Hand::showBuildings() {
+	//Showing Buildings cards on Hand
+	cout << "Showing Buildings on Hand" << endl;
+	for (int i = 0; i < this->getRemainBuilding(); ++i) {
+		cout << "Building Tile no." << i << endl;
+		cout << *buildingHold[0][i] << endl;
+	}
 }
 
 void Hand::showHand()
 {
 	cout << "Showing cards on hand:" << endl;
-	for (int i = 0; i < this->getRemainHarvest(); ++i) {
-		cout << "Harvest Tile no." << i << endl;
-		cout << *harvestHold[0][i] << endl;
-	}
-	for (int i = 0; i < this->getRemainBuilding(); ++i) {
-		cout << "Building Tile no." << i << endl;
-		cout << *buildingHold[0][i] << endl;
-	}
+	Hand::showHarvests();
+	Hand::showBuildings();
+}
 
+void Hand::addSHIPMENT(HarvestTile* shipment)
+{
+	SHIPMENT_TILE = shipment;
+	SHIPMENT_TILE->setShipmentStatus(true);
+	*containSHIPMENT = true;
 }
 
 void Hand::addHarvestTile(HarvestTile* ht)

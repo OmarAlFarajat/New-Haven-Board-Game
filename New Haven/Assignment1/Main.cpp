@@ -188,6 +188,8 @@ void testHandObj() {
 		mine.addHarvestTile(harvestDeck.draw());
 		mine.addBuildingTile(buildingDeck.draw());
 	}
+	mine.addSHIPMENT(harvestDeck.draw());
+
 	cout << "Showing cards on Hand after drawing from the Deck" << endl;
 	mine.showHand();
 
@@ -314,10 +316,10 @@ int main() {
 	//testGBMap();
 	//testHarvestDeck();
 	//testBuildingDeck();
-	//testHandObj();
+	testHandObj();
 	//testResourceCount(); 	
 	//testVGMap();
-	testPlayer();
+	//testPlayer();
 	//printAllGraphs();
 
 	delete gb_map;
