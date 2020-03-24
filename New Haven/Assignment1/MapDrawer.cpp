@@ -5,6 +5,8 @@ using std::endl;
 using std::vector;
 using std::to_string;
 using std::make_unique;
+using std::make_shared;
+using std::shared_ptr;
 
 MapDrawer::MapDrawer()
 {
@@ -207,7 +209,7 @@ CImg<unsigned char> MapDrawer::drawVGMap(Player& const player)
     return VGMAP;
 }
 
-void MapDrawer::drawHarvestOnHand(Player& const player, std::shared_ptr<CImg<unsigned char>> HAND)
+void MapDrawer::drawHarvestOnHand(Player& const player, shared_ptr<CImg<unsigned char>> HAND)
 {
     vector<HarvestTile*> tiles = player.getHand()->getHarvestHold()[0];
 
@@ -243,7 +245,7 @@ void MapDrawer::drawHarvestOnHand(Player& const player, std::shared_ptr<CImg<uns
     }
 }
 
-void MapDrawer::drawBuildingsOnHand(Player& const player, std::shared_ptr<CImg<unsigned char>> HAND)
+void MapDrawer::drawBuildingsOnHand(Player& const player, shared_ptr<CImg<unsigned char>> HAND)
 {
     vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
 
@@ -278,8 +280,8 @@ void MapDrawer::drawBuildingsOnHand(Player& const player, std::shared_ptr<CImg<u
 CImg<unsigned char> MapDrawer::drawHand(Player& const player)
 {
     //// HAND
-    std::shared_ptr<CImg<unsigned char>> HAND;
-    HAND = std::make_shared<CImg<unsigned char>>("./Images/Hand.BMP");
+    shared_ptr<CImg<unsigned char>> HAND;
+    HAND = make_shared<CImg<unsigned char>>("./Images/Hand.BMP");
     drawHarvestOnHand(player, HAND);
     drawBuildingsOnHand(player, HAND);
     return *HAND;
@@ -287,6 +289,8 @@ CImg<unsigned char> MapDrawer::drawHand(Player& const player)
 
 void MapDrawer::drawResourceTracker(GBMap& const gb_map)
 {
+    RESOURCE_TRACKER = make_unique<CImg<unsigned char>>("./Images/ResourceTracker.BMP");
+
     //// RESOURCE TRACKER
     int stone = gb_map.getResourceTracker()[0][ResourceType::STONE];
     int timber = gb_map.getResourceTracker()[0][ResourceType::TIMBER];

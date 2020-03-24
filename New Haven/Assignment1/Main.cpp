@@ -262,16 +262,16 @@ void testPlayer() {
 		//std::cout << " SHOWING HAND AFTER DRAWING " << std::endl;
 		test->show();
 		//std::cout << "\n==============================" << std::endl;
-		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test),"cstr?");
+		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test),"New Haven");
 
 		//std::cout << "Placing a Harvest Tile on the game board" << std::endl;
 		test->PlaceHarvestTile(gb_map);
-		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "cstr?");
+		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "New Haven");
 
 		//std::cout << "Placing a Building Tile on the Village board" << std::endl;
 		test->PlaceBuildingTile(test->getVGMap());
 		test->show();
-		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "cstr?");
+		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "New Haven");
 
 		main_disp.wait();
 
