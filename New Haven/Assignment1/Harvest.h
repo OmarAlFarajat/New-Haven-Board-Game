@@ -9,6 +9,7 @@ using std::ostream;
 // Harvest tile class (extends Node)
 class HarvestTile
 {
+	bool* shipmentTile;
 	const int numOfResource = 4;
 	vector<ResourceType> container;
 
@@ -18,10 +19,13 @@ public:
 	~HarvestTile();
 
 	friend ostream& operator<<(ostream& os, HarvestTile& ht);
+	bool isShipmentTile();
+	void setShipmentStatus(bool status);
 	vector<ResourceType> getContainer();
 	vector<ResourceType>* getContainerPointer();
-
 };
+inline bool HarvestTile::isShipmentTile() { return *shipmentTile; }
+inline void HarvestTile::setShipmentStatus(bool status) { *shipmentTile = status; }
 inline vector<ResourceType> HarvestTile::getContainer() { return container; }
 inline vector<ResourceType>* HarvestTile::getContainerPointer() { return &container; } 
 
