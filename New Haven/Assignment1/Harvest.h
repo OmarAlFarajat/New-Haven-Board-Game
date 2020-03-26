@@ -19,16 +19,20 @@ public:
 	HarvestTile(ResourceType[4]);
 	~HarvestTile();
 
+	int getNumOfResource();
 	friend ostream& operator<<(ostream& os, HarvestTile& ht);
 	bool isShipmentTile();
 	void setShipmentStatus(bool status);
 	bool makeShipmentOf(ResourceType type);
 	vector<ResourceType> getContainer();
+	vector<ResourceType*> getShipmentContainer();
 	vector<ResourceType>* getContainerPointer();
 };
+inline int HarvestTile::getNumOfResource() { return numOfResource; }
 inline bool HarvestTile::isShipmentTile() { return *shipmentTile; }
 inline void HarvestTile::setShipmentStatus(bool status) { *shipmentTile = status; }
 inline vector<ResourceType> HarvestTile::getContainer() { return container; }
+inline vector<ResourceType*> HarvestTile::getShipmentContainer() { return *shipmentContainer; }
 inline vector<ResourceType>* HarvestTile::getContainerPointer() { return &container; } 
 
 // The Deck of Harvest Tiles Object
