@@ -27,7 +27,7 @@ Hand::~Hand()
 	harvestHold = nullptr;
 	delete buildingHold;
 	buildingHold = nullptr;
-	delete SHIPMENT_TILE;
+	//delete SHIPMENT_TILE;
 	SHIPMENT_TILE = nullptr;
 	delete containSHIPMENT;
 	containSHIPMENT = nullptr;
@@ -99,6 +99,17 @@ int Hand::getNodeID_VG(VGMap* vg_map, int row, int col)
 	return (row * length + col);
 }
 
+void Hand::playSHIPMENT()
+{
+	if (!hasSHIPMENT_TILE()) {
+		cout << "\n You do not have any SHIPMENT TILE \n" << endl;
+		return;
+	}
+	
+
+
+}
+
 /*
 A function asking and validating user's prefered orientation of the Harvest Tile they are playing
 */
@@ -158,6 +169,50 @@ bool Hand::requestRotate(HarvestTile* target)
 
 }
 
+int Hand::askHarvestChoice()
+{
+	//Ask for choice of Harvest Tile on hand
+	int choice = -1;
+	cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << endl;
+	cout << "Please enter the index of Harvest Tile you want to play" << endl;
+	try {
+		cin >> choice;
+		if (choice < 0 || choice >= this->getRemainHarvest()) {
+			throw exception();
+		}
+		return choice;
+	}
+	catch (const exception & e) {
+		cout << "Invalid choice. Please try again." << endl;
+		return -1;
+	}
+
+}
+
+vector<int> Hand::askHarvestLocation(GBMap* const gb_map) throw(int)
+{
+	vector<int> location;
+	//Ask for position on the map to place tile
+	cout << "\n---Select position to place Tile---" << endl;
+	int row, col;
+	cout << "Enter the index of row:" << endl;
+	cin >> row;
+	if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
+		throw exception();
+	}
+
+	cout << "Enter the index of column:" << endl;
+	cin >> col;
+	if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
+		throw exception();
+	}
+
+	location.push_back(row);
+	location.push_back(col);
+	return location;
+
+}
+
 /*
 Function exchange will calculate the generated resources from a player's move
 Then, set the Resource Tracker (located on the GBMap).
@@ -183,39 +238,20 @@ int Hand::playHarvest(GBMap* gb_map) {
 		}
 
 		showHand();
-
-		//Ask for choice of Harvest Tile on hand
-		int choice = -1;
-		cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << endl;
-		cout << "Please enter the index of Harvest Tile you want to play" << endl;
-		try {
-            cin >> choice;
-            if (choice < 0 || choice >= this->getRemainHarvest()) {
-                throw exception();
-            }
-
-		} catch (const exception& e) {
-		    cout << "Invalid choice. Please try again." << endl;
-		    continue;
-		}
-
+	
+		//Ask fow which Harvest tile to be played
+		int choice = askHarvestChoice();
+		if (choice == -1) 
+			continue;
 		HarvestTile* target = getHarvestTile(choice);
 
 		//Ask for position on the map to place tile
-		cout << "\n---Select position to place Tile---" << endl;
 		int row, col;
 		try {
-			cout << "Enter the index of row:" << endl;
-			cin >> row;
-			if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
-				throw exception();
-			}
-
-			cout << "Enter the index of column:" << endl;
-			cin >> col;
-			if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
-				throw exception();
-			}
+			//location stores the coordinate of requested position to place the tile
+			vector<int> location = askHarvestLocation(gb_map);
+			row = location[0];
+			col = location[1];
 		}
 		catch (const exception & e) {
 			cout << "Invalid position input. Please try again" << endl;
@@ -264,7 +300,7 @@ bool Hand::requestFlip(BuildingTile* target) {
     char flip = 'f';
     char question = '?';
 
-	  string faceStatus;
+	 string faceStatus;
     while (true) {
         cout << "\n---------------" << endl;
         cout << "Your Building Tile:" << endl;
@@ -329,6 +365,50 @@ bool Hand::requestFlip(BuildingTile* target) {
 
 }
 
+int Hand::askBuildingChoice()
+{
+	//Ask for choice of Building Tile from hand
+	int choice = -1;
+	cout << "\nCurrently, you have " << getRemainBuilding() << " Building tiles in your hand" << endl;
+	cout << "Please enter the index of Building Tile you want to play" << endl;
+	try {
+		cin >> choice;
+		if (choice < 0 || choice >= this->getRemainBuilding()) {
+			throw exception();
+		}
+		return choice;
+	} 
+	catch (const exception & e) {
+		cout << "Invalid choice. Please try again." << endl;
+		return -1;
+	}
+
+}
+
+vector<int> Hand::askBuildingLocation(VGMap* const vg_map)
+{
+	//Ask for position on the map to place tile
+	cout << "\n---Select position to place Tile---" << endl;
+	int row, col;
+	vector<int> location;
+	cout << "Enter the index of row:" << endl;
+	cin >> row;
+	if (row < 0 || row >= vg_map->getBuildingGraph()->getHeight()) {
+		throw exception();
+	}
+
+	cout << "Enter the index of column:" << endl;
+	cin >> col;
+	if (col < 0 || col >= vg_map->getBuildingGraph()->getLength()) {
+		throw exception();
+	}
+
+	location.push_back(row);
+	location.push_back(col);
+	return location;
+
+}
+
 /*
 Function to start playing Building Tile and placing the tile on the village board if it is valid
 (build village)
@@ -341,40 +421,17 @@ void Hand::playBuilding(VGMap* vg_map) {
 		
 		showHand();
 
-		//Ask for choice of Building Tile from hand
-		int choice = -1;
-		cout << "\nCurrently, you have " << getRemainBuilding() << " Building tiles in your hand" << endl;
-		cout << "Please enter the index of Building Tile you want to play" << endl;
-		try {
-			cin >> choice;
-			if (choice < 0 || choice >= this->getRemainBuilding()) {
-				throw exception();
-			}
-
-		}
-		catch (const exception & e) {
-			cout << "Invalid choice. Please try again." << endl;
+		int choice = askBuildingChoice();
+		if (choice == -1)
 			continue;
-		}
-
 		BuildingTile* target = getBuildingTile(choice);
 
-		//Ask for position on the map to place tile
-		cout << "\n---Select position to place Tile---" << endl;
 		int row, col;
 		try {
-			cout << "Enter the index of row:" << endl;
-			cin >> row;
-			if (row < 0 || row >= vg_map->getBuildingGraph()->getHeight()) {
-				throw exception();
-			}
-
-			cout << "Enter the index of column:" << endl;
-			cin >> col;
-			if (col < 0 || col >= vg_map->getBuildingGraph()->getLength()) {
-				throw exception();
-			}
-		}
+			vector<int> location = askBuildingLocation(vg_map);
+			row = location[0];
+			col = location[1];
+		} 
 		catch (const exception & e) {
 			cout << "Invalid position input. Please try again" << endl;
 			continue;

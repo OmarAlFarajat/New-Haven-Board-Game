@@ -104,6 +104,18 @@ ostream& operator<<(ostream& os, HarvestTile& ht)
 	return os;
 }
 
+bool HarvestTile::makeShipmentOf(ResourceType type) {
+	if (*shipmentTile) {
+		for (int i = 0; i < numOfResource; ++i) {
+			shipmentContainer->push_back(new ResourceType(type));
+		}
+		return true;
+	}
+	else {
+		return false; // Wrong call, the tile is not a shipment
+	}
+}
+
 HarvestDeck::HarvestDeck()
 {
     srand((int) time(nullptr));

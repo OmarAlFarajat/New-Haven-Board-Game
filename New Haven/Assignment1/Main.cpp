@@ -195,6 +195,7 @@ void testHandObj() {
 
 	cout << "Test a turn of playing Harvest Tile" << endl;
 	mine.playHarvest(gb_map);
+	mine.playBuilding(players[0].getVGMap());
 }
 
 void testResourceCount() {

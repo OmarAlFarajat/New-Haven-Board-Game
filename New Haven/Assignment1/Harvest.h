@@ -12,6 +12,7 @@ class HarvestTile
 	bool* shipmentTile;
 	const int numOfResource = 4;
 	vector<ResourceType> container;
+	vector<ResourceType*>* shipmentContainer;
 
 public:
 	HarvestTile();
@@ -21,6 +22,7 @@ public:
 	friend ostream& operator<<(ostream& os, HarvestTile& ht);
 	bool isShipmentTile();
 	void setShipmentStatus(bool status);
+	bool makeShipmentOf(ResourceType type);
 	vector<ResourceType> getContainer();
 	vector<ResourceType>* getContainerPointer();
 };

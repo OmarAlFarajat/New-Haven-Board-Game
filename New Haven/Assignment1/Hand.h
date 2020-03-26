@@ -46,9 +46,13 @@ class Hand
 
 	void exchange(GBMap* gb_map, TileNode*);
 	bool requestRotate(HarvestTile* target);
+	int askHarvestChoice();
+	vector<int> askHarvestLocation(GBMap* const gb_map);
 	int playHarvest(GBMap* gb_map);
 
 	bool requestFlip(BuildingTile* target);
+	int askBuildingChoice();
+	vector<int> askBuildingLocation(VGMap* const vg_map);
 	void playBuilding(VGMap* vg_map);
 
 };
