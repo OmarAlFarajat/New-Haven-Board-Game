@@ -21,8 +21,6 @@ using std::endl;
 using std::string;
 using std::vector;
 
-
-
 /* Global Variables for the game*/
 static int numberOfPlayers;
 static string mapFileName = "";
@@ -194,7 +192,9 @@ void testHandObj() {
 	mine.showHand();
 
 	cout << "Test a turn of playing Harvest Tile" << endl;
+	mine.playSHIPMENT(gb_map);
 	mine.playHarvest(gb_map);
+	//mine.uncoverShipment(gb_map);
 	mine.playBuilding(players[0].getVGMap());
 }
 

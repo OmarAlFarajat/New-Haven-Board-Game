@@ -45,6 +45,7 @@ HarvestTile::HarvestTile()
 	}
 
 	shipmentTile = new bool(false);
+	shipmentContainer = new vector<ResourceType*>();
 }
 
 HarvestTile::HarvestTile(ResourceType resources[4])
@@ -105,7 +106,7 @@ ostream& operator<<(ostream& os, HarvestTile& ht)
 }
 
 bool HarvestTile::makeShipmentOf(ResourceType type) {
-	if (*shipmentTile) {
+	if (isShipmentTile()) {
 		for (int i = 0; i < numOfResource; ++i) {
 			shipmentContainer->push_back(new ResourceType(type));
 		}

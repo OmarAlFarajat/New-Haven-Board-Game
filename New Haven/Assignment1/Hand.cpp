@@ -15,6 +15,7 @@ Hand::Hand()
 	buildingHold = new vector<BuildingTile*>(0);
 	SHIPMENT_TILE = new HarvestTile();
 	containSHIPMENT = new bool(false);
+	SHIPMENTlocation = new vector<int*>();
 }
 
 Hand::~Hand()
@@ -31,6 +32,18 @@ Hand::~Hand()
 	SHIPMENT_TILE = nullptr;
 	delete containSHIPMENT;
 	containSHIPMENT = nullptr;
+}
+
+void Hand::printOccupiedPositionMessage() {
+	cout << "\n------------------------------------------" << endl;
+	cout << "The position is either occupied or invalid" << endl;
+	cout << "Please try again." << endl;
+	cout << "------------------------------------------\n" << endl;
+}
+
+void Hand::setShipmentLocation(int row, int col) {
+	SHIPMENTlocation->push_back(new int(row));
+	SHIPMENTlocation->push_back(new int(col));
 }
 
 void Hand::showHarvests() {
@@ -99,15 +112,120 @@ int Hand::getNodeID_VG(VGMap* vg_map, int row, int col)
 	return (row * length + col);
 }
 
-void Hand::playSHIPMENT()
+/*
+Function exchange will calculate the generated resources from a player's move
+Then, set the Resource Tracker (located on the GBMap).
+Finally, display the generated resources.
+*/
+void Hand::exchange(GBMap* gb_map, TileNode* location)
 {
+	std::map<ResourceType, int> generatedResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
+	gb_map->calcResourceAdjacencies(location, generatedResources);
+	gb_map->setResourceTracker(&generatedResources);
+	gb_map->displayResourceTracker();
+}
+
+vector<int> Hand::askHarvestLocation(GBMap* const gb_map)
+{
+	vector<int> location;
+	//Ask for position on the map to place tile
+	cout << "\n---Select position to place Tile---" << endl;
+	int row, col;
+	cout << "Enter the index of row:" << endl;
+	cin >> row;
+	if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
+		throw exception();
+	}
+
+	cout << "Enter the index of column:" << endl;
+	cin >> col;
+	if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
+		throw exception();
+	}
+
+	location.push_back(row);
+	location.push_back(col);
+	return location;
+
+}
+
+ResourceType Hand::askTypeForShipment()
+{
+	string menu = "\n1. TIMBER\n2. STONE\n3. WHEAT\n4. SHEEP";
+	int choice;
+	while (true) {
+		cout << "\nSelect the type of Resource for your Shipment Tile" << endl;
+		cout << menu << endl;
+		try {
+			cin >> choice;
+			if (choice < 0 || choice > 4) {
+				throw exception();
+			}
+			break;
+		}
+		catch (const exception & e) {
+			cout << "Invalid input. Please try again" << endl;
+		}
+	}
+
+	switch (choice) {
+		case 1: return ResourceType::TIMBER;
+		case 2: return ResourceType::STONE;
+		case 3:	return ResourceType::WHEAT;
+		case 4:	return ResourceType::SHEEP;
+		default: return ResourceType::NONE;
+	}
+
+}
+
+/*
+Return false if operation fails.
+*/
+bool Hand::playSHIPMENT(GBMap* gb_map)
+{
+	//Safe guard
 	if (!hasSHIPMENT_TILE()) {
-		cout << "\n You do not have any SHIPMENT TILE \n" << endl;
-		return;
+		cout << "\n You do not have any SHIPMENT TILE left\n" << endl;
+		return false;
+	}
+
+	SHIPMENT_TILE->makeShipmentOf(askTypeForShipment());
+	
+	int row, col;
+	try {
+		vector<int> coordination= askHarvestLocation(gb_map);
+		row = coordination[0];
+		col = coordination[1];
+		setShipmentLocation(row, col);
+	}
+	catch (const exception & e) {
+		cout << "Invalid position" << endl;
+		return false;
 	}
 	
+	int nodeID = this->getNodeID_GB(gb_map, row, col);
+	TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
+	if (gb_map->isValid(location)) {
+		gb_map->placeHarvestTile(SHIPMENT_TILE, location);
+		cout << "\nPLACED SHIPMENT TILE ON THE GAMEBOARD SUCCESSFULLY\n" << endl;
+		exchange(gb_map, location);
+		SHIPMENT_TILE->setShipmentStatus(false);
+		*containSHIPMENT = false;
+	}
+	else {
+		printOccupiedPositionMessage();
+		return false;
+	}
 
+	return true;
+}
 
+void Hand::uncoverShipment(GBMap* gb_map)
+{
+	int nodeID = this->getNodeID_GB(gb_map, *SHIPMENTlocation[0][0], (*SHIPMENTlocation[0][0])[1]);
+	TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
+	gb_map->placeHarvestTile(SHIPMENT_TILE, location);
+	exchange(gb_map, location); // TODO: For debugging only. Uncovering doesn't supposed to generate resources.
 }
 
 /*
@@ -189,42 +307,7 @@ int Hand::askHarvestChoice()
 
 }
 
-vector<int> Hand::askHarvestLocation(GBMap* const gb_map) throw(int)
-{
-	vector<int> location;
-	//Ask for position on the map to place tile
-	cout << "\n---Select position to place Tile---" << endl;
-	int row, col;
-	cout << "Enter the index of row:" << endl;
-	cin >> row;
-	if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
-		throw exception();
-	}
 
-	cout << "Enter the index of column:" << endl;
-	cin >> col;
-	if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
-		throw exception();
-	}
-
-	location.push_back(row);
-	location.push_back(col);
-	return location;
-
-}
-
-/*
-Function exchange will calculate the generated resources from a player's move
-Then, set the Resource Tracker (located on the GBMap).
-Finally, display the generated resources.
-*/
-void Hand::exchange(GBMap* gb_map, TileNode* location)
-{
-    std::map<ResourceType , int> generatedResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
-	gb_map->calcResourceAdjacencies(location, generatedResources);
-	gb_map->setResourceTracker(&generatedResources);
-	gb_map->displayResourceTracker();
-}
 
 /*
 Function to start playing Harvest Tile and placing the tile on the board if it is valid
@@ -277,10 +360,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 
 		}
 		else {
-			cout << "\n------------------------------------------" << endl;
-			cout << "The position is either occupied or invalid" << endl;
-			cout << "Please try again." << endl;
-			cout << "------------------------------------------\n" << endl;
+			printOccupiedPositionMessage();
 			continue;
 		}
 	}
@@ -451,10 +531,7 @@ void Hand::playBuilding(VGMap* vg_map) {
                 *numOfBuilding = *numOfBuilding - 1;
                 break;
 		    } else {
-                cout << "\n------------------------------------------" << endl;
-                cout << "The position is either occupied or invalid flipping request" << endl;
-                cout << "Please try again." << endl;
-                cout << "------------------------------------------\n" << endl;
+				printOccupiedPositionMessage();
                 continue;
             }
 		}

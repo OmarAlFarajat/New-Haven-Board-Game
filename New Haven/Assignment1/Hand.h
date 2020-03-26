@@ -15,19 +15,22 @@ class Hand
 	int* numOfBuilding;
 	bool* containSHIPMENT;
 	HarvestTile* SHIPMENT_TILE;
+	vector<int*>* SHIPMENTlocation; // in format of row, col
 	vector<HarvestTile*>* harvestHold;
 	vector<BuildingTile*>* buildingHold;
 
 	public:
 	Hand();
 	~Hand();
-
+	
+	void printOccupiedPositionMessage();
 	int getRemainHarvest();
 	int getRemainBuilding();
 	bool hasNoHarvest();
 	bool hasNoBuilding();
 	HarvestTile* getSHIPMENT_TILE();
 	bool hasSHIPMENT_TILE();
+	void setShipmentLocation(int row, int col);
 	vector<HarvestTile*>* getHarvestHold();
 	vector<BuildingTile*>* getBuildingHold();
 	HarvestTile* getHarvestTile(int index);
@@ -42,21 +45,28 @@ class Hand
 	int getNodeID_GB(GBMap* gb_map, int row, int col);
 	int getNodeID_VG(VGMap* vg_map, int row, int col);
 
-	void playSHIPMENT();
-
 	void exchange(GBMap* gb_map, TileNode*);
+
+	vector<int> askHarvestLocation(GBMap* const gb_map);
+
+	// Shipment operations:
+	ResourceType askTypeForShipment();
+	bool playSHIPMENT(GBMap* gb_map);
+	void uncoverShipment(GBMap* gb_map);
+
+	// Harvest Tile operations:
 	bool requestRotate(HarvestTile* target);
 	int askHarvestChoice();
-	vector<int> askHarvestLocation(GBMap* const gb_map);
 	int playHarvest(GBMap* gb_map);
 
+	// Building Tile operations:
 	bool requestFlip(BuildingTile* target);
 	int askBuildingChoice();
 	vector<int> askBuildingLocation(VGMap* const vg_map);
 	void playBuilding(VGMap* vg_map);
 
 };
-
+// Getters & Setters
 inline int Hand::getRemainHarvest() {return *numOfHarvest;}
 inline int Hand::getRemainBuilding() {return *numOfBuilding;}
 inline bool Hand::hasNoHarvest() {return (*numOfHarvest == 0);}
