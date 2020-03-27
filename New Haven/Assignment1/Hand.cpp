@@ -222,10 +222,14 @@ bool Hand::playSHIPMENT(GBMap* gb_map)
 
 void Hand::uncoverShipment(GBMap* gb_map)
 {
-	int nodeID = this->getNodeID_GB(gb_map, *SHIPMENTlocation[0][0], (*SHIPMENTlocation[0][0])[1]);
-	TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
+	int nodeID = this->getNodeID_GB(gb_map, *SHIPMENTlocation[0][0], *SHIPMENTlocation[0][1]);
+	auto location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
 	gb_map->placeHarvestTile(SHIPMENT_TILE, location);
-	exchange(gb_map, location); // TODO: For debugging only. Uncovering doesn't supposed to generate resources.
+	/*
+	cout << "DEBUG: Uncovering the shipment tile and re calculate the resources gathered" << endl;
+	cout << *SHIPMENT_TILE << endl;
+	exchange(gb_map, location); 
+	*/
 }
 
 /*

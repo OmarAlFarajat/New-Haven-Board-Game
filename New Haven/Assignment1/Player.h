@@ -18,12 +18,14 @@ public:
 	Player();
 	~Player();
 
+	void PlaceShipmentTile(GBMap* gb_map);
 	void PlaceHarvestTile(GBMap* gb_map);
 	void PlaceBuildingTile(VGMap* vg_map);
 
 	void DrawBuilding(BuildingDeck* deck);
 	void DrawHarvestTile(HarvestDeck* deck);
 
+	void UncoverShipment(GBMap* gb_map);
 	Hand* getHand();
 	VGMap* getVGMap();
 	void show();
