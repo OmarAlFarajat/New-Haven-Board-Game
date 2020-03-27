@@ -15,7 +15,8 @@ MapDrawer::MapDrawer()
 
     RESOURCE_TRACKER = make_unique<CImg<unsigned char>>("./Images/ResourceTracker.BMP");
     AVAILABLE_BUILDINGS = make_unique<CImg<unsigned char>>("./Images/AvailableBuildings.BMP");
-
+    
+    GAME_TITLE = make_unique<CImg<unsigned char>>("./Images/GameTitleBar.BMP");
     NONE = make_unique<CImg<unsigned char>>("./Images/None.BMP");
 
     SHEEP = make_unique<CImg<unsigned char>>("./Images/Sheep.BMP");
@@ -325,10 +326,12 @@ CImg<unsigned char> MapDrawer::drawGame(GBMap& const gb_map, Player& const playe
     drawResourceTracker(gb_map);
     
 //// FINAL ASSEMBLY OF ALL BOARD AND PLAYER COMPONENTS
-    CImg<unsigned char> SCREEN = *RESOURCE_TRACKER;
-    SCREEN.append(gameBoard);
-    SCREEN.append(*AVAILABLE_BUILDINGS);
-    SCREEN.append(VGMAP);
+    CImg<unsigned char> SCREEN = *GAME_TITLE;
+    CImg<unsigned char> GAMEPLAY= *RESOURCE_TRACKER;
+    GAMEPLAY.append(gameBoard);
+    GAMEPLAY.append(*AVAILABLE_BUILDINGS);
+    GAMEPLAY.append(VGMAP);
+    SCREEN.append(GAMEPLAY, 'y');
     return SCREEN;
 }
 
