@@ -17,6 +17,8 @@ class MapDrawer {
 	unique_ptr<CImg<unsigned char>> RESOURCE_TRACKER;
 	unique_ptr<CImg<unsigned char>> AVAILABLE_BUILDINGS;
 
+	unique_ptr<CImg<unsigned char>> GAME_TITLE;
+
 	unique_ptr<CImg<unsigned char>> NONE;
 
 	unique_ptr<CImg<unsigned char>> SHEEP;
