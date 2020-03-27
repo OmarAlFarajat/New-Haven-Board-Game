@@ -102,6 +102,7 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 			tileNode->getResourceNodes()[i]->setType(*harvestTile->getShipmentContainer()[i]);
 			tileNode->getResourceNodes()[i]->setOccupied(true);
 		}
+		tileNode->setOccupied(true);
 		return true;
 	}
 

@@ -26,6 +26,9 @@ Player::~Player()
 	delete name;
 }
 
+void Player::PlaceShipmentTile(GBMap* gb_map) {
+	this->myHand->playSHIPMENT(gb_map);
+}
 /*
 The two functions PlaceHarvestTile and PlaceBuildingTile will start a playing session for
 the corresponding type.
@@ -68,6 +71,10 @@ void Player::DrawHarvestTile(HarvestDeck* deck)
 	else {
 		myHand->addHarvestTile(deck->draw());
 	}
+}
+
+void Player::UncoverShipment(GBMap* gb_map) {
+	myHand->uncoverShipment(gb_map);
 }
 
 void Player::show()
