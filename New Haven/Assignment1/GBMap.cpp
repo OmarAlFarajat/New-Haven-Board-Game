@@ -98,16 +98,16 @@ bool GBMap::isValid(TileNode* tileNode) {
 
 bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	tileNode->getResourceNodes()[0]->setType(harvestTile->getContainer()[0]);
-	tileNode->getResourceNodes()[0]->setOccupied(true);
-
 	tileNode->getResourceNodes()[1]->setType(harvestTile->getContainer()[1]);
-	tileNode->getResourceNodes()[1]->setOccupied(true);
-
 	tileNode->getResourceNodes()[2]->setType(harvestTile->getContainer()[3]);
-	tileNode->getResourceNodes()[2]->setOccupied(true);
-
 	tileNode->getResourceNodes()[3]->setType(harvestTile->getContainer()[2]);
+
+	tileNode->getResourceNodes()[0]->setOccupied(true);
+	tileNode->getResourceNodes()[1]->setOccupied(true);
+	tileNode->getResourceNodes()[2]->setOccupied(true);
 	tileNode->getResourceNodes()[3]->setOccupied(true);
+
+	tileNode->setOccupied(true);
 
 	return true;
 }
