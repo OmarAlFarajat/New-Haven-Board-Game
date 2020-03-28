@@ -171,8 +171,8 @@ CImg<unsigned char> MapDrawer::drawVGMap(Player& const player)
     CImg<unsigned char> VGMAP("./Images/VGMap.BMP");
     //// VGMAP
     // Add the name of the village to the bottom of the VGMap
-    int village_name_x = 235;
-    int village_name_y = 655;
+    int village_name_x = 100;
+    int village_name_y = 750;
     VGMAP.draw_text(village_name_x, village_name_y, player.getVGMap()->getName().c_str(), black, 1, 1.0f, 30);
 
     vector<Node*> vgNodes = player.getVGMap()->getBuildingGraph()->getNodes()[0];
@@ -200,8 +200,8 @@ CImg<unsigned char> MapDrawer::drawVGMap(Player& const player)
                 buildingTile = BuildingDownToBMP(static_cast<BuildingTile*>(vgNodes[id])->getType());
 
             // Draw the building tile in the appropriate location on VGMap
-            int x_offset = 18;
-            int y_offset = 23;
+            int x_offset = 64;
+            int y_offset = 76;
             int building_x = x_offset + buildingTile.width() * i;
             int building_y = y_offset + buildingTile.width() * j;
             VGMAP.draw_image(building_x, building_y, 0, buildingTile, 100);
@@ -304,8 +304,8 @@ void MapDrawer::drawResourceTracker(GBMap& const gb_map)
     int wheat_x = 70;
     int sheep_x = 91;
 
-    int resources_y = 670;  // Vertical starting position of resources on the tracker
-    int delta_y = 33;    // This is the amount of pixels needed to move up one step in the resource tracker
+    int resources_y = 695;  // Vertical starting position of resources on the tracker
+    int delta_y = 35;    // This is the amount of pixels needed to move up one step in the resource tracker
 
     RESOURCE_TRACKER->draw_image(stone_x, resources_y - delta_y * stone, *GREY_TRACKER, 100);
     RESOURCE_TRACKER->draw_image(timber_x, resources_y - delta_y * timber, *RED_TRACKER, 100);
