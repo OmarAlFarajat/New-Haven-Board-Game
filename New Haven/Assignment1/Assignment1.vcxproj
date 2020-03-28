@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GBMap.cpp" />
     <ClCompile Include="GBMapLoader.cpp" />
     <ClCompile Include="Graph.cpp" />
@@ -141,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="Building.h" />
     <ClInclude Include="CImg.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GBMap.h" />
     <ClInclude Include="GBMapLoader.h" />
     <ClInclude Include="Graph.h" />
