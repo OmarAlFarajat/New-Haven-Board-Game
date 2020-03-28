@@ -255,7 +255,8 @@ void testPlayer() {
 
 	// CIMG Main Display
 	cimg_library::CImgDisplay main_disp;
-
+	int main_disp_x = 0;
+	int main_disp_y = 25; 
 	MapDrawer drawer;
 	// CIMG Window Draw Loop
 	while (true)
@@ -265,15 +266,18 @@ void testPlayer() {
 		test->show();
 		//std::cout << "\n==============================" << std::endl;
 		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test),"New Haven");
+		main_disp.move(main_disp_x, main_disp_y);
 
 		//std::cout << "Placing a Harvest Tile on the game board" << std::endl;
 		test->PlaceHarvestTile(gb_map);
 		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "New Haven");
+		main_disp.move(main_disp_x, main_disp_y);
 
 		//std::cout << "Placing a Building Tile on the Village board" << std::endl;
 		test->PlaceBuildingTile(test->getVGMap());
 		test->show();
 		main_disp = cimg_library::CImgDisplay(drawer.drawGame(*gb_map, *test), "New Haven");
+		main_disp.move(main_disp_x, main_disp_y);
 
 		main_disp.wait();
 
