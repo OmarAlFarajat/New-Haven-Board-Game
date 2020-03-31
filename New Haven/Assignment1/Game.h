@@ -14,16 +14,17 @@ using std::string;
 class Game {
 
 private:
-	
+	vector<Player*>* Players;
+	GBMap* gb_map;
+	HarvestDeck* harvestDeck;
+	BuildingDeck* buildingDeck;
 
 public:
-
-	vector<string>* VGMapsSelection; // a list of all the VGMap files as strings
-	vector<Player*>* Players;
-	GBMap* gameBoardMap;
-
 	Game(int number_of_players);
 	~Game();
-		
-};
 
+	GBMap* getGBMap();
+	Player* getPlayer(int id);
+};
+inline GBMap* Game::getGBMap() { return gb_map; }
+inline Player* Game::getPlayer(int id) { return Players[0][id];}
