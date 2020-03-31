@@ -8,6 +8,11 @@ using std::make_unique;
 using std::make_shared;
 using std::shared_ptr;
 
+// CIMG Main Display
+extern CImgDisplay main_disp = CImgDisplay();
+extern int main_disp_x = 0;
+extern int main_disp_y = 25;
+
 MapDrawer::MapDrawer()
 {
     MAP_TILE = make_unique<CImg<unsigned char>>("./Images/TileNode.BMP");
