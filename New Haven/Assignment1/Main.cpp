@@ -256,10 +256,6 @@ void testPlayer() {
 		test->DrawBuilding(&buildingDeck);
 	}
 
-	// CIMG Main Display
-	cimg_library::CImgDisplay main_disp;
-	int main_disp_x = 0;
-	int main_disp_y = 25; 
 	MapDrawer drawer;
 	// CIMG Window Draw Loop
 	while (true)

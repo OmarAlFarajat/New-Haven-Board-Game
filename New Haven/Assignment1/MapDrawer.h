@@ -6,6 +6,11 @@
 using namespace cimg_library;
 using std::unique_ptr;
 
+// CIMG Main Display
+extern CImgDisplay main_disp;
+extern int main_disp_x;
+extern int main_disp_y;
+
 class MapDrawer {
 	//Global variables
 	const unsigned char black[3] = { 0,0,0 };
