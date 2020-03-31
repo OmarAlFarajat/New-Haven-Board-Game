@@ -15,7 +15,7 @@ class Player {
 	VGMap* vg_map; 
 
 public:
-	Player();
+	Player(string name, int vgmap_id);
 	~Player();
 
 	void PlaceShipmentTile(GBMap* gb_map);
@@ -28,10 +28,12 @@ public:
 	void UncoverShipment(GBMap* gb_map);
 	Hand* getHand();
 	VGMap* getVGMap();
+	string* getName();
 	void show();
   
 };
 inline VGMap* Player::getVGMap() {	return vg_map; }
 inline Hand* Player::getHand() { return myHand; }
+inline string* Player::getName() { return name; }
 
 

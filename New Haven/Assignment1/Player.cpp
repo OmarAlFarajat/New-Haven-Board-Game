@@ -5,13 +5,31 @@
 using std::cout;
 using std::endl;
 
-Player::Player()
+Player::Player(string name, int vgmap_id)
 {
-	name = new string("Mike");
+	this->name = new string(name);
 	myHand = new Hand;
 
 	vg_map = new VGMap();
-	string vgMapName = "Stratford_example.vgmap";
+
+	string vgMapName;
+	switch (vgmap_id) {
+	case 0:
+		vgMapName = "./Maps/Stratford.vgmap";
+		break;
+	case 1:
+		vgMapName = "./Maps/Fairfield.vgmap";
+		break;
+	case 2:
+		vgMapName = "./Maps/Guilford.vgmap";
+		break;
+	case 3:
+		vgMapName = "./Maps/Milford.vgmap";
+		break;
+	default: 
+		vgMapName = "./Maps/Stratford.vgmap";
+	}
+
 	loadVGMap(vgMapName, *vg_map);
 
 }
