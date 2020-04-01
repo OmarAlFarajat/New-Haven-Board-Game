@@ -38,6 +38,18 @@ GBMap::~GBMap()
 
 }
 
+bool GBMap::GameOver()
+{
+	int counter = 0;
+	for (int i = 0; i < tileGraph->getNodes()[0].size(); i++)
+		if (tileGraph->getNodes()[0][i]->isOccupied())
+			counter++;
+	cout << "TILEGRAPH COUNT: " << counter << "occupied tiles." << endl;
+	if (counter == tileGraph->getNumEnabledNodes() - 1)
+		return true;
+	return false;
+}
+
 void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 {
 	resourceTracker[0][ResourceType::SHEEP] = inTracker[0][ResourceType::SHEEP];

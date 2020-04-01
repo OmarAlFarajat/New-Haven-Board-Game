@@ -16,6 +16,8 @@ class GBMap
 public:
 	GBMap();
 	~GBMap();
+
+	bool GameOver(); 
 	
 	/*	Uses HarvestTile information to set the Resource nodes linked to TileNode. 
 	*	Sets TileNode to occupied. 

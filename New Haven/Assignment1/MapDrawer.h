@@ -2,17 +2,13 @@
 #include "GBMap.h"
 #include "CImg.h"
 #include "Player.h"
+#include "Game.h"
 
 using namespace cimg_library;
 using std::unique_ptr;
 
-// CIMG Main Display
-extern CImgDisplay main_disp;
-extern int main_disp_x;
-extern int main_disp_y;
-
 class MapDrawer {
-	//Global variables
+	Game* game;
 	const unsigned char black[3] = { 0,0,0 };
 	const unsigned char vagueBrown[3] = { 224,192,128 };
 
@@ -47,18 +43,18 @@ class MapDrawer {
 	unique_ptr<CImg<unsigned char>> RED_BUILDING_DOWN;
 
 public:
-	MapDrawer(); // setting up global variables
+	MapDrawer(Game* const game); // setting up global variables
 	CImg<unsigned char> ResourceToBMP(ResourceType type);
 	CImg<unsigned char> BuildingToBMP(ResourceType type);
 	CImg<unsigned char> BuildingDownToBMP(ResourceType type);
 
-	CImg<unsigned char> drawColumnIndicators(GBMap& const gb_map);
-	CImg<unsigned char> drawGBMap(GBMap& const gb_map);
-	CImg<unsigned char> drawVGMap(Player& const player);
-	void drawHarvestOnHand(Player& const player, std::shared_ptr<CImg<unsigned char>> HAND);
-	void drawBuildingsOnHand(Player& const player, std::shared_ptr<CImg<unsigned char>> HAND);
-	CImg<unsigned char> drawHand(Player& const player);
-	void drawResourceTracker(GBMap& const gb_map);
+	CImg<unsigned char> drawColumnIndicators();
+	CImg<unsigned char> drawGBMap();
+	CImg<unsigned char> drawVGMap();
+	void drawHarvestOnHand(std::shared_ptr<CImg<unsigned char>> HAND);
+	void drawBuildingsOnHand(std::shared_ptr<CImg<unsigned char>> HAND);
+	CImg<unsigned char> drawHand();
+	void drawResourceTracker();
 
-	CImg<unsigned char> drawGame(GBMap& gb_map, Player& player);
+	CImg<unsigned char> Update();
 };

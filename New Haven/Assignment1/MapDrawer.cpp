@@ -8,13 +8,9 @@ using std::make_unique;
 using std::make_shared;
 using std::shared_ptr;
 
-// CIMG Main Display
-extern CImgDisplay main_disp = CImgDisplay();
-extern int main_disp_x = 0;
-extern int main_disp_y = 25;
-
-MapDrawer::MapDrawer()
+MapDrawer::MapDrawer(Game* const game)
 {
+    this->game = game; 
     MAP_TILE = make_unique<CImg<unsigned char>>("./Images/TileNode.BMP");
     DISABLED_TILE = make_unique<CImg<unsigned char>>("./Images/DisabledTile.BMP");
 
@@ -93,12 +89,12 @@ CImg<unsigned char> MapDrawer::BuildingDownToBMP(ResourceType type) {
     }
 }
 
-CImg<unsigned char> MapDrawer::drawColumnIndicators(GBMap& const gb_map) {
+CImg<unsigned char> MapDrawer::drawColumnIndicators() {
     // Make the numbered column indicators based on the length of the tile graph
     CImg<unsigned char> columns(25, 25, 1, 3, 0);    // Empty square corner between column and row indicators
 
     // Create the column indicator based on length of tile graph
-    for (int i = 0; i < gb_map.getTileGraph()->getLength(); i++) {
+    for (int i = 0; i < game->getGBMap()->getTileGraph()->getLength(); i++) {
         CImg<unsigned char> columnTitle("./Images/Column.BMP");
         int columnTitle_x = 50;
         int columnTitle_y = 1;
@@ -109,14 +105,14 @@ CImg<unsigned char> MapDrawer::drawColumnIndicators(GBMap& const gb_map) {
     return columns;
 }
 
-CImg<unsigned char> MapDrawer::drawGBMap(GBMap& const gb_map)
+CImg<unsigned char> MapDrawer::drawGBMap()
 {
     //// GBMAP
     // GRID is initialized with the numbered columns to start and will gradually be appended with more components
-    CImg<unsigned char> GRID = MapDrawer::drawColumnIndicators(gb_map);
+    CImg<unsigned char> GRID = MapDrawer::drawColumnIndicators();
 
     // Row-by-row traversal of harvest tile graph
-    for (int i = 0; i < gb_map.getTileGraph()->getHeight(); i++) {
+    for (int i = 0; i < game->getGBMap()->getTileGraph()->getHeight(); i++) {
 
         // Draws the column indicator to the far-left of the row.
         CImg<unsigned char> rowTitle("./Images/Row.BMP");
@@ -125,11 +121,11 @@ CImg<unsigned char> MapDrawer::drawGBMap(GBMap& const gb_map)
         rowTitle.draw_text(row_x, row_y, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
 
         // Traverse the row
-        for (int j = 0; j < gb_map.getTileGraph()->getLength(); j++) {
+        for (int j = 0; j < game->getGBMap()->getTileGraph()->getLength(); j++) {
 
             // Calculate next node id from row and column number and get a pointer to the node.
-            int id = i * gb_map.getTileGraph()->getLength() + j;
-            Node* n = gb_map.getTileGraph()->getNode(id);
+            int id = i * game->getGBMap()->getTileGraph()->getLength() + j;
+            Node* n = game->getGBMap()->getTileGraph()->getNode(id);
 
             // If node is enabled, then for each of the 4 resources, draw the resource onto the tile   
             // Else, draw a disabled tile.
@@ -171,18 +167,18 @@ CImg<unsigned char> MapDrawer::drawGBMap(GBMap& const gb_map)
     return GRID;
 }
 
-CImg<unsigned char> MapDrawer::drawVGMap(Player& const player)
+CImg<unsigned char> MapDrawer::drawVGMap()
 {
     CImg<unsigned char> VGMAP("./Images/VGMap.BMP");
     //// VGMAP
     // Add the name of the village to the bottom of the VGMap
     int village_name_x = 100;
     int village_name_y = 750;
-    VGMAP.draw_text(village_name_x, village_name_y, player.getVGMap()->getName().c_str(), black, 1, 1.0f, 30);
+    VGMAP.draw_text(village_name_x, village_name_y, game->getCurrentPlayer()->getVGMap()->getName().c_str(), black, 1, 1.0f, 30);
 
-    vector<Node*> vgNodes = player.getVGMap()->getBuildingGraph()->getNodes()[0];
-    int vg_length = player.getVGMap()->getBuildingGraph()->getLength();
-    int vg_height = player.getVGMap()->getBuildingGraph()->getHeight();
+    vector<Node*> vgNodes = game->getCurrentPlayer()->getVGMap()->getBuildingGraph()->getNodes()[0];
+    int vg_length = game->getCurrentPlayer()->getVGMap()->getBuildingGraph()->getLength();
+    int vg_height = game->getCurrentPlayer()->getVGMap()->getBuildingGraph()->getHeight();
 
     // Row-by-row traversal of VGMap
     for (int i = 0; i < vg_length; i++) {
@@ -215,9 +211,9 @@ CImg<unsigned char> MapDrawer::drawVGMap(Player& const player)
     return VGMAP;
 }
 
-void MapDrawer::drawHarvestOnHand(Player& const player, shared_ptr<CImg<unsigned char>> HAND)
+void MapDrawer::drawHarvestOnHand(shared_ptr<CImg<unsigned char>> HAND)
 {
-    vector<HarvestTile*> tiles = player.getHand()->getHarvestHold()[0];
+    vector<HarvestTile*> tiles = game->getCurrentPlayer()->getHand()->getHarvestHold()[0];
 
     // HAND: HARVEST TILES
     // Iterate through each harvest tile in the player's hand
@@ -251,9 +247,9 @@ void MapDrawer::drawHarvestOnHand(Player& const player, shared_ptr<CImg<unsigned
     }
 }
 
-void MapDrawer::drawBuildingsOnHand(Player& const player, shared_ptr<CImg<unsigned char>> HAND)
+void MapDrawer::drawBuildingsOnHand(shared_ptr<CImg<unsigned char>> HAND)
 {
-    vector<BuildingTile*> buildings = player.getHand()->getBuildingHold()[0];
+    vector<BuildingTile*> buildings = game->getCurrentPlayer()->getHand()->getBuildingHold()[0];
 
     // HAND: BUILDINGS
     // Iterate through each building in player's hand
@@ -283,25 +279,25 @@ void MapDrawer::drawBuildingsOnHand(Player& const player, shared_ptr<CImg<unsign
     }
 }
 
-CImg<unsigned char> MapDrawer::drawHand(Player& const player)
+CImg<unsigned char> MapDrawer::drawHand()
 {
     //// HAND
     shared_ptr<CImg<unsigned char>> HAND;
     HAND = make_shared<CImg<unsigned char>>("./Images/Hand.BMP");
-    drawHarvestOnHand(player, HAND);
-    drawBuildingsOnHand(player, HAND);
+    drawHarvestOnHand(HAND);
+    drawBuildingsOnHand(HAND);
     return *HAND;
 }
 
-void MapDrawer::drawResourceTracker(GBMap& const gb_map)
+void MapDrawer::drawResourceTracker()
 {
     RESOURCE_TRACKER = make_unique<CImg<unsigned char>>("./Images/ResourceTracker.BMP");
 
     //// RESOURCE TRACKER
-    int stone = gb_map.getResourceTracker()[0][ResourceType::STONE];
-    int timber = gb_map.getResourceTracker()[0][ResourceType::TIMBER];
-    int wheat = gb_map.getResourceTracker()[0][ResourceType::WHEAT];
-    int sheep = gb_map.getResourceTracker()[0][ResourceType::SHEEP];
+    int stone = game->getGBMap()->getResourceTracker()[0][ResourceType::STONE];
+    int timber = game->getGBMap()->getResourceTracker()[0][ResourceType::TIMBER];
+    int wheat = game->getGBMap()->getResourceTracker()[0][ResourceType::WHEAT];
+    int sheep = game->getGBMap()->getResourceTracker()[0][ResourceType::SHEEP];
 
     // Horizontal positions for each of the 4 trackers on the resource tracker images
     int stone_x = 16;
@@ -319,16 +315,16 @@ void MapDrawer::drawResourceTracker(GBMap& const gb_map)
 
 }
 
-CImg<unsigned char> MapDrawer::drawGame(GBMap& const gb_map, Player& const player)
+CImg<unsigned char> MapDrawer::Update()
 {
-    CImg<unsigned char> gameBoard = drawGBMap(gb_map);
+    CImg<unsigned char> gameBoard = drawGBMap();
     
-    CImg<unsigned char> VGMAP = drawVGMap(player);
+    CImg<unsigned char> VGMAP = drawVGMap();
 
-    CImg<unsigned char> HAND = MapDrawer::drawHand(player);
+    CImg<unsigned char> HAND = MapDrawer::drawHand();
 
     gameBoard.append(HAND, 'y');
-    drawResourceTracker(gb_map);
+    drawResourceTracker();
     
 //// FINAL ASSEMBLY OF ALL BOARD AND PLAYER COMPONENTS
     CImg<unsigned char> SCREEN = *GAME_TITLE;
