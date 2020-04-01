@@ -35,7 +35,7 @@ Game::Game(int number_of_players)
 		break;
 	case 3:
 		//mapFileName = "./Maps/GBA_3Players.gbmap";
-		mapFileName = "./Maps/GBLoadFiles/GBA_3Players_fullBoardSize.gbmap";
+		mapFileName = "./Maps/GBA_3Players_fullBoardSize.gbmap";
 		break;
 	case 4:
 		mapFileName = "./Maps/GBA_4Players.gbmap";
@@ -63,6 +63,8 @@ Game::Game(int number_of_players)
 
 }
 
+
+
 Game::~Game()
 {
 	delete Players;
@@ -71,4 +73,9 @@ Game::~Game()
 	delete gb_map;
 	gb_map = nullptr;
 
+}
+
+void Game::playerDraw(int player_index)
+{
+	Players[0][player_index]->DrawHarvestTile(harvestDeck);
 }

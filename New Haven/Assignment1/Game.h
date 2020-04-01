@@ -11,6 +11,7 @@
 
 using std::string;
 
+
 class Game {
 
 private:
@@ -18,13 +19,20 @@ private:
 	GBMap* gb_map;
 	HarvestDeck* harvestDeck;
 	BuildingDeck* buildingDeck;
+	Player* currentPlayer; 
 
 public:
 	Game(int number_of_players);
 	~Game();
 
+	void playerDraw(int player_index);
+
 	GBMap* getGBMap();
 	Player* getPlayer(int id);
+	Player* getCurrentPlayer();
+	void setCurrentPlayer(Player* playerIn);
 };
+inline void Game::setCurrentPlayer(Player* playerIn) { currentPlayer = playerIn; }
 inline GBMap* Game::getGBMap() { return gb_map; }
 inline Player* Game::getPlayer(int id) { return Players[0][id];}
+inline Player* Game::getCurrentPlayer() { return currentPlayer; }

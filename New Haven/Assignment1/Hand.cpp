@@ -1,4 +1,9 @@
 #include "Hand.h"
+//#include "MapDrawer.h"
+#include "CImg.h"
+#include "DrawDisplay.h"
+
+using cimg_library::CImgDisplay;
 
 using std::cout;
 using std::cin;
@@ -277,6 +282,7 @@ bool Hand::requestRotate(HarvestTile* target)
 				ResourceType temp = container[0][3];
 				container[0].insert(container[0].begin(), temp);
 				container[0].erase(container[0].end() - 1);
+				UpdateDisplay();
 				continue;
 			}
 
@@ -324,7 +330,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 			return 1;
 		}
 
-		showHand();
+		//showHand();
 	
 		//Ask fow which Harvest tile to be played
 		int choice = askHarvestChoice();
@@ -503,7 +509,7 @@ void Hand::playBuilding(VGMap* vg_map) {
 		if (hasNoBuilding()) 
 			cout << "There is no Building Tile on hand to play" << endl;
 		
-		showHand();
+		//showHand();
 
 		int choice = askBuildingChoice();
 		if (choice == -1)

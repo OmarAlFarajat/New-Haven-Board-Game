@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="Building.h" />
     <ClInclude Include="CImg.h" />
+    <ClInclude Include="DrawDisplay.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GBMap.h" />
     <ClInclude Include="GBMapLoader.h" />
