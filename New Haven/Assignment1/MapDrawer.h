@@ -25,6 +25,7 @@ class MapDrawer {
 
 	unique_ptr<CImg<unsigned char>> NONE;
 
+	unique_ptr<CImg<unsigned char>> SHIPMENTBACK;
 	unique_ptr<CImg<unsigned char>> SHEEP;
 	unique_ptr<CImg<unsigned char>> STONE;
 	unique_ptr<CImg<unsigned char>> WHEAT;

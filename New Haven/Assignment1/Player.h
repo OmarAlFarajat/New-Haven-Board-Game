@@ -27,12 +27,14 @@ public:
 	void DrawHarvestTile(HarvestDeck* deck);
 
 	void UncoverShipment(GBMap* gb_map);
+	bool hasShipmentTile();
 	Hand* getHand();
 	VGMap* getVGMap();
 	string* getName();
 	void show();
   
 };
+inline bool Player::hasShipmentTile() { return (this->getHand()->hasSHIPMENT_TILE()); }
 inline VGMap* Player::getVGMap() {	return vg_map; }
 inline Hand* Player::getHand() { return myHand; }
 inline string* Player::getName() { return name; }
