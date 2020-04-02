@@ -115,6 +115,7 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 			tileNode->getResourceNodes()[i]->setOccupied(true);
 		}
 		tileNode->setOccupied(true);
+		tileNode->setShipmentStatus(true);
 		return true;
 	}
 
@@ -128,6 +129,7 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	tileNode->getResourceNodes()[2]->setOccupied(true);
 	tileNode->getResourceNodes()[3]->setOccupied(true);
 
+	tileNode->setShipmentStatus(false);
 	tileNode->setOccupied(true);
 
 	return true;

@@ -5,6 +5,7 @@
 class TileNode : public Node
 {
 	Resource* resources[4];
+	bool* isShipment;
 
 public:
 	TileNode();
@@ -16,4 +17,5 @@ public:
 	// Getter(s)
 	Resource** getResourceNodes();
 };
+inline Resource** TileNode::getResourceNodes() { return resources; }
 

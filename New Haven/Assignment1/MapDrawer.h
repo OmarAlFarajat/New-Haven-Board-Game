@@ -28,6 +28,11 @@ class MapDrawer {
 	unique_ptr<CImg<unsigned char>> WHEAT;
 	unique_ptr<CImg<unsigned char>> TIMBER;
 
+	unique_ptr<CImg<unsigned char>> SHIPMENT_SHEEP;
+	unique_ptr<CImg<unsigned char>> SHIPMENT_STONE;
+	unique_ptr<CImg<unsigned char>> SHIPMENT_WHEAT;
+	unique_ptr<CImg<unsigned char>> SHIPMENT_TIMBER;
+
 	unique_ptr<CImg<unsigned char>> GREEN_TRACKER;
 	unique_ptr<CImg<unsigned char>> GREY_TRACKER;
 	unique_ptr<CImg<unsigned char>> YELLOW_TRACKER;
@@ -48,6 +53,7 @@ public:
 	CImg<unsigned char> ResourceToBMP(ResourceType type);
 	CImg<unsigned char> BuildingToBMP(ResourceType type);
 	CImg<unsigned char> BuildingDownToBMP(ResourceType type);
+	CImg<unsigned char> ShipmentResourceToBMP(ResourceType type);
 
 	CImg<unsigned char> drawColumnIndicators();
 	CImg<unsigned char> drawGBMap();
