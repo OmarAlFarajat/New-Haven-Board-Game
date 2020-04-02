@@ -14,6 +14,8 @@ MapDrawer::MapDrawer(Game* const game)
     MAP_TILE = make_unique<CImg<unsigned char>>("./Images/TileNode.BMP");
     DISABLED_TILE = make_unique<CImg<unsigned char>>("./Images/DisabledTile.BMP");
 
+    SHIPMENT = make_unique<CImg<unsigned char>>("./Images/Shipment.BMP");
+
     RESOURCE_TRACKER = make_unique<CImg<unsigned char>>("./Images/ResourceTracker.BMP");
     AVAILABLE_BUILDINGS = make_unique<CImg<unsigned char>>("./Images/AvailableBuildings.BMP");
     
@@ -39,6 +41,38 @@ MapDrawer::MapDrawer(Game* const game)
     GREY_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/GreyBuildingDown.BMP");
     YELLOW_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/YellowBuildingDown.BMP");
     RED_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/RedBuildingDown.BMP");
+}
+
+// https://stackoverflow.com/a/50675486/9387394
+void MapDrawer::draw_line(cimg_library::CImg<uint8_t>& image,
+    const int x1, const int y1,
+    const int x2, const int y2,
+    const uint8_t* const color,
+    const unsigned int line_width)
+{
+    if (x1 == x2 && y1 == y2) {
+        return;
+    }
+    // Convert line (p1, p2) to polygon (pa, pb, pc, pd)
+    const double x_diff = std::abs(x1 - x2);
+    const double y_diff = std::abs(y1 - y2);
+    const double w_diff = line_width / 2.0;
+
+    const int x_adj = y_diff * w_diff / std::sqrt(std::pow(x_diff, 2) + std::pow(y_diff, 2));
+    const int y_adj = x_diff * w_diff / std::sqrt(std::pow(x_diff, 2) + std::pow(y_diff, 2));
+
+    // Points are listed in clockwise order, starting from top-left
+    cimg_library::CImg<int> points(4, 2);
+    points(0, 0) = x1 - x_adj;
+    points(0, 1) = y1 + y_adj;
+    points(1, 0) = x1 + x_adj;
+    points(1, 1) = y1 - y_adj;
+    points(2, 0) = x2 + x_adj;
+    points(2, 1) = y2 - y_adj;
+    points(3, 0) = x2 - x_adj;
+    points(3, 1) = y2 + y_adj;
+
+    image.draw_polygon(points, color);
 }
 
 // Returns the appropriate resource image based on the passed resource type
@@ -217,9 +251,15 @@ void MapDrawer::drawHarvestOnHand(shared_ptr<CImg<unsigned char>> HAND)
 
     // HAND: HARVEST TILES
     // Iterate through each harvest tile in the player's hand
+            // Initialize to a "blank" tile
+    CImg<unsigned char> tile = *MAP_TILE;
+    int x_offset = tile.width() * 1.25;
+    int y_offset = 25;
+
     for (int j = 0; j < tiles.size(); j++) {
-        // Initialize to a "blank" tile
-        CImg<unsigned char> tile = *MAP_TILE;
+
+        tile = *MAP_TILE;
+
         // For each of the 4 resource slots, draw the resource image onto the tile
         for (int i = 0; i < 4; i++) {
 
@@ -239,11 +279,38 @@ void MapDrawer::drawHarvestOnHand(shared_ptr<CImg<unsigned char>> HAND)
                 break;
             }
         }
+
+        if (tiles[j]->getIsSelected()) {
+
+            draw_line(tile,
+                0, 0,
+                tile.width(), 0,
+                blue, 7);
+
+            draw_line(tile,
+                0, 0,
+                0, tile.height(),
+                blue, 7);
+
+            draw_line(tile,
+                tile.width(), tile.height(),
+                tile.width(), 0,
+                blue, 7);
+
+            draw_line(tile,
+                tile.width(), tile.height(),
+                0, tile.height(),
+                blue, 7);
+        }
+
+
         // Once the tile is "dressed", we draw it in the appropriate place in the player's hand
-        int x_offset = tile.width() * 1.25;
-        int y_offset = 25;
         HAND->draw_image(x_offset * j, y_offset, 0, tile, 100);
         HAND->draw_text(x_offset * j, y_offset, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
+    }
+
+    if (game->getCurrentPlayer()->getHand()->hasSHIPMENT_TILE()) {
+        HAND->draw_image(x_offset * 3, y_offset, 0, *SHIPMENT, 100);
     }
 }
 
@@ -335,4 +402,3 @@ CImg<unsigned char> MapDrawer::Update()
     SCREEN.append(GAMEPLAY, 'y');
     return SCREEN;
 }
-

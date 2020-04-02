@@ -265,6 +265,7 @@ bool Hand::requestRotate(HarvestTile* target)
 			cin >> input;
 
 			if (input == back) {
+				target->setIsSelected(false);
 				return false;
 			}
 
@@ -331,12 +332,15 @@ int Hand::playHarvest(GBMap* gb_map) {
 		}
 
 		//showHand();
-	
+		UpdateDisplay();
+
 		//Ask fow which Harvest tile to be played
 		int choice = askHarvestChoice();
 		if (choice == -1) 
 			continue;
 		HarvestTile* target = getHarvestTile(choice);
+		target->setIsSelected(true);
+		UpdateDisplay();
 
 		//Ask for position on the map to place tile
 		int row, col;
@@ -348,6 +352,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 		}
 		catch (const exception & e) {
 			cout << "Invalid position input. Please try again" << endl;
+			target->setIsSelected(false);
 			continue;
 		}
 
@@ -371,6 +376,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 		}
 		else {
 			printOccupiedPositionMessage();
+			target->setIsSelected(false);
 			continue;
 		}
 	}

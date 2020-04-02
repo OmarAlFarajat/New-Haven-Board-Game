@@ -13,6 +13,7 @@ class HarvestTile
 	const int numOfResource = 4;
 	vector<ResourceType> container;
 	vector<ResourceType*>* shipmentContainer;
+	bool* isSelected; 
 
 public:
 	HarvestTile();
@@ -22,12 +23,16 @@ public:
 	int getNumOfResource();
 	friend ostream& operator<<(ostream& os, HarvestTile& ht);
 	bool isShipmentTile();
+	bool getIsSelected();
+	void setIsSelected(bool selected);
 	void setShipmentStatus(bool status);
 	bool makeShipmentOf(ResourceType type);
 	vector<ResourceType> getContainer();
 	vector<ResourceType*> getShipmentContainer();
 	vector<ResourceType>* getContainerPointer();
 };
+inline void HarvestTile::setIsSelected(bool selected) { *isSelected = selected; }
+inline bool HarvestTile::getIsSelected() { return *isSelected; };
 inline int HarvestTile::getNumOfResource() { return numOfResource; }
 inline bool HarvestTile::isShipmentTile() { return *shipmentTile; }
 inline void HarvestTile::setShipmentStatus(bool status) { *shipmentTile = status; }
@@ -41,7 +46,6 @@ class HarvestDeck
 	const static int numOfTiles = 60; 
 	int *tileIndex;  
 	vector<HarvestTile> deck;
-
 public:
 	HarvestDeck();
 	~HarvestDeck();

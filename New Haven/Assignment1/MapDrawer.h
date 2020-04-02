@@ -10,10 +10,13 @@ using std::unique_ptr;
 class MapDrawer {
 	Game* game;
 	const unsigned char black[3] = { 0,0,0 };
+	const unsigned char blue[3] = { 0,0,255 };
 	const unsigned char vagueBrown[3] = { 224,192,128 };
 
 	unique_ptr<CImg<unsigned char>> MAP_TILE;
 	unique_ptr<CImg<unsigned char>> DISABLED_TILE;
+
+	unique_ptr<CImg<unsigned char>> SHIPMENT;
 
 	unique_ptr<CImg<unsigned char>> RESOURCE_TRACKER;
 	unique_ptr<CImg<unsigned char>> AVAILABLE_BUILDINGS;
@@ -44,6 +47,7 @@ class MapDrawer {
 
 public:
 	MapDrawer(Game* const game); // setting up global variables
+	void draw_line(cimg_library::CImg<uint8_t>& image, const int x1, const int y1, const int x2, const int y2, const uint8_t* const color, const unsigned int line_width);
 	CImg<unsigned char> ResourceToBMP(ResourceType type);
 	CImg<unsigned char> BuildingToBMP(ResourceType type);
 	CImg<unsigned char> BuildingDownToBMP(ResourceType type);
