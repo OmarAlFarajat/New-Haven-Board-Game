@@ -22,26 +22,31 @@ MapDrawer::MapDrawer(Game* const game)
     GAME_TITLE = make_unique<CImg<unsigned char>>("./Images/GameTitleBar.BMP");
     NONE = make_unique<CImg<unsigned char>>("./Images/None.BMP");
 
-    SHIPMENTBACK = make_unique<CImg<unsigned char>>("./Images/shipmentBack.BMP");
-    SHEEP = make_unique<CImg<unsigned char>>("./Images/Sheep.BMP");
-    STONE = make_unique<CImg<unsigned char>>("./Images/Stone.BMP");
-    WHEAT = make_unique<CImg<unsigned char>>("./Images/Wheat.BMP");
-    TIMBER = make_unique<CImg<unsigned char>>("./Images/Timber.BMP");
+    SHEEP = make_unique<CImg<unsigned char>>("./Images/RESOURCES/Sheep.BMP");
+    STONE = make_unique<CImg<unsigned char>>("./Images/RESOURCES/Stone.BMP");
+    WHEAT = make_unique<CImg<unsigned char>>("./Images/RESOURCES/Wheat.BMP");
+    TIMBER = make_unique<CImg<unsigned char>>("./Images/RESOURCES/Timber.BMP");
 
-    GREEN_TRACKER = make_unique<CImg<unsigned char>>("./Images/GreenTracker.BMP");
-    GREY_TRACKER = make_unique<CImg<unsigned char>>("./Images/GreyTracker.BMP");
-    YELLOW_TRACKER = make_unique<CImg<unsigned char>>("./Images/YellowTracker.BMP");
-    RED_TRACKER = make_unique<CImg<unsigned char>>("./Images/RedTracker.BMP");
+    SHIPMENTBACK = make_unique<CImg<unsigned char>>("./Images/SHIPMENTS/shipmentBack.BMP");
+    SHIPMENT_SHEEP = make_unique<CImg<unsigned char>>("./Images/SHIPMENTS/sheepShipment.BMP");
+    SHIPMENT_STONE = make_unique<CImg<unsigned char>>("./Images/SHIPMENTS/stoneShipment.BMP");
+    SHIPMENT_WHEAT = make_unique<CImg<unsigned char>>("./Images/SHIPMENTS/wheatShipment.BMP");
+    SHIPMENT_TIMBER = make_unique<CImg<unsigned char>>("./Images/SHIPMENTS/timberShipment.BMP");
 
-    GREEN_BUILDING = make_unique<CImg<unsigned char>>("./Images/GreenBuilding.BMP");
-    GREY_BUILDING = make_unique<CImg<unsigned char>>("./Images/GreyBuilding.BMP");
-    YELLOW_BUILDING = make_unique<CImg<unsigned char>>("./Images/YellowBuilding.BMP");
-    RED_BUILDING = make_unique<CImg<unsigned char>>("./Images/RedBuilding.BMP");
+    GREEN_TRACKER = make_unique<CImg<unsigned char>>("./Images/TRACKERS/GreenTracker.BMP");
+    GREY_TRACKER = make_unique<CImg<unsigned char>>("./Images/TRACKERS/GreyTracker.BMP");
+    YELLOW_TRACKER = make_unique<CImg<unsigned char>>("./Images/TRACKERS/YellowTracker.BMP");
+    RED_TRACKER = make_unique<CImg<unsigned char>>("./Images/TRACKERS/RedTracker.BMP");
 
-    GREEN_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/GreenBuildingDown.BMP");
-    GREY_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/GreyBuildingDown.BMP");
-    YELLOW_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/YellowBuildingDown.BMP");
-    RED_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/RedBuildingDown.BMP");
+    GREEN_BUILDING = make_unique<CImg<unsigned char>>("./Images/BUILDINGS/GreenBuilding.BMP");
+    GREY_BUILDING = make_unique<CImg<unsigned char>>("./Images/BUILDINGS/GreyBuilding.BMP");
+    YELLOW_BUILDING = make_unique<CImg<unsigned char>>("./Images/BUILDINGS/YellowBuilding.BMP");
+    RED_BUILDING = make_unique<CImg<unsigned char>>("./Images/BUILDINGS/RedBuilding.BMP");
+
+    GREEN_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/BUILDINGSDOWN/GreenBuildingDown.BMP");
+    GREY_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/BUILDINGSDOWN/GreyBuildingDown.BMP");
+    YELLOW_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/BUILDINGSDOWN/YellowBuildingDown.BMP");
+    RED_BUILDING_DOWN = make_unique<CImg<unsigned char>>("./Images/BUILDINGSDOWN/RedBuildingDown.BMP");
 }
 
 // https://stackoverflow.com/a/50675486/9387394
@@ -124,6 +129,23 @@ CImg<unsigned char> MapDrawer::BuildingDownToBMP(ResourceType type) {
     }
 }
 
+CImg<unsigned char> MapDrawer::ShipmentResourceToBMP(ResourceType type)
+{
+    switch (type) {
+    case ResourceType::NONE:
+        return *NONE;
+    case ResourceType::SHEEP:
+        return *SHIPMENT_SHEEP;
+    case ResourceType::STONE:
+        return *SHIPMENT_STONE;
+    case ResourceType::WHEAT:
+        return *SHIPMENT_WHEAT;
+    case ResourceType::TIMBER:
+        return *SHIPMENT_TIMBER;
+    }
+}
+
+
 CImg<unsigned char> MapDrawer::drawColumnIndicators() {
     // Make the numbered column indicators based on the length of the tile graph
     CImg<unsigned char> columns(25, 25, 1, 3, 0);    // Empty square corner between column and row indicators
@@ -157,38 +179,43 @@ CImg<unsigned char> MapDrawer::drawGBMap()
 
         // Traverse the row
         for (int j = 0; j < game->getGBMap()->getTileGraph()->getLength(); j++) {
-
+               
             // Calculate next node id from row and column number and get a pointer to the node.
             int id = i * game->getGBMap()->getTileGraph()->getLength() + j;
             Node* n = game->getGBMap()->getTileGraph()->getNode(id);
-
+            
             // If node is enabled, then for each of the 4 resources, draw the resource onto the tile   
             // Else, draw a disabled tile.
             // Append the results to the row as is appropriate. 
             if (n->isEnabled()) {
                 // Give the tile a "blank" map tile which will be dressed with resources
                 CImg<unsigned char> tile = *MAP_TILE;
-
-                // For each of the 4 resources that are on a harvest tile
-                for (int k = 0; k < 4; k++) {
-                    // Get the resource as an image
-                    CImg<unsigned char> resource = ResourceToBMP(static_cast<Resource*>((static_cast<TileNode*>(n)->getResourceNodes()[k]))->getType());
-
-                    // Determine which position the resource should be drawn in the tile based on the value of k
-                    switch (k) {
-                    case 0:
-                        tile.draw_image(0, 0, 0, resource, 100);
-                        break;
-                    case 1:
-                        tile.draw_image(tile.width() / 2, 0, 0, resource, 100);
-                        break;
-                    case 2:
-                        tile.draw_image(0, tile.height() / 2, 0, resource, 100);
-                        break;
-                    case 3:
-                        tile.draw_image(tile.width() / 2, tile.height() / 2, 0, resource, 100);
-                        break;
-                    }
+                if (n->isShipmentTile()) {
+                    CImg<unsigned char> resource = ShipmentResourceToBMP(static_cast<Resource*>((static_cast<TileNode*>(n)->getResourceNodes()[0]))->getType());
+                    tile.draw_image(resource);
+                }
+                else {
+					// For each of the 4 resources that are on a harvest tile
+					for (int k = 0; k < 4; k++) {
+						// Get the resource as an image
+						CImg<unsigned char> resource = ResourceToBMP(static_cast<Resource*>((static_cast<TileNode*>(n)->getResourceNodes()[k]))->getType());
+						
+						// Determine which position the resource should be drawn in the tile based on the value of k
+						switch (k) {
+						case 0:
+							tile.draw_image(0, 0, 0, resource, 100);
+							break;
+						case 1:
+							tile.draw_image(tile.width() / 2, 0, 0, resource, 100);
+							break;
+						case 2:
+							tile.draw_image(0, tile.height() / 2, 0, resource, 100);
+							break;
+						case 3:
+							tile.draw_image(tile.width() / 2, tile.height() / 2, 0, resource, 100);
+							break;
+						}
+					}
                 }
                 rowTitle.append(tile, 'x');
             }

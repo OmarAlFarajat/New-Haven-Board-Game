@@ -11,6 +11,7 @@ Node::Node()
 	down = NULL;
 	right = NULL;
 	left = NULL;
+	isShipment = new bool(false);
 }
 
 Node::~Node()

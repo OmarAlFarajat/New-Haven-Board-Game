@@ -58,7 +58,7 @@ Game::Game(int number_of_players)
 		for (int j = 0; j < drawBuilding; ++j) {
 			Players[0][i]->DrawBuilding(buildingDeck);
 		}
-		Players[0][i]->getHand()->addSHIPMENT(harvestDeck->draw());
+		Players[0][i]->DrawShipment(harvestDeck);
 	}
 
 }
