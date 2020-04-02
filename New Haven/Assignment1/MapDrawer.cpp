@@ -20,6 +20,7 @@ MapDrawer::MapDrawer(Game* const game)
     GAME_TITLE = make_unique<CImg<unsigned char>>("./Images/GameTitleBar.BMP");
     NONE = make_unique<CImg<unsigned char>>("./Images/None.BMP");
 
+    SHIPMENTBACK = make_unique<CImg<unsigned char>>("./Images/shipmentBack.BMP");
     SHEEP = make_unique<CImg<unsigned char>>("./Images/Sheep.BMP");
     STONE = make_unique<CImg<unsigned char>>("./Images/Stone.BMP");
     WHEAT = make_unique<CImg<unsigned char>>("./Images/Wheat.BMP");
@@ -213,13 +214,17 @@ CImg<unsigned char> MapDrawer::drawVGMap()
 
 void MapDrawer::drawHarvestOnHand(shared_ptr<CImg<unsigned char>> HAND)
 {
-    vector<HarvestTile*> tiles = game->getCurrentPlayer()->getHand()->getHarvestHold()[0];
+    auto tiles = game->getCurrentPlayer()->getHand()->getHarvestHold()[0];
+
+    CImg<unsigned char> tile = *MAP_TILE;
+	int x_offset = tile.width() * 1.25;
+	int y_offset = 25;
+
 
     // HAND: HARVEST TILES
     // Iterate through each harvest tile in the player's hand
     for (int j = 0; j < tiles.size(); j++) {
         // Initialize to a "blank" tile
-        CImg<unsigned char> tile = *MAP_TILE;
         // For each of the 4 resource slots, draw the resource image onto the tile
         for (int i = 0; i < 4; i++) {
 
@@ -240,11 +245,16 @@ void MapDrawer::drawHarvestOnHand(shared_ptr<CImg<unsigned char>> HAND)
             }
         }
         // Once the tile is "dressed", we draw it in the appropriate place in the player's hand
-        int x_offset = tile.width() * 1.25;
-        int y_offset = 25;
         HAND->draw_image(x_offset * j, y_offset, 0, tile, 100);
         HAND->draw_text(x_offset * j, y_offset, to_string(j).c_str(), black, vagueBrown, 1.0f, 22);
     }
+    
+    // Draw shipment shipment tile 
+    if (game->getCurrentPlayer()->hasShipmentTile()) {
+        tile.draw_image(*SHIPMENTBACK);
+        HAND->draw_image(x_offset * tiles.size(), y_offset, 0, tile, 100);
+    }
+
 }
 
 void MapDrawer::drawBuildingsOnHand(shared_ptr<CImg<unsigned char>> HAND)
