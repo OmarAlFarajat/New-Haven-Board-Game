@@ -65,6 +65,15 @@ void Player::PlaceBuildingTile(VGMap* vg_map)
 	this->myHand->playBuilding(vg_map);
 }
 
+void Player::DrawShipment(HarvestDeck* deck) {
+	if (deck->getNumOfRemain() <= 0) {
+		cout << "There is no harvesr Tile in the Deck";
+	}
+	else {
+		myHand->addSHIPMENT(deck->draw());
+	}
+}
+
 /*
 The two functions DrawBuilding and DrawHarvestTile
 will call function draw from the player's hand. 

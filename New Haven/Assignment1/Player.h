@@ -22,6 +22,7 @@ public:
 	void PlaceHarvestTile(GBMap* gb_map);
 	void PlaceBuildingTile(VGMap* vg_map);
 
+	void DrawShipment(HarvestDeck* deck);
 	void DrawBuilding(BuildingDeck* deck);
 	void DrawHarvestTile(HarvestDeck* deck);
 
