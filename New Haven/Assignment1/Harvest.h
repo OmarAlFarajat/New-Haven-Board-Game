@@ -19,7 +19,6 @@ public:
 	HarvestTile();
 	HarvestTile(ResourceType[4]);
 	~HarvestTile();
-
 	int getNumOfResource();
 	friend ostream& operator<<(ostream& os, HarvestTile& ht);
 	bool isShipmentTile();
@@ -31,6 +30,7 @@ public:
 	vector<ResourceType*> getShipmentContainer();
 	vector<ResourceType>* getContainerPointer();
 };
+
 inline void HarvestTile::setIsSelected(bool selected) { *isSelected = selected; }
 inline bool HarvestTile::getIsSelected() { return *isSelected; };
 inline int HarvestTile::getNumOfResource() { return numOfResource; }
@@ -49,7 +49,6 @@ class HarvestDeck
 public:
 	HarvestDeck();
 	~HarvestDeck();
-
 
 	HarvestTile* draw();
 	int getNumOfRemain() const; 
