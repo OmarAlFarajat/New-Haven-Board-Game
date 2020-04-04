@@ -1,4 +1,4 @@
-Yes#include <string> 
+#include <string> 
 #include "MapDrawer.h"
 using std::cout;
 using std::endl; 
@@ -276,11 +276,6 @@ CImg<unsigned char> MapDrawer::drawVGMap()
 void MapDrawer::drawHarvestOnHand(shared_ptr<CImg<unsigned char>> HAND)
 {
     auto tiles = game->getCurrentPlayer()->getHand()->getHarvestHold()[0];
-
-    CImg<unsigned char> tile = *MAP_TILE;
-	int x_offset = tile.width() * 1.25;
-	int y_offset = 25;
-
 
     // HAND: HARVEST TILES
     // Iterate through each harvest tile in the player's hand
