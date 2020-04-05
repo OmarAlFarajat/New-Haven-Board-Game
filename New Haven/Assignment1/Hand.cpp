@@ -40,10 +40,11 @@ Hand::~Hand()
 }
 
 void Hand::printOccupiedPositionMessage() {
-	cout << "\n------------------------------------------" << endl;
-	cout << "The position is either occupied or invalid" << endl;
-	cout << "Please try again." << endl;
-	cout << "------------------------------------------\n" << endl;
+	cout << ">>> INVALID CHOICE. The position is either occupied or invalid. Please try again." << endl;
+	//cout << "\n------------------------------------------" << endl;
+	//cout << "The position is either occupied or invalid" << endl;
+	//cout << "Please try again." << endl;
+	//cout << "------------------------------------------\n" << endl;
 }
 
 void Hand::setShipmentLocation(int row, int col) {
@@ -134,15 +135,14 @@ vector<int> Hand::askHarvestLocation(GBMap* const gb_map)
 {
 	vector<int> location;
 	//Ask for position on the map to place tile
-	cout << "\n---Select position to place Tile---" << endl;
 	int row, col;
-	cout << "Enter the index of row:" << endl;
+	cout << "\t>>> Enter the row you want to play it on:" << endl;
 	cin >> row;
 	if (row < 0 || row >= gb_map->getTileGraph()->getHeight()) {
 		throw exception();
 	}
 
-	cout << "Enter the index of column:" << endl;
+	cout << "\t>>> Enter the column you want to play it on:" << endl;
 	cin >> col;
 	if (col < 0 || col >= gb_map->getTileGraph()->getLength()) {
 		throw exception();
@@ -156,10 +156,10 @@ vector<int> Hand::askHarvestLocation(GBMap* const gb_map)
 
 ResourceType Hand::askTypeForShipment()
 {
-	string menu = "\n1. TIMBER\n2. STONE\n3. WHEAT\n4. SHEEP";
+	string menu = "\t1. TIMBER\n\t2. STONE\n\t3. WHEAT\n\t4. SHEEP";
 	int choice;
 	while (true) {
-		cout << "\nSelect the type of Resource for your Shipment Tile" << endl;
+		cout << ">>> Select the type of Resource for your Shipment Tile" << endl;
 		cout << menu << endl;
 		try {
 			cin >> choice;
@@ -212,7 +212,7 @@ bool Hand::playSHIPMENT(GBMap* gb_map)
 	TileNode* location = static_cast<TileNode*>(gb_map->getTileGraph()->getNode(nodeID));
 	if (gb_map->isValid(location)) {
 		gb_map->placeHarvestTile(SHIPMENT_TILE, location);
-		cout << "\nPLACED SHIPMENT TILE ON THE GAMEBOARD SUCCESSFULLY\n" << endl;
+		//cout << "\nPLACED SHIPMENT TILE ON THE GAMEBOARD SUCCESSFULLY\n" << endl;
 		exchange(gb_map, location);
 		SHIPMENT_TILE->setShipmentStatus(false);
 		*containSHIPMENT = false;
@@ -242,7 +242,6 @@ A function asking and validating user's prefered orientation of the Harvest Tile
 */
 bool Hand::requestRotate(HarvestTile* target)
 {
-	cout << "\n---Start rotating session---" << endl;
 
 	char input;
 	char back = 'b';
@@ -250,15 +249,15 @@ bool Hand::requestRotate(HarvestTile* target)
 	char rotate = 'r';
 
 	while (true) {
-		cout << "\n---------------" << endl;
-		cout << "Your Harvest Tile:" << endl;
-		cout << *target << endl;
-		cout << "---------------" << endl;
+		//cout << "\n---------------" << endl;
+		//cout << "Your Harvest Tile:" << endl;
+		//cout << *target << endl;
+		//cout << "---------------" << endl;
 		
-
-		cout << "+ Rotate the Tile: r" << endl;
-		cout << "+ End rotating the Tile: e" << endl;
-	  cout << "+ Choose another Tile: b" << endl;
+		cout << ">>> Chosen Harvest Tile options: " << endl;
+		cout << "\t+ Place it: e" << endl;
+		cout << "\t+ Rotate clockwise: r" << endl;
+		cout << "\t+ Choose another: b" << endl;
 		vector<ResourceType>* container = target->getContainerPointer();
 
 		try {
@@ -270,16 +269,16 @@ bool Hand::requestRotate(HarvestTile* target)
 			}
 
 			if (input == end) {
-				cout << "------------------------------------------" << endl;
-				cout << "Placing Tile on the gameboard" << endl;
-				cout << "------------------------------------------" << endl;
+				//cout << "------------------------------------------" << endl;
+				//cout << "Placing Tile on the gameboard" << endl;
+				//cout << "------------------------------------------" << endl;
 				return true;
 
 			}
 
 			if (input == rotate) {
 				// Mimic a deque for rotating clockwise 
-				cout << "Rotating ..." << endl;
+				//cout << "Rotating ..." << endl;
 				ResourceType temp = container[0][3];
 				container[0].insert(container[0].begin(), temp);
 				container[0].erase(container[0].end() - 1);
@@ -302,8 +301,8 @@ int Hand::askHarvestChoice()
 {
 	//Ask for choice of Harvest Tile on hand
 	int choice = -1;
-	cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << endl;
-	cout << "Please enter the index of Harvest Tile you want to play" << endl;
+	//cout << "\nCurrently, you are having " << getRemainHarvest() << " Harvest Tiles on your hand" << endl;
+	cout << ">>> Enter the ID of the Harvest Tile you want to play: " << endl;
 	try {
 		cin >> choice;
 		if (choice < 0 || choice >= this->getRemainHarvest()) {
@@ -324,7 +323,7 @@ int Hand::askHarvestChoice()
 Function to start playing Harvest Tile and placing the tile on the board if it is valid
 */
 int Hand::playHarvest(GBMap* gb_map) {
-	cout << "\n----PLAYING HARVEST TILE----" << endl;
+	//cout << "\n----PLAYING HARVEST TILE----" << endl;
 	while (true) {
 		if (hasNoHarvest()) {
 			cout << "There is no Harvest Tile on hand to play" << endl;
@@ -366,7 +365,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 			if (requestRotate(target)) {
 				// User satisfies with their choice of rotation, process to place HarvestTile
 				gb_map->placeHarvestTile(target, location);
-				cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << endl;
+				//cout << "\nPLACED TILE ON THE GAMEBOARD SUCCESSFULLY\n" << endl;
 				exchange(gb_map, location);
 				harvestHold->erase(harvestHold[0].begin() + choice); //Remove the tile from hand after placement
 				*numOfHarvest = *numOfHarvest - 1;
@@ -388,7 +387,7 @@ int Hand::playHarvest(GBMap* gb_map) {
 A function to ask and validate player's request on flipping the Building Tile or not
 */
 bool Hand::requestFlip(BuildingTile* target) {
-    cout << "\n---Start flipping---" << endl;
+    //cout << "\n---Start flipping---" << endl;
 
     char input;
     char back = 'b';
@@ -398,17 +397,12 @@ bool Hand::requestFlip(BuildingTile* target) {
 
 	 string faceStatus;
     while (true) {
-        cout << "\n---------------" << endl;
-        cout << "Your Building Tile:" << endl;
-        cout << *target << endl;
-		    faceStatus = target->isFaceUp() ? " Up" : " Down";
-		    cout << "+ facing: " << faceStatus << endl;
-        cout << "---------------" << endl;
-      
-        cout << "+ Flip the Tile: f" << endl;
-        cout << "+ End flipping the Tile: e" << endl;
-        cout << "+ Choose another Tile: b" << endl;
-        cout << "+ Trade-of of flipping request: ?" << endl;
+		faceStatus = target->isFaceUp() ? "Up" : "Down";
+		cout << ">>> Chosen Building is " << faceStatus << ". Options:" << endl;
+		cout << "\t+ Place it: e" << endl;
+        cout << "\t+ Flip the Tile: f" << endl;
+        cout << "\t+ Choose another Tile: b" << endl;
+        cout << "\t+ Help with flipping: ?" << endl;
 
         try {
             cin >> input;
@@ -418,9 +412,9 @@ bool Hand::requestFlip(BuildingTile* target) {
             }
 
             if (input == end) {
-                cout << "------------------------------------------" << endl;
-                cout << "Validating the request" << endl;
-                cout << "------------------------------------------" << endl;
+                //cout << "------------------------------------------" << endl;
+                //cout << "Validating the request" << endl;
+                //cout << "------------------------------------------" << endl;
                 return true;
 
             }
@@ -438,15 +432,15 @@ bool Hand::requestFlip(BuildingTile* target) {
             }
 
             if(input == flip) {
-                cout << "\nFlipping the tile" << endl;
+                //cout << "\nFlipping the tile" << endl;
                 target->setFaceUp(!target->isFaceUp());
-                if(target->isFaceUp()) {
-                    cout << "The Building Tile is faced up." << endl;
-                    cout << "You CAN earn double points if you complete the whole column or row corresponding to the position of this card" << endl;
-                } else {
-                    cout << "The Building Tile is faced down." << endl;
-                    cout << "You CANNOT earn double points if you complete the whole column or row corresponding to the position of this card" << endl;
-                }
+                //if(target->isFaceUp()) {
+                //    cout << "The Building Tile is faced up." << endl;
+                //    cout << "You CAN earn double points if you complete the whole column or row corresponding to the position of this card" << endl;
+                //} else {
+                //    cout << "The Building Tile is faced down." << endl;
+                //    cout << "You CANNOT earn double points if you complete the whole column or row corresponding to the position of this card" << endl;
+                //}
                 continue;
             }
 
@@ -465,8 +459,8 @@ int Hand::askBuildingChoice()
 {
 	//Ask for choice of Building Tile from hand
 	int choice = -1;
-	cout << "\nCurrently, you have " << getRemainBuilding() << " Building tiles in your hand" << endl;
-	cout << "Please enter the index of Building Tile you want to play" << endl;
+	//cout << "\nCurrently, you have " << getRemainBuilding() << " Building tiles in your hand" << endl;
+	cout << ">>> Enter the ID of Building Tile you want to play:" << endl;
 	try {
 		cin >> choice;
 		if (choice < 0 || choice >= this->getRemainBuilding()) {
@@ -484,16 +478,15 @@ int Hand::askBuildingChoice()
 vector<int> Hand::askBuildingLocation(VGMap* const vg_map)
 {
 	//Ask for position on the map to place tile
-	cout << "\n---Select position to place Tile---" << endl;
 	int row, col;
 	vector<int> location;
-	cout << "Enter the index of row:" << endl;
+	cout << "\t>>> Enter the row you want to play it on:" << endl;
 	cin >> row;
 	if (row < 0 || row >= vg_map->getBuildingGraph()->getHeight()) {
 		throw exception();
 	}
 
-	cout << "Enter the index of column:" << endl;
+	cout << "\t>>> Enter the column you want to play it on:" << endl;
 	cin >> col;
 	if (col < 0 || col >= vg_map->getBuildingGraph()->getLength()) {
 		throw exception();
@@ -510,7 +503,7 @@ Function to start playing Building Tile and placing the tile on the village boar
 (build village)
 */
 void Hand::playBuilding(VGMap* vg_map) {
-	cout << "\n----PLAYING BUILDING TILE----" << endl;
+	//cout << "\n----PLAYING BUILDING TILE----" << endl;
 	while (true) {
 		if (hasNoBuilding()) 
 			cout << "There is no Building Tile on hand to play" << endl;
@@ -542,13 +535,13 @@ void Hand::playBuilding(VGMap* vg_map) {
 		if (requestFlip(target)) {
 		    if(vg_map->isValid(target, location)) {
                 vg_map->placeBuildingTile(target, location);
-                cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << endl;
+                //cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << endl;
                 buildingHold->erase(buildingHold[0].begin() + choice); //Remove the tile from hand after placement
                 *numOfBuilding = *numOfBuilding - 1;
                 break;
 		    } else {
 				printOccupiedPositionMessage();
-                continue;
+				break;
             }
 		}
 

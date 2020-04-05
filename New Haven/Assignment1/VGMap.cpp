@@ -85,18 +85,19 @@ bool VGMap::isAdjacent(ResourceType const fromHand, BuildingTile* const toBoard)
 
 bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
 	// Check all building nodes to see if this type of building has been placed before. 
+
 	bool firstPlacementOfType = isFirstPlacement(fromHand->getType()); 
 
 	// If playing face down, only check if space is not occupied, node is enabled, and is adjacent
 	if (!fromHand->isFaceUp()) {
 		// If it is the first placement, then check if enabled and not occupied.
 		if (firstPlacementOfType) {
-			cout << ">>> First placement of type "<< endl;
+			//cout << ">>> First placement of type "<< endl;
 			return !toBoard->isOccupied() && toBoard->isEnabled();
 		}
 		// If it is not the first placement of that type, then check that at least one adjacent node is of the same type
 		else {
-			cout << ">>> Not first placement of type, validating extra requirements..." << endl; 
+			//cout << ">>> Not first placement of type, validating extra requirements..." << endl; 
 			return !toBoard->isOccupied() && toBoard->isEnabled() 
 				&& isAdjacent(fromHand->getType(), toBoard);
 		}
@@ -107,13 +108,13 @@ bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
 
 	// If it is the first placement, then check if enabled and not occupied and the value of the building matches the value of the space
 	if (firstPlacementOfType) {
-		cout << ">>> First placement of type, checking if same value..." << endl;
+		//cout << ">>> First placement of type, checking if same value..." << endl;
 		return !toBoard->isOccupied() && toBoard->isEnabled() 
 			&& (toBoard->getValue() == fromHand->getValue());
 	}
 	// If it is not the first placement of that type, then check that at least one adjacent node is of the same type
 	else {
-		cout << ">>> Not first placement of type, checking if adjacent..." << endl; 
+		//cout << ">>> Not first placement of type, checking if adjacent..." << endl; 
 		return !toBoard->isOccupied() && toBoard->isEnabled() 
 			&& (toBoard->getValue() == fromHand->getValue())
 			&& isAdjacent(fromHand->getType(), toBoard);

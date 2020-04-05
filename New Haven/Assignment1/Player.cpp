@@ -44,8 +44,8 @@ Player::~Player()
 	delete name;
 }
 
-void Player::PlaceShipmentTile(GBMap* gb_map) {
-	this->myHand->playSHIPMENT(gb_map);
+bool Player::PlaceShipmentTile(GBMap* gb_map) {
+	return this->myHand->playSHIPMENT(gb_map);
 }
 /*
 The two functions PlaceHarvestTile and PlaceBuildingTile will start a playing session for

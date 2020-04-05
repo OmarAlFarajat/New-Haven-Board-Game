@@ -46,6 +46,9 @@ Game::Game(int number_of_players)
 
 	loadGBMap(mapFileName, *this->gb_map);
 
+	cout << ">>> Number of cards in Harvest deck: " << harvestDeck[0].getNumOfRemain() << endl;
+	cout << ">>> Number of cards in Building deck: " << buildingDeck[0].getNumOfRemain() << endl;
+
 	for (int i = 0; i < Players[0].size(); i++) {
 		int drawHarvest = 2;
 		//std::cout << "Drawing " << drawHarvest << " Harvest Tiles" << std::endl;
@@ -53,7 +56,7 @@ Game::Game(int number_of_players)
 			Players[0][i]->DrawHarvestTile(harvestDeck);
 		}
 
-		int drawBuilding = 18;
+		int drawBuilding = 6;
 		//std::cout << "Drawing " << drawBuilding << " Building Tiles" << std::endl;
 		for (int j = 0; j < drawBuilding; ++j) {
 			Players[0][i]->DrawBuilding(buildingDeck);
@@ -78,4 +81,7 @@ Game::~Game()
 void Game::playerDraw(int player_index)
 {
 	Players[0][player_index]->DrawHarvestTile(harvestDeck);
+	cout << ">>> Harvests remaining: " << harvestDeck[0].getNumOfRemain() << endl; 
+	cout << ">>> Buildings remaining: " << buildingDeck[0].getNumOfRemain() << endl;
+
 }

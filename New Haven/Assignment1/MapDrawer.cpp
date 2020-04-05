@@ -364,9 +364,9 @@ void MapDrawer::drawBuildingsOnHand(shared_ptr<CImg<unsigned char>> HAND)
         // Ideally, it can comfortably support 0 to 60 buildings in hand. Over that and it will be difficult to read.
         // The number of buildings in hand will be distributed "as best as possible" over 3 rows of space in the hand section displayed.
 
-        const int number_of_rows = 3;
+        const int number_of_rows = 2;
 
-        int row_size = (buildings.size() + number_of_rows - 1) / number_of_rows;
+        int row_size = 6; /*(buildings.size() + number_of_rows - 1) / number_of_rows;*/
         int handRow = i / row_size;   // integer division intended
 
         int x_offset = HAND->width() / row_size;

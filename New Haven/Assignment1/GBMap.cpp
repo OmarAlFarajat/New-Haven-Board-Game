@@ -44,7 +44,6 @@ bool GBMap::GameOver()
 	for (int i = 0; i < tileGraph->getNodes()[0].size(); i++)
 		if (tileGraph->getNodes()[0][i]->isOccupied())
 			counter++;
-	cout << "TILEGRAPH COUNT: " << counter << "occupied tiles." << endl;
 	if (counter == tileGraph->getNumEnabledNodes() - 1)
 		return true;
 	return false;
@@ -61,11 +60,11 @@ void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 
 void GBMap::displayResourceTracker()
 {
-	cout << "GBMap RESOURCE TRACKER: " << endl;
-	cout << "SHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
-	cout << "TIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
-	cout << "STONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
-	cout << "WHEAT: " << resourceTracker[0][ResourceType::WHEAT] << endl;;
+	cout << ">>> Resource Tracker " << endl;
+	cout << "\tSHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
+	cout << "\tTIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
+	cout << "\tSTONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
+	cout << "\tWHEAT: " << resourceTracker[0][ResourceType::WHEAT] << "\n" << endl;;
 
 }
 

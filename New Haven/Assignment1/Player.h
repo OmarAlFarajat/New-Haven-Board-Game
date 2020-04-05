@@ -18,7 +18,7 @@ public:
 	Player(string name, int vgmap_id);
 	~Player();
 
-	void PlaceShipmentTile(GBMap* gb_map);
+	bool PlaceShipmentTile(GBMap* gb_map);
 	void PlaceHarvestTile(GBMap* gb_map);
 	void PlaceBuildingTile(VGMap* vg_map);
 
