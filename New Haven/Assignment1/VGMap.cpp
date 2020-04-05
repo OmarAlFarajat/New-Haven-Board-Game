@@ -7,6 +7,10 @@ VGMap::VGMap()
 {
 	name = new string();
 	buildingGraph = new Graph();
+	firstPlacementExisted = new vector<bool*>;
+	for (int i = 0; i < 4; ++i) {
+		firstPlacementExisted->push_back(new bool(false));
+	}
 }
 
 VGMap::~VGMap()
@@ -15,6 +19,8 @@ VGMap::~VGMap()
 	name = nullptr;
 	delete buildingGraph;
 	buildingGraph = nullptr;
+	delete[] firstPlacementExisted;
+	firstPlacementExisted = nullptr;
 }
 
 void VGMap::initTileValues() {
@@ -35,36 +41,82 @@ void VGMap::initTileValues() {
 	}
 }
 
-bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
+void VGMap::setFirstPlacement(ResourceType type)
+{
+	switch (type) {
+	case ResourceType::TIMBER:
+		*firstPlacementExisted[0][0] = new bool(true);
+		break;
+	case ResourceType::STONE:
+		*firstPlacementExisted[0][1] = new bool(true);
+		break;
+	case ResourceType::WHEAT:
+		*firstPlacementExisted[0][2] = new bool(true);
+		break;
+	case ResourceType::SHEEP:
+		*firstPlacementExisted[0][3] = new bool(true);
+		break;
+	}
+}
 
-	// If playing face down, only check if space is not occupied, and the node is enabled.
-	if (!fromHand->isFaceUp())
-		return !toBoard->isOccupied() && toBoard->isEnabled();
+bool VGMap::isFirstPlacement(ResourceType type)
+{
+	switch (type) {
+	case ResourceType::TIMBER:
+		return !*firstPlacementExisted->at(0);
+	case ResourceType::STONE:
+		return !*firstPlacementExisted->at(1);
+	case ResourceType::WHEAT:
+		return !*firstPlacementExisted->at(2);
+	case ResourceType::SHEEP:
+		return !*firstPlacementExisted->at(3);
+	}
+}
+
+bool VGMap::isAdjacent(ResourceType const fromHand, BuildingTile* const toBoard)
+{
+	// Edge exists (not null)		... the neighbouring node is of the board space has a building that is of the same type as that being placed from the hand
+	bool evaluate =(toBoard->getUp() &&	static_cast<BuildingTile*>(toBoard->getUp())->getType() == fromHand) ||
+				(toBoard->getDown()	&&	static_cast<BuildingTile*>(toBoard->getDown())->getType() == fromHand)	||
+				(toBoard->getLeft()	&&	static_cast<BuildingTile*>(toBoard->getLeft())->getType() == fromHand)	||
+				(toBoard->getRight() &&	static_cast<BuildingTile*>(toBoard->getRight())->getType() == fromHand);
+	return evaluate;
+}
+
+bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
+	// Check all building nodes to see if this type of building has been placed before. 
+	bool firstPlacementOfType = isFirstPlacement(fromHand->getType()); 
+
+	// If playing face down, only check if space is not occupied, node is enabled, and is adjacent
+	if (!fromHand->isFaceUp()) {
+		// If it is the first placement, then check if enabled and not occupied.
+		if (firstPlacementOfType) {
+			cout << ">>> First placement of type "<< endl;
+			return !toBoard->isOccupied() && toBoard->isEnabled();
+		}
+		// If it is not the first placement of that type, then check that at least one adjacent node is of the same type
+		else {
+			cout << ">>> Not first placement of type, validating extra requirements..." << endl; 
+			return !toBoard->isOccupied() && toBoard->isEnabled() 
+				&& isAdjacent(fromHand->getType(), toBoard);
+		}
+	}
 
 	// The rest of the logic assumes that the building requesting to be played is face up
 	cout << ">>> Building is face up... " << endl;
 
-	// Check all building nodes to see if this type of building has been placed before. 
-	bool firstPlacementOfType = true; 
-	for (Node* x : buildingGraph->getNodes()[0]) 
-		if (static_cast<BuildingTile*>(x)->getType() == fromHand->getType()) {
-			cout << ">>> Not the first placement... " << endl;
-			firstPlacementOfType = false;
-		}
 	// If it is the first placement, then check if enabled and not occupied and the value of the building matches the value of the space
 	if (firstPlacementOfType) {
 		cout << ">>> First placement of type, checking if same value..." << endl;
-		return !toBoard->isOccupied() && toBoard->isEnabled() && (toBoard->getValue() == fromHand->getValue());
+		return !toBoard->isOccupied() && toBoard->isEnabled() 
+			&& (toBoard->getValue() == fromHand->getValue());
 	}
 	// If it is not the first placement of that type, then check that at least one adjacent node is of the same type
 	else {
 		cout << ">>> Not first placement of type, checking if adjacent..." << endl; 
-		return !toBoard->isOccupied() && toBoard->isEnabled() && (toBoard->getValue() == fromHand->getValue()) &&
-				// Edge exists (not null)		... the neighbouring node is of the board space has a building that is of the same type as that being placed from the hand
-			(	(toBoard->getUp()		&&		static_cast<BuildingTile*>(toBoard->getUp())->getType() == fromHand->getType())		||
-				(toBoard->getDown()		&&		static_cast<BuildingTile*>(toBoard->getDown())->getType() == fromHand->getType())	||
-				(toBoard->getLeft()		&&		static_cast<BuildingTile*>(toBoard->getLeft())->getType() == fromHand->getType())	||
-				(toBoard->getRight()	&&		static_cast<BuildingTile*>(toBoard->getRight())->getType() == fromHand->getType())	);
+		return !toBoard->isOccupied() && toBoard->isEnabled() 
+			&& (toBoard->getValue() == fromHand->getValue())
+			&& isAdjacent(fromHand->getType(), toBoard);
 	}
 }
 
@@ -73,6 +125,9 @@ void VGMap::placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard) {
 	toBoard->setType (fromHand->getType());
 	toBoard->setFaceUp(fromHand->isFaceUp());	
 	toBoard->setOccupied(true);
+	if (isFirstPlacement(fromHand->getType())) {
+		setFirstPlacement(fromHand->getType());
+	}
 }
 
 int VGMap::calculatePoints() {

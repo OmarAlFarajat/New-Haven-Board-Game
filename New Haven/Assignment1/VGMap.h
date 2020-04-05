@@ -9,11 +9,21 @@ class VGMap
 {
 	Graph* buildingGraph;
 	string* name;
+	/*
+	firstPlacement vector: holds 4 bool values showing 
+	which type has been placed on the VGBoard
+	The order is: TIMBER, STONE, WHEAT, SHEEP respectively
+	*/
+	std::vector<bool*>* firstPlacementExisted;
 
 public:
 	VGMap();
 	~VGMap();
 
+	//Check first placement
+	void setFirstPlacement(ResourceType);
+	bool isFirstPlacement(ResourceType);
+	bool isAdjacent(ResourceType const fromHand, BuildingTile* const onBoard);
 	// Helper to Hand::playBuilding(). Checks if building tile placement is valid.
 	bool isValid(BuildingTile* fromHand, BuildingTile* toBoard);
 
@@ -21,7 +31,7 @@ public:
 	int calculatePoints();
 
 	// Setters
-	void setName(std::string name) { *this->name = name; }
+	void setName(std::string name);
 	/*	Sets the Building "cost" for each building tile in VGMap. 
 	*(!)HACK:
 	*	initTileValues() is hardcoded assuming that the VGMap is always 5x6.
@@ -35,9 +45,11 @@ public:
 	void placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard);
 
 	// Getters
-	Graph* getBuildingGraph() {	return buildingGraph; }
-	std::string getName() { return *name; }
-
+	Graph* getBuildingGraph();
+	string getName();
 
 };
 
+inline void VGMap::setName(std::string name) { *this->name = name; }
+inline Graph* VGMap::getBuildingGraph() {	return buildingGraph; }
+inline	string VGMap::getName() { return *name; }
