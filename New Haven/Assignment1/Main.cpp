@@ -119,9 +119,6 @@ void PlayHarvest(int player_index) {
 		cin >> answer;
 			switch (answer) {
 			case 'y':
-				//////
-				// TODO: BUG. Misplacing the shipment tile (and redoing the placement) messes up the uncover process in EndTurn() step. 
-				/////
 				if (game->getPlayer(player_index)->PlaceShipmentTile(game->getGBMap())) {
 					validInput = true;
 					shipmentPlayed = true;

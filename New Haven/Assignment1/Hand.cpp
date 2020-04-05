@@ -201,7 +201,6 @@ bool Hand::playSHIPMENT(GBMap* gb_map)
 		vector<int> coordination= askHarvestLocation(gb_map);
 		row = coordination[0];
 		col = coordination[1];
-		setShipmentLocation(row, col);
 	}
 	catch (const exception & e) {
 		cout << "Invalid position" << endl;
@@ -213,6 +212,7 @@ bool Hand::playSHIPMENT(GBMap* gb_map)
 	if (gb_map->isValid(location)) {
 		gb_map->placeHarvestTile(SHIPMENT_TILE, location);
 		//cout << "\nPLACED SHIPMENT TILE ON THE GAMEBOARD SUCCESSFULLY\n" << endl;
+		setShipmentLocation(row, col);
 		exchange(gb_map, location);
 		SHIPMENT_TILE->setShipmentStatus(false);
 		*containSHIPMENT = false;
