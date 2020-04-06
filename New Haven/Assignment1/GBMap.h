@@ -25,6 +25,8 @@ public:
 	*(!)It's intended use is only as a helper for Hand::playHarvest() in conjunction with isValid().	*/
 	bool placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode);
 
+	BuildingTile* DrawBuilding(BuildingDeck* deck);
+
 	/*	A helper function for Hand::playHarvest().
 	*	Ensures that the request to place a Harvest tile on the board is valid.	*/
 	bool isValid(TileNode* tileNode);
@@ -39,13 +41,18 @@ public:
 
 	// Setters
 	void setResourceTracker(std::map<ResourceType, int>* inTracker);
+	//void setAvailableBuilding(int index, BuildingTile* building);
 
 	// Getters
 	Graph* getTileGraph();
 	Graph* getResourceGraph();
 	std::map<ResourceType, int>* getResourceTracker();
 
+	friend class Game;
+	friend class MapDrawer;
 };
 inline Graph* GBMap::getTileGraph() { return tileGraph; }
 inline Graph* GBMap::getResourceGraph() { return resourceGraph; }
 inline std::map<ResourceType, int>* GBMap::getResourceTracker() { return resourceTracker; }
+//inline void GBMap::setAvailableBuilding(int index, BuildingTile* building) { *buildingsAvailable[0] = *building; }
+//inline BuildingTile GBMap::getAvailableBuilding(int index) { return *buildingsAvailable[index]; }

@@ -412,14 +412,41 @@ void MapDrawer::drawResourceTracker()
 
 }
 
+CImg<unsigned char> MapDrawer::drawAvailableBuildings() {
+    CImg<unsigned char> GB_Buildings = *AVAILABLE_BUILDINGS;
+    int numberOfBuildingSlots = 5;
+    for (int i = 0; i < numberOfBuildingSlots; i++) {
+        if (game->getGBMap()->buildingsAvailable[i]) {
+            // Assign "building" the correct image based on building type
+            CImg<unsigned char> building = BuildingToBMP(game->getGBMap()->buildingsAvailable[i]->getType());
+
+            // Draw the building value onto the building image
+            int value_x = 4;
+            int value_y = 20;
+            building.draw_text(value_x, value_y, to_string(game->getGBMap()->buildingsAvailable[i]->getValue()).c_str(), black, 1, 1.0f, 28);
+
+            int x_offset = 4;
+            int y_offset = 46;
+            int delta_y = 136; 
+
+            GB_Buildings.draw_image(x_offset, y_offset + i*delta_y, 0, building, 100);
+            GB_Buildings.draw_text(x_offset, y_offset + i * delta_y, to_string(i).c_str(), black, vagueBrown, 1.0f, 22);
+        }
+
+    }
+    return GB_Buildings;
+}
+
 CImg<unsigned char> MapDrawer::Update()
 {
     CImg<unsigned char> gameBoard = drawGBMap();
     
     CImg<unsigned char> VGMAP = drawVGMap();
 
-    CImg<unsigned char> HAND = MapDrawer::drawHand();
-
+    CImg<unsigned char> HAND = drawHand();
+   
+    CImg<unsigned char> GB_Buildings = drawAvailableBuildings();
+    
     gameBoard.append(HAND, 'y');
     drawResourceTracker();
     
@@ -427,7 +454,7 @@ CImg<unsigned char> MapDrawer::Update()
     CImg<unsigned char> SCREEN = *GAME_TITLE;
     CImg<unsigned char> GAMEPLAY= *RESOURCE_TRACKER;
     GAMEPLAY.append(gameBoard);
-    GAMEPLAY.append(*AVAILABLE_BUILDINGS);
+    GAMEPLAY.append(GB_Buildings/**AVAILABLE_BUILDINGS*/);
     GAMEPLAY.append(VGMAP);
     SCREEN.append(GAMEPLAY, 'y');
     return SCREEN;

@@ -13,11 +13,11 @@ GBMap::GBMap()
 	resourceTracker = new std::map<ResourceType,int>;
 	resourceTracker[0] = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
 
-	buildingsAvailable[0] = new BuildingTile();
-	buildingsAvailable[1] = new BuildingTile();
-	buildingsAvailable[2] = new BuildingTile();
-	buildingsAvailable[3] = new BuildingTile();
-	buildingsAvailable[4] = new BuildingTile();
+	buildingsAvailable[0] = nullptr;
+	buildingsAvailable[1] = nullptr;
+	buildingsAvailable[2] = nullptr;
+	buildingsAvailable[3] = nullptr;
+	buildingsAvailable[4] = nullptr;
 
 }
 
@@ -134,3 +134,13 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	return true;
 }
 
+BuildingTile* GBMap::DrawBuilding(BuildingDeck* deck)
+{
+	if (deck->getNumOfRemain() <= 0) {
+		cout << "There is no more Building Tile in the Deck to draw" << endl;
+		return nullptr; 
+	}
+	else {
+		return deck->draw();
+	}
+}
