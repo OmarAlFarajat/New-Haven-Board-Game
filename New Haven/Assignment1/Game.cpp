@@ -83,12 +83,17 @@ Game::~Game()
 
 }
 
-void Game::playerDraw(int player_index)
+void Game::playerDrawHarvest(int player_index)
 {
 	Players[0][player_index]->DrawHarvestTile(harvestDeck);
 	cout << ">>> Harvests remaining: " << harvestDeck[0].getNumOfRemain() << endl; 
-	cout << ">>> Buildings remaining: " << buildingDeck[0].getNumOfRemain() << endl;
 
+}
+
+void Game::playerDrawBuilding(int player_index)
+{
+	Players[0][player_index]->DrawBuilding(buildingDeck);
+	cout << ">>> Buildings remaining: " << buildingDeck[0].getNumOfRemain() << endl;
 }
 
 void Game::FillAvailableBuildings() {
@@ -98,6 +103,6 @@ void Game::FillAvailableBuildings() {
 		if (!gb_map->buildingsAvailable[i]) {
 			gb_map->buildingsAvailable[i] = new BuildingTile();
 			gb_map->buildingsAvailable[i] = gb_map->DrawBuilding(buildingDeck);
-			cout << *gb_map->buildingsAvailable[i]; 
+			//cout << *gb_map->buildingsAvailable[i]; 
 		}
 }

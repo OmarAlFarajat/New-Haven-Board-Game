@@ -39,15 +39,13 @@ int main_disp_x;
 int main_disp_y;
 MapDrawer* drawer;
 
-//void testGame();
-
 void initialize();
 void PlayHarvest(int);
-//void DetermineResources(int);
 void BuildVillage(int);
 void ShareWealth(int);
 void DrawBuildings(int);
 void EndTurn(int);
+//void DrawBuildingsHelper(int, int);
 
 int main() {
 
@@ -55,8 +53,10 @@ int main() {
 
 	initialize();
 
+	// Keeps track of the game turn
 	int turn_counter = 1;
 
+	// MAIN GAME LOOP
 	for (int player_index = 0; !game->getGBMap()->GameOver(); player_index = ++player_index % numberOfPlayers) {
 
 		shipmentPlayed = false; 
@@ -168,6 +168,7 @@ void PlayHarvest(int player_index) {
 		} 
 	}
 }
+
 void BuildVillage(int player_index) {
 
 	if (!game->getPlayer(player_index)->getHand()->hasNoHarvest()) {
@@ -234,16 +235,85 @@ void ShareWealth(int player_index) {
 }
 
 void DrawBuildings(int player_index) {
-	
+	std::map<ResourceType, int>* resources = game->getGBMap()->getResourceTracker();
+
+	// TODO: Redo this count more efficiently...
+	int zeroCount = 0;
+	if (resources[0][ResourceType::SHEEP] == 0)
+		zeroCount++;
+	if (resources[0][ResourceType::STONE] == 0)
+		zeroCount++;
+	if (resources[0][ResourceType::WHEAT] == 0)
+		zeroCount++;
+	if (resources[0][ResourceType::TIMBER] == 0)
+		zeroCount++;
+
 	//////
 	// TODO: Draw one building for every resource marker at 0. Must first draw from GBMap's Available Buildings. 
 	/////
 
-	cout << ">>> Drawing a new Harvest tile card!" << endl;
-	if(game->getPlayer(0)->getHand()->getRemainHarvest() < 2)
-		game->playerDraw(player_index);
-	UpdateDisplay();
+	///	TEMPORARY: For now, player simply draws 1 Building from the deck at the end so long as their hand has less than 12. 
+	///	There is no interaction with the Buildings on the gameboard for now (will be fixed by A3). 
+
+	cout << ">>> Drawing a new Building card from the deck!" << endl;
+	if (game->getPlayer(0)->getHand()->getRemainBuilding() < 12)
+		game->playerDrawBuilding(player_index);
+
+	////	WORKING CODE, commented out. Simple "stand-in" behaviour above. 
+
+	//validInput = false;
+	//switch (zeroCount) {
+	//case 0:
+	//	break;
+	//case 1:
+	//	cout << ">>> You must draw 1 Building from the gameboard!" << endl;
+	//	//
+	//	break;
+	//case 2:
+	//	DrawBuildingsHelper(zeroCount, player_index);
+	//	break;
+	//case 3:
+	//	DrawBuildingsHelper(zeroCount, player_index);
+	//	break;
+	//case 4:
+	//	DrawBuildingsHelper(zeroCount, player_index);
+	//	break;
+	//}
 }
+
+//void DrawBuildingsHelper(int zeroCount, int player_index) {
+//	int numDrawFromGB = 0;
+//	while (!validInput) {
+//		cout << ">>> You must draw " << zeroCount << " Buildings, with at least 1 from the gameboard!" << endl;
+//		cout << "\t>>> Besides the mandatory Building, how many do you want to draw from the gameboard?" << endl;
+//		cin >> numDrawFromGB;
+//		if (numDrawFromGB < 0 || numDrawFromGB > zeroCount - 1) {
+//			cout << ">>> Invalid input, try again..." << endl;
+//			validInput = false;
+//			continue;
+//		}
+//
+//		validInput = true;
+//	}
+//
+//	for (int i = 0; i < numDrawFromGB; i++) {
+//		int choice = 0;
+//		while (!validInput) {
+//			cout << ">>> Select the Building ID from the gameboard you'd like to draw (" << i << "/" << numDrawFromGB << "): " << endl;
+//			cin >> choice;
+//			if (!(game->getGBMap()->getBuildingsAvailable() + choice)) {
+//				cout << ">>> Invalid input, try again..." << endl;
+//				validInput = false;
+//				continue;
+//			}
+//			
+//			validInput = true;
+//
+//		}
+//
+//
+//	}
+//}
 
 void EndTurn(int player_index) {
 
@@ -258,4 +328,9 @@ void EndTurn(int player_index) {
 		game->getPlayer(player_index)->UncoverShipment(game->getGBMap());
 		UpdateDisplay();
 	}
+
+	cout << ">>> Drawing a new Harvest card from the deck!" << endl;
+	if (game->getPlayer(0)->getHand()->getRemainHarvest() < 2)
+		game->playerDrawHarvest(player_index);
+	UpdateDisplay();
 }
