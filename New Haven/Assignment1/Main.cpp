@@ -71,7 +71,9 @@ int main() {
 		// 3: Build Your Village
 		BuildVillage(player_index);
 		// 4: Share the Wealth
-		ShareWealth(player_index);
+		if (game->getGBMap()->hasWealthToShare()) {
+			ShareWealth(player_index);
+		}
 		// 5: Draw Buildings
 		DrawBuildings(player_index);
 		// 6: End of Turn
@@ -169,7 +171,7 @@ void BuildVillage(int player_index) {
 		} 
 
 		while (wantsToBuild) {
-			game->getPlayer(player_index)->PlaceBuildingTile(game->getPlayer(player_index)->getVGMap());
+			game->getPlayer(player_index)->PlaceBuildingTile(game->getPlayer(player_index)->getVGMap(), game->getGBMap());
 			UpdateDisplay();
 
 			validInput = false;
@@ -196,12 +198,17 @@ void BuildVillage(int player_index) {
 }
 
 void ShareWealth(int player_index) {
-	cout << ">>> Number of points from VGMap: " << game->getPlayer(0)->getVGMap()->calculatePoints() << endl;
-
-	//////
-	// TODO: 
-	//////
-
+	cout << ">>> There are some unused resources. Start sharing wealth turn" << endl;
+	//cout << ">>> Number of points from VGMap: " << game->getPlayer(0)->getVGMap()->calculatePoints() << endl;
+	int new_player_index = player_index;
+	for (int i = ++new_player_index % numberOfPlayers; i == new_player_index; i = ++i % numberOfPlayers) {
+		cout << "*** START " << *game->getPlayer(new_player_index)->getName() << "'s SHARE WEALTH TURN! ***" << endl;
+		game->setCurrentPlayer(game->getPlayer(i));
+		UpdateDisplay();
+		BuildVillage(i);
+	}
+	game->setCurrentPlayer(game->getPlayer(player_index)); // back on track
+	cout << "*** BACK TO " << *game->getPlayer(player_index)->getName() << "'s TURN! ***" << endl;
 }
 
 void DrawBuildings(int player_index) {

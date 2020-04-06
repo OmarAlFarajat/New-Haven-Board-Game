@@ -58,6 +58,24 @@ void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 
 }
 
+void GBMap::spendResource(ResourceType type, int cost)
+{
+	resourceTracker[0][type] -= cost;
+}
+
+bool GBMap::isValidExpense(ResourceType type, int cost)
+{
+	return (resourceTracker[0][type] >= cost);
+}
+
+bool GBMap::hasWealthToShare()
+{
+	return (resourceTracker[0][ResourceType::SHEEP] > 0) ||
+		(resourceTracker[0][ResourceType::STONE] > 0) ||
+		(resourceTracker[0][ResourceType::TIMBER] > 0) ||
+		(resourceTracker[0][ResourceType::WHEAT] > 0) ;
+}
+
 void GBMap::displayResourceTracker()
 {
 	cout << ">>> Resource Tracker " << endl;

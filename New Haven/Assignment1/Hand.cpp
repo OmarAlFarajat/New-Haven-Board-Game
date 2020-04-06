@@ -502,7 +502,7 @@ vector<int> Hand::askBuildingLocation(VGMap* const vg_map)
 Function to start playing Building Tile and placing the tile on the village board if it is valid
 (build village)
 */
-void Hand::playBuilding(VGMap* vg_map) {
+void Hand::playBuilding(VGMap* vg_map, GBMap* const gb_map) {
 	//cout << "\n----PLAYING BUILDING TILE----" << endl;
 	while (true) {
 		if (hasNoBuilding()) 
@@ -511,9 +511,13 @@ void Hand::playBuilding(VGMap* vg_map) {
 		//showHand();
 
 		int choice = askBuildingChoice();
-		if (choice == -1)
-			continue;
 		BuildingTile* target = getBuildingTile(choice);
+
+		// Validate if player has enough resources
+		if (!gb_map->isValidExpense(target->getType(), target->getValue())) {
+			cout << "INSUFFICIENT RESOURCES: You do not have enough resources to construct this building" << endl;
+			break;
+		}
 
 		int row, col;
 		try {
@@ -535,6 +539,8 @@ void Hand::playBuilding(VGMap* vg_map) {
 		if (requestFlip(target)) {
 		    if(vg_map->isValid(target, location)) {
                 vg_map->placeBuildingTile(target, location);
+				gb_map->spendResource(target->getType(), target->getValue());
+
                 //cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << endl;
                 buildingHold->erase(buildingHold[0].begin() + choice); //Remove the tile from hand after placement
                 *numOfBuilding = *numOfBuilding - 1;

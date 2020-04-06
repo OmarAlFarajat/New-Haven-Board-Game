@@ -39,10 +39,14 @@ public:
 	*	Counts up the visited nodes for each ResourceType and passes it back through output as a map.	*/
 	void calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int>& output);
 
-	// Setters
+	// Resource Tracker operations
 	void setResourceTracker(std::map<ResourceType, int>* inTracker);
-	//void setAvailableBuilding(int index, BuildingTile* building);
+	void spendResource(ResourceType, int);
+	bool isValidExpense(ResourceType, int);
+	bool hasWealthToShare();
 
+	//void setAvailableBuilding(int index, BuildingTile* building);
+  
 	// Getters
 	Graph* getTileGraph();
 	Graph* getResourceGraph();
