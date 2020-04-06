@@ -22,6 +22,7 @@ using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
+using std::map;
 using cimg_library::CImgDisplay;
 
 static Game* game;
@@ -71,9 +72,8 @@ int main() {
 		// 3: Build Your Village
 		BuildVillage(player_index);
 		// 4: Share the Wealth
-		if (game->getGBMap()->hasWealthToShare()) {
+		if (game->getGBMap()->hasWealthToShare())
 			ShareWealth(player_index);
-		}
 		// 5: Draw Buildings
 		DrawBuildings(player_index);
 		// 6: End of Turn
@@ -104,11 +104,6 @@ void initialize() {
 	game = new Game(numberOfPlayers);
 	drawer = new MapDrawer(game);
 	validInput = false;
-
-	//////
-	// TODO: Initialize GBMap's Available Buildings
-	/////
-
 }
 
 void PlayHarvest(int player_index) {
@@ -145,7 +140,6 @@ void PlayHarvest(int player_index) {
 		} 
 	}
 }
-
 void BuildVillage(int player_index) {
 
 	if (!game->getPlayer(player_index)->getHand()->hasNoHarvest()) {
@@ -225,9 +219,12 @@ void DrawBuildings(int player_index) {
 
 void EndTurn(int player_index) {
 
-	//////
-	// TODO: Reset resource tracker
-	/////
+	cout << "Resetting Resource Tracker..." << endl;
+	
+	std::map<ResourceType, int>* resetResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
+	game->getGBMap()->setResourceTracker(resetResources);	
+
+	void displayResourceTracker();
 
 	if (shipmentPlayed) {
 		cout << "Shipment Tile flipped!" << endl;

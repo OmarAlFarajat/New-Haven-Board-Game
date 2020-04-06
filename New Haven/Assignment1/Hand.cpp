@@ -539,8 +539,7 @@ void Hand::playBuilding(VGMap* vg_map, GBMap* const gb_map) {
 		if (requestFlip(target)) {
 		    if(vg_map->isValid(target, location)) {
                 vg_map->placeBuildingTile(target, location);
-				gb_map->spendResource(target->getType(), target->getValue());
-
+				        gb_map->spendResource(target->getType(), target->getValue());
                 //cout << "\nPLACED TILE ON THE VGBOARD SUCCESSFULLY\n" << endl;
                 buildingHold->erase(buildingHold[0].begin() + choice); //Remove the tile from hand after placement
                 *numOfBuilding = *numOfBuilding - 1;

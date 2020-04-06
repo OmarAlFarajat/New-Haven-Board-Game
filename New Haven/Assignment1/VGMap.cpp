@@ -104,7 +104,7 @@ bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
 	}
 
 	// The rest of the logic assumes that the building requesting to be played is face up
-	cout << ">>> Building is face up... " << endl;
+	//cout << ">>> Building is face up... " << endl;
 
 	// If it is the first placement, then check if enabled and not occupied and the value of the building matches the value of the space
 	if (firstPlacementOfType) {
