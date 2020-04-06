@@ -1,0 +1,40 @@
+NAME	Fairfield
+LENGTH	5
+HEIGHT	6
+# Can populate the VG Map initially for testing and debugging. 
+# See the reference image in the source code "Stratford_example.png"
+# This example as is should total up to 24 points.
+# Uncommenting "BUILDING 21" below should increase it to 28 points. 
+#			ID	Type	Value	Orientation
+# Row 0
+BUILDING	0	TIMBER	6		UP
+BUILDING	1	TIMBER	6		UP
+BUILDING	4	SHEEP	6		UP
+   
+# Row 1
+BUILDING	5	STONE	5		UP
+BUILDING 	6	TIMBER	5		UP
+BUILDING	7	TIMBER	5		UP
+BUILDING	9	SHEEP	5		UP
+	
+# Row 2
+BUILDING	10	STONE	4		UP
+BUILDING	11	STONE	4		UP
+BUILDING	12	WHEAT	4		UP
+BUILDING	13	SHEEP	4		UP
+BUILDING	14	SHEEP	4		UP
+
+# Row 3
+BUILDING	15	WHEAT	3		UP
+BUILDING	16	WHEAT	3		UP
+BUILDING	17	WHEAT	3		UP
+BUILDING	18	SHEEP	3		UP
+BUILDING	19	SHEEP	3		UP
+
+# Row 4
+BUILDING	20	WHEAT	2		UP
+BUILDING	21	WHEAT	6		UP
+
+# Row 5
+BUILDING	25	WHEAT	1		UP
+BUILDING	26	WHEAT	1		UP

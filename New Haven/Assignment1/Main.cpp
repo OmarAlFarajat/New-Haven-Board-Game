@@ -99,7 +99,7 @@ void scoreBoard() {
 	for (int i = 0; i < numberOfPlayers; ++i) {
 		int gainedScore = game->getPlayer(i)->getVGMap()->calculatePoints();
 		game->getPlayer(i)->setScore(gainedScore);
-		cout << "Player " << game->getPlayer(i)->getName() << " : " << game->getPlayer(i)->getScore() << endl;
+		cout << "Player " << *game->getPlayer(i)->getName() << " : " << game->getPlayer(i)->getScore() << endl;
 		scoreBoard.push(gainedScore);
 	}
 
@@ -115,7 +115,7 @@ void scoreBoard() {
 		int examining = game->getPlayer(i)->getScore();
 		if (examining == bestScore) {
 			cout << " CONGRATULATION " << endl;
-			cout << "\n >>>> The winner is " << game->getPlayer(i)->getName() << " with " << bestScore << endl;
+			cout << "\n >>>> The winner is " << *game->getPlayer(i)->getName() << " with " << bestScore << endl;
 		}
 	}
 

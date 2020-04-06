@@ -158,11 +158,11 @@ int VGMap::calculatePoints() {
 
 			if (buildingCount == buildingGraph->getLength()) 
 				if (perfectRow) {
-					cout << "~~~ Found a perfect row! " << 2 * colonistRowValue[j] << endl;
+					//cout << "~~~ Found a perfect row! " << 2 * colonistRowValue[j] << endl;
 					points += 2 * colonistRowValue[j];
 				}
 				else {
-					cout << "~~~ Found an imperfect row! " << colonistRowValue[j] << endl;
+					//cout << "~~~ Found an imperfect row! " << colonistRowValue[j] << endl;
 					points += colonistRowValue[j];
 				}
 			
@@ -192,11 +192,11 @@ int VGMap::calculatePoints() {
 
 			if (buildingCount == buildingGraph->getHeight())
 				if (perfectRow) {
-					cout << "~~~ Found a perfect column! " << 2 * colonistColumnValue[j] << endl;
+					//cout << "~~~ Found a perfect column! " << 2 * colonistColumnValue[j] << endl;
 					points += 2 * colonistColumnValue[j];
 				}
 				else {
-					cout << "~~~ Found an imperfect column! " << colonistColumnValue[j] << endl;
+					//cout << "~~~ Found an imperfect column! " << colonistColumnValue[j] << endl;
 					points += colonistColumnValue[j];
 				}
 		}
