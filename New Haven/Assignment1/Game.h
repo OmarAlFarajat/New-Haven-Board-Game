@@ -25,7 +25,9 @@ public:
 	Game(int number_of_players);
 	~Game();
 
-	void playerDraw(int player_index);
+	void playerDrawHarvest(int player_index);
+
+	void playerDrawBuilding(int player_index);
 
 	void FillAvailableBuildings();
 	GBMap* getGBMap();

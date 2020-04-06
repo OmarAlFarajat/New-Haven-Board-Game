@@ -51,6 +51,7 @@ public:
 	Graph* getTileGraph();
 	Graph* getResourceGraph();
 	std::map<ResourceType, int>* getResourceTracker();
+	BuildingTile* getBuildingsAvailable();
 
 	friend class Game;
 	friend class MapDrawer;
@@ -58,5 +59,6 @@ public:
 inline Graph* GBMap::getTileGraph() { return tileGraph; }
 inline Graph* GBMap::getResourceGraph() { return resourceGraph; }
 inline std::map<ResourceType, int>* GBMap::getResourceTracker() { return resourceTracker; }
+inline BuildingTile* GBMap::getBuildingsAvailable() { return buildingsAvailable[0]; }
 //inline void GBMap::setAvailableBuilding(int index, BuildingTile* building) { *buildingsAvailable[0] = *building; }
 //inline BuildingTile GBMap::getAvailableBuilding(int index) { return *buildingsAvailable[index]; }
