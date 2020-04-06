@@ -67,5 +67,7 @@ public:
 	CImg<unsigned char> drawHand();
 	void drawResourceTracker();
 
+	CImg<unsigned char>  drawAvailableBuildings();
+
 	CImg<unsigned char> Update();
 };

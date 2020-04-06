@@ -217,7 +217,8 @@ void DrawBuildings(int player_index) {
 	/////
 
 	cout << ">>> Drawing a new Harvest tile card!" << endl;
-	game->playerDraw(player_index);
+	if(game->getPlayer(0)->getHand()->getRemainHarvest() < 2)
+		game->playerDraw(player_index);
 	UpdateDisplay();
 }
 
