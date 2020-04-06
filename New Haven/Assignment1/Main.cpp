@@ -221,10 +221,9 @@ void EndTurn(int player_index) {
 
 	cout << "Resetting Resource Tracker..." << endl;
 	
-	std::map<ResourceType, int>* resetResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
-	game->getGBMap()->setResourceTracker(resetResources);	
+	std::map<ResourceType, int> resetResources = { {ResourceType::SHEEP, 0}, { ResourceType::STONE,0 }, { ResourceType::TIMBER,0 }, { ResourceType::WHEAT,0 } };
 
-	void displayResourceTracker();
+	game->getGBMap()->setResourceTracker(&resetResources);
 
 	if (shipmentPlayed) {
 		cout << "Shipment Tile flipped!" << endl;
