@@ -32,6 +32,7 @@ Game::Game(int number_of_players)
 		//mapFileName = "./Maps/GBA_2Players.gbmap";
 		//mapFileName = "./Maps/GBA_2Players_resourceTest.gbmap";
 		//mapFileName = "./Maps/GBA_2Players_invalid.gbmap";
+		//mapFileName = "./Maps/GBA_2Players_testWinner.gbmap"; failing
 		mapFileName = "./Maps/GBA_2Players_fullBoardSize.gbmap";
 		break;
 	case 3:

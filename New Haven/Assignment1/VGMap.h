@@ -15,6 +15,7 @@ class VGMap
 	The order is: TIMBER, STONE, WHEAT, SHEEP respectively
 	*/
 	std::vector<bool*>* firstPlacementExisted;
+	int* counter; // To find winner when there is a tie
 
 public:
 	VGMap();
@@ -47,9 +48,10 @@ public:
 	// Getters
 	Graph* getBuildingGraph();
 	string getName();
-
+	int getCounter();
 };
 
 inline void VGMap::setName(std::string name) { *this->name = name; }
 inline Graph* VGMap::getBuildingGraph() {	return buildingGraph; }
 inline	string VGMap::getName() { return *name; }
+inline int VGMap::getCounter() { return *counter; }

@@ -31,7 +31,7 @@ Player::Player(string name, int vgmap_id)
 	}
 
 	loadVGMap(vgMapName, *vg_map);
-
+	score = new int(0);
 }
 
 Player::~Player()
