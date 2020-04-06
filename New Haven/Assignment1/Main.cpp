@@ -103,7 +103,14 @@ void scoreBoard() {
 		scoreBoard.push(gainedScore);
 	}
 
-	int bestScore = scoreBoard.top();
+	int bestScore = 0;
+	for (int i = 0; i < numberOfPlayers; ++i) {
+		int examining = game->getPlayer(i)->getScore();
+		if (examining > bestScore) {
+			bestScore = examining;
+		}
+	}
+
 	for (int i = 0; i < numberOfPlayers; ++i) {
 		int examining = game->getPlayer(i)->getScore();
 		if (examining == bestScore) {
