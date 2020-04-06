@@ -60,9 +60,9 @@ void Player::PlaceHarvestTile(GBMap* gb_map)
 	this->myHand->playHarvest(gb_map);
 }
 
-void Player::PlaceBuildingTile(VGMap* vg_map)
+void Player::PlaceBuildingTile(VGMap* vg_map, GBMap* gb_map)
 {
-	this->myHand->playBuilding(vg_map);
+	this->myHand->playBuilding(vg_map, gb_map);
 }
 
 void Player::DrawShipment(HarvestDeck* deck) {

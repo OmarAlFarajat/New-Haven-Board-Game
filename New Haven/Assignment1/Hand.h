@@ -63,7 +63,7 @@ class Hand
 	bool requestFlip(BuildingTile* target);
 	int askBuildingChoice();
 	vector<int> askBuildingLocation(VGMap* const vg_map);
-	void playBuilding(VGMap* vg_map);
+	void playBuilding(VGMap* vg_map, GBMap* const gb_map);
 
 };
 // Getters & Setters
