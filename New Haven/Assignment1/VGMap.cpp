@@ -11,6 +11,7 @@ VGMap::VGMap()
 	for (int i = 0; i < 4; ++i) {
 		firstPlacementExisted->push_back(new bool(false));
 	}
+	counter = new int(0);
 }
 
 VGMap::~VGMap()
@@ -129,6 +130,7 @@ void VGMap::placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard) {
 	if (isFirstPlacement(fromHand->getType())) {
 		setFirstPlacement(fromHand->getType());
 	}
+	counter += 1;
 }
 
 int VGMap::calculatePoints() {

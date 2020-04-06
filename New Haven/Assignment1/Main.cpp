@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <queue>
 
 #include "GBMap.h"
 #include "Resources.h"
@@ -30,6 +31,7 @@ static int numberOfPlayers;
 static int validInput; 
 static char answer;
 static bool shipmentPlayed; 
+void scoreBoard();
 
 void UpdateDisplay();
 CImgDisplay main_disp;
@@ -81,11 +83,37 @@ int main() {
 
 		cout << "*** END OF " << *game->getPlayer(player_index)->getName() << "'s turn! ***" << endl;
 		cout << "*****************************" << endl;
-
+		
 	}
-
+	scoreBoard();
 	return 0;
 }
+
+//TODO: Implement to find the winner with more filters
+void scoreBoard() {
+	cout << "*******************************" << endl;
+	cout << "            GAME ENDS           " << endl;
+	cout << "***********SCORE BOARD***********" << endl;
+
+	std::priority_queue<int> scoreBoard;
+	for (int i = 0; i < numberOfPlayers; ++i) {
+		int gainedScore = game->getPlayer(i)->getVGMap()->calculatePoints();
+		game->getPlayer(i)->setScore(gainedScore);
+		cout << "Player " << game->getPlayer(i)->getName() << " : " << game->getPlayer(i)->getScore() << endl;
+		scoreBoard.push(gainedScore);
+	}
+
+	int bestScore = scoreBoard.top();
+	for (int i = 0; i < numberOfPlayers; ++i) {
+		int examining = game->getPlayer(i)->getScore();
+		if (examining == bestScore) {
+			cout << " CONGRATULATION " << endl;
+			cout << "\n >>>> The winner is " << game->getPlayer(i)->getName() << " with " << bestScore << endl;
+		}
+	}
+
+}
+
 
 void UpdateDisplay() {
 	main_disp = CImgDisplay(drawer->Update(), "New Haven");
