@@ -27,10 +27,12 @@ public:
 
 	void playerDraw(int player_index);
 
+	void FillAvailableBuildings();
 	GBMap* getGBMap();
 	Player* getPlayer(int id);
 	Player* getCurrentPlayer();
 	void setCurrentPlayer(Player* playerIn);
+
 };
 inline void Game::setCurrentPlayer(Player* playerIn) { currentPlayer = playerIn; }
 inline GBMap* Game::getGBMap() { return gb_map; }

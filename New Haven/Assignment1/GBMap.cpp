@@ -13,11 +13,11 @@ GBMap::GBMap()
 	resourceTracker = new std::map<ResourceType,int>;
 	resourceTracker[0] = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
 
-	buildingsAvailable[0] = new BuildingTile();
-	buildingsAvailable[1] = new BuildingTile();
-	buildingsAvailable[2] = new BuildingTile();
-	buildingsAvailable[3] = new BuildingTile();
-	buildingsAvailable[4] = new BuildingTile();
+	buildingsAvailable[0] = nullptr;
+	buildingsAvailable[1] = nullptr;
+	buildingsAvailable[2] = nullptr;
+	buildingsAvailable[3] = nullptr;
+	buildingsAvailable[4] = nullptr;
 
 }
 
@@ -44,7 +44,6 @@ bool GBMap::GameOver()
 	for (int i = 0; i < tileGraph->getNodes()[0].size(); i++)
 		if (tileGraph->getNodes()[0][i]->isOccupied())
 			counter++;
-	cout << "TILEGRAPH COUNT: " << counter << "occupied tiles." << endl;
 	if (counter == tileGraph->getNumEnabledNodes() - 1)
 		return true;
 	return false;
@@ -59,13 +58,31 @@ void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 
 }
 
+void GBMap::spendResource(ResourceType type, int cost)
+{
+	resourceTracker[0][type] -= cost;
+}
+
+bool GBMap::isValidExpense(ResourceType type, int cost)
+{
+	return (resourceTracker[0][type] >= cost);
+}
+
+bool GBMap::hasWealthToShare()
+{
+	return (resourceTracker[0][ResourceType::SHEEP] > 0) ||
+		(resourceTracker[0][ResourceType::STONE] > 0) ||
+		(resourceTracker[0][ResourceType::TIMBER] > 0) ||
+		(resourceTracker[0][ResourceType::WHEAT] > 0) ;
+}
+
 void GBMap::displayResourceTracker()
 {
-	cout << "GBMap RESOURCE TRACKER: " << endl;
-	cout << "SHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
-	cout << "TIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
-	cout << "STONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
-	cout << "WHEAT: " << resourceTracker[0][ResourceType::WHEAT] << endl;;
+	cout << ">>> Resource Tracker " << endl;
+	cout << "\tSHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
+	cout << "\tTIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
+	cout << "\tSTONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
+	cout << "\tWHEAT: " << resourceTracker[0][ResourceType::WHEAT] << "\n" << endl;;
 
 }
 
@@ -135,3 +152,13 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	return true;
 }
 
+BuildingTile* GBMap::DrawBuilding(BuildingDeck* deck)
+{
+	if (deck->getNumOfRemain() <= 0) {
+		cout << "There is no more Building Tile in the Deck to draw" << endl;
+		return nullptr; 
+	}
+	else {
+		return deck->draw();
+	}
+}
