@@ -11,6 +11,10 @@ class Observer
 	* do when update() is invoked.
 	*/
 public:
+	Subject* model;
+	Observer();
+	Observer(Subject* subject) : model(subject) {};
+	virtual void update(int code) {};
 	~Observer();
 	//virtual ~Observer();		//to properly delete derived classes with dynamic members if using polymorphism
 	virtual void Update() = 0;
