@@ -56,11 +56,16 @@ void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 	resourceTracker[0][ResourceType::TIMBER] = inTracker[0][ResourceType::TIMBER];
 	resourceTracker[0][ResourceType::WHEAT] = inTracker[0][ResourceType::WHEAT];
 
+	// A3. Notify observer of change to resource tracker! 
+	Notify();
 }
 
 void GBMap::spendResource(ResourceType type, int cost)
 {
 	resourceTracker[0][type] -= cost;
+
+	// A3. Notify observer of change to resource tracker! 
+	Notify();
 }
 
 bool GBMap::isValidExpense(ResourceType type, int cost)
@@ -78,11 +83,11 @@ bool GBMap::hasWealthToShare()
 
 void GBMap::displayResourceTracker()
 {
-	cout << ">>> Resource Tracker " << endl;
-	cout << "\tSHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
-	cout << "\tTIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
-	cout << "\tSTONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
-	cout << "\tWHEAT: " << resourceTracker[0][ResourceType::WHEAT] << "\n" << endl;;
+	cout << "\t\t$$$ Resource Tracker " << endl;
+	cout << "\t\t\tSHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
+	cout << "\t\t\tTIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
+	cout << "\t\t\tSTONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
+	cout << "\t\t\tWHEAT: " << resourceTracker[0][ResourceType::WHEAT] << "\n" << endl;;
 
 }
 
@@ -117,6 +122,7 @@ void GBMap::calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int> 
 			}
 
 		}
+
 	// Reset the state of all nodes to unvisited
 	resourceGraph->resetAllVisited();
 }
@@ -149,6 +155,8 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	tileNode->setShipmentStatus(false);
 	tileNode->setOccupied(true);
 
+	// A3. Notify observers of tile placement! 
+	Notify(); 
 	return true;
 }
 
@@ -161,4 +169,28 @@ BuildingTile* GBMap::DrawBuilding(BuildingDeck* deck)
 	else {
 		return deck->draw();
 	}
+}
+
+
+GBMapObserver::GBMapObserver(GBMap* s) {
+	_subject = s;
+	_subject->Attach(this);
+}
+
+GBMapObserver::~GBMapObserver() {
+	_subject->Detach(this);
+}
+
+void GBMapObserver::Update(Subject* theChangedSubject)
+{
+	if (theChangedSubject == _subject)
+		Output();
+}
+
+void GBMapObserver::Output() {
+
+	cout << "\t\t$$$ GBMAP OBSERVER SAYS: The state of GBMap has changed!" << endl;
+	cout << "\t\t$$$ GBMAP OBSERVER SAYS: Either a Harvest card was placed, or resources were generated or removed!" << endl;
+	_subject->displayResourceTracker();
+
 }

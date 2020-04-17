@@ -52,6 +52,14 @@ int main() {
 	srand(time(nullptr));
 
 	initialize();
+	// A3. Creating the observers and attaching them to the subjects (via constructors). 
+	GameObserver GameObserver(game);
+	GBMapObserver GBMapObserver(game->getGBMap());
+	// One VGMap observer per player 
+	vector<VGMapObserver*> VGMapObservers;
+	for (int i = 0; i < numberOfPlayers; i++) {
+		VGMapObservers.push_back(new VGMapObserver(game->getPlayer(i)->getVGMap()));
+	}
 
 	// Keeps track of the game turn
 	int turn_counter = 1;
@@ -61,11 +69,14 @@ int main() {
 
 		shipmentPlayed = false; 
 
+		// A3. GameObserver will be notified by using setCurrentPlayer. 
+		game->setCurrentPlayer(game->getPlayer(player_index));
+
 		cout << "\n*****************************" << endl; 
 		cout << "*** START OF " << *game->getPlayer(player_index)->getName() << "'s TURN! ***" << endl;
 		cout << "Game turn: " << turn_counter << endl;
 		turn_counter++;
-		game->setCurrentPlayer(game->getPlayer(player_index));
+
 		UpdateDisplay();
 
 		// 1: Play a Harvest Tile

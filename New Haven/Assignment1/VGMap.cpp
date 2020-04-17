@@ -122,6 +122,7 @@ bool VGMap::isValid(BuildingTile* fromHand, BuildingTile* toBoard) {
 	}
 }
 
+// A3. >>> OBSERVED <<<
 void VGMap::placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard) {
 	toBoard->setValue(fromHand->getValue());
 	toBoard->setType (fromHand->getType());
@@ -131,6 +132,9 @@ void VGMap::placeBuildingTile(BuildingTile* fromHand, BuildingTile* toBoard) {
 		setFirstPlacement(fromHand->getType());
 	}
 	counter += 1;
+
+	// A3. Notify observer when building tile has been placed! 
+	Notify();
 }
 
 int VGMap::calculatePoints() {
@@ -206,4 +210,25 @@ int VGMap::calculatePoints() {
 	
 
 	return points;
+}
+
+VGMapObserver::VGMapObserver(VGMap* s) {
+	_subject = s;
+	_subject->Attach(this);
+}
+
+VGMapObserver ::~VGMapObserver() {
+	_subject->Detach(this);
+}
+
+void VGMapObserver::Update(Subject* theChangedSubject)
+{
+	if (theChangedSubject == _subject)
+		Output();
+}
+
+void VGMapObserver::Output() {
+	cout << "\t\t$$$ VGMAP OBSERVER SAYS: A building was placed on VGMap \"" << _subject->getName() << "\"!" << endl;
+	cout << "\t\t$$$ VGMAP OBSERVER SAYS: The number of points so far is: " << _subject->calculatePoints() << endl; 
+
 }

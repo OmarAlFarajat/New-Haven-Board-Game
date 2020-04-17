@@ -1,60 +1,31 @@
-#include <iostream>
-#include <list>
+// Adapted from: https://www.bogotobogo.com/DesignPatterns/observer.php
+// The above source uses code examples from the book "Design Patterns: Elements of Reusable Object-Oriented Software" by Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides.
+
 #include "GameObservers.h"
-
-using std::cout;
-using std::endl;
-using std:: list;
-
-Observer::Observer() {};
-
-Observer::~Observer()
-{
-	//To show order of destructor calls with polymorphism or not
-	//cout << "in ~Observer" << endl;
-};
-
-Subject::Subject()
-{
-	_observers = new list<Observer*>;
-};
-
-Subject::~Subject()
-{
-	/*
-	for (Observer* o : *_observers)
-	{
-		//Detach(o); //cannot do!
-		if (o != nullptr)
-		{
-			delete o;
-			o = nullptr;
-		}
-	}
-	/**/
-	delete _observers;
-};
 
 void Subject::Attach(Observer* o)
 {
-	_observers->push_back(o);
-};
+    _observers.push_back(o);
+}
 
 void Subject::Detach(Observer* o)
 {
-	_observers->remove(o);
-	/*
-	if (o != nullptr)
-	{
-		delete o;
-		o = nullptr;
-	}
-	/**/
-};
+    int count = _observers.size();
+    int i;
+
+    for (i = 0; i < count; i++) {
+        if (_observers[i] == o)
+            break;
+    }
+    if (i < count)
+        _observers.erase(_observers.begin() + i);
+
+}
 
 void Subject::Notify()
 {
-	list<Observer*>::iterator i = _observers->begin();
-	for (; i != _observers->end(); ++i)	//note: for loop initialization already handled with begin()
-		(*i)->Update();
-};
+    int count = _observers.size();
+
+    for (int i = 0; i < count; i++)
+        (_observers[i])->Update(this);
+}

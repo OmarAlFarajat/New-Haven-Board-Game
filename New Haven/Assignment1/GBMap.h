@@ -1,12 +1,15 @@
 #pragma once
 #include <vector>
 #include <map>
+
+
 #include "Graph.h"
 #include "TileNode.h"
 #include "Harvest.h"
 #include "Building.h"
+#include "GameObservers.h"
 
-class GBMap 
+class GBMap : public Subject
 {
 	Graph* tileGraph;								// The tiles on the gameboard itself. Composed of 'TileNodes'.
 	Graph* resourceGraph;							// A graph representing all the resources that can be on the board. Composed of 'Resource' nodes. 
@@ -40,7 +43,9 @@ public:
 	void calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int>& output);
 
 	// Resource Tracker operations
+	// A3. >>> OBSERVED <<<
 	void setResourceTracker(std::map<ResourceType, int>* inTracker);
+	// A3. >>> OBSERVED <<<
 	void spendResource(ResourceType, int);
 	bool isValidExpense(ResourceType, int);
 	bool hasWealthToShare();
@@ -62,3 +67,14 @@ inline std::map<ResourceType, int>* GBMap::getResourceTracker() { return resourc
 inline BuildingTile* GBMap::getBuildingsAvailable() { return buildingsAvailable[0]; }
 //inline void GBMap::setAvailableBuilding(int index, BuildingTile* building) { *buildingsAvailable[0] = *building; }
 //inline BuildingTile GBMap::getAvailableBuilding(int index) { return *buildingsAvailable[index]; }
+
+// A3. GBMap Class Concrete Observer
+class GBMapObserver : public Observer {
+public:
+	GBMapObserver(GBMap*);
+	~GBMapObserver();
+	void Update(Subject*);
+	void Output();
+private:
+	GBMap* _subject;
+};
