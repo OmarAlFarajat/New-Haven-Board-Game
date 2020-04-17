@@ -32,6 +32,10 @@ static int validInput;
 static char answer;
 static bool shipmentPlayed; 
 void scoreBoard();
+vector<int> rankThirdRule(vector<int> candidatesID);
+vector<int> rankSecondRule(vector<int> candidatesID);
+vector<int> rankFirstRule(vector<int> candidatesID);
+void end_game();
 
 void UpdateDisplay();
 CImgDisplay main_disp;
@@ -55,7 +59,7 @@ int main() {
 
 	// Keeps track of the game turn
 	int turn_counter = 1;
-
+	
 	// MAIN GAME LOOP
 	for (int player_index = 0; !game->getGBMap()->GameOver(); player_index = ++player_index % numberOfPlayers) {
 
@@ -85,7 +89,7 @@ int main() {
 		cout << "*****************************" << endl;
 		
 	}
-	scoreBoard();
+	end_game();
 	return 0;
 }
 
@@ -121,6 +125,114 @@ void scoreBoard() {
 
 }
 
+void end_game() {
+	cout << "*******************************" << endl;
+	cout << "            GAME ENDS           " << endl;
+	cout << "***********SCORE BOARD***********" << endl;
+
+	//Calculate and display gained score for each player
+	vector<int> candidateID;
+	for (int i = 0; i < numberOfPlayers; ++i) {
+		int gainedScore = game->getPlayer(i)->getVGMap()->calculatePoints();
+		game->getPlayer(i)->setScore(gainedScore);
+		cout << "Player " << *game->getPlayer(i)->getName() << " : " << game->getPlayer(i)->getScore() << endl;
+		candidateID.push_back(i);
+	}
+
+	vector<int> winnersID = rankFirstRule(candidateID);
+
+	cout << " ------------------- CONGRATULATIONS ------------------" << endl;
+	for (int i = 0; i < winnersID.size(); ++i) {
+		cout << "The winner is " << *game->getPlayer(i)->getName() << " with " << game->getPlayer(i)->getScore() << endl;
+	}
+
+}
+
+//Ranking based on highest score
+vector<int> rankFirstRule(vector<int> candidatesID) {
+	int highestScore = 0;
+	int winnerID = -1;
+	for (int i = 0; i < candidatesID.size(); ++i) {
+		int examining = game->getPlayer(candidatesID[i])->getScore();
+		if (examining > highestScore) {
+			highestScore = examining;
+			winnerID = candidatesID[i];
+		}
+	}
+
+	//Check tie:
+	bool tie = false;
+	vector<int> tieCandidates;
+	tieCandidates.push_back(winnerID);
+	for (int i = 0; i < candidatesID.size(); ++i) {
+		int examining = game->getPlayer(i)->getScore(); 
+		if (examining = highestScore && candidatesID[i] != winnerID) {
+			tieCandidates.push_back(i);
+			tie = true;
+		}
+	}
+
+	if (tie) {
+		return (rankSecondRule(tieCandidates));
+	}
+	else {
+		return tieCandidates;
+	}
+}
+
+//Ranking based on empty spaces on the board (fewest empty space on VGboard wins)
+vector<int> rankSecondRule(vector<int> candidatesID) {
+	int leastEmptySpc = 100;
+	int winnerID = -1;
+	for (int i = 0; i < candidatesID.size(); ++i) {
+		int examining = game->getPlayer(candidatesID[i])->getVGMap()->getCounter();
+		if (examining < leastEmptySpc) {
+			leastEmptySpc = examining;
+			winnerID = candidatesID[i];
+		}
+	}
+
+	bool tie = false;
+	vector<int> candidates;
+	candidates.push_back(winnerID);
+	for (int i = 0; i < candidatesID.size(); ++i) {
+		int examining = game->getPlayer(candidatesID[i])->getVGMap()->getCounter();
+		if (examining == leastEmptySpc && candidatesID[i] != winnerID) {
+			candidates.push_back(candidatesID[i]);
+		}
+	}
+
+	if (tie) {
+		return (rankThirdRule(candidates));
+	}
+	else {
+		return candidates;
+	}
+}
+
+//Ranking based on the number of buildings on hand (least wins)
+vector<int> rankThirdRule(vector<int> candidatesID) {
+	int leastBuildings = 100;
+	int winnerID = -1;
+	for (int i = 0; i < candidatesID.size(); ++i) {
+		int examining = game->getPlayer(candidatesID[i])->getHand()->getRemainBuilding();
+		if (examining < leastBuildings) {
+			leastBuildings = examining;
+			winnerID = candidatesID[i];
+		}
+	}
+
+	vector<int> candidates;
+	candidates.push_back(winnerID);
+	for (int i = 0; i < candidatesID.size(); ++i) {
+		int examining = game->getPlayer(candidatesID[i])->getHand()->getRemainBuilding();
+		if (examining == leastBuildings && candidatesID[i] != winnerID) {
+			candidates.push_back(candidatesID[i]);
+		}
+	}
+
+	return candidates;
+}
 
 void UpdateDisplay() {
 	main_disp = CImgDisplay(drawer->Update(), "New Haven");
