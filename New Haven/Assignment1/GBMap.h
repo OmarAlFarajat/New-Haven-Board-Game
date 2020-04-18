@@ -73,8 +73,8 @@ class GBMapObserver : public Observer {
 public:
 	GBMapObserver(GBMap*);
 	~GBMapObserver();
-	void Update(Subject*);
-	void Output();
+	void Update(Subject*,string);
+	void Output(string);
 private:
 	GBMap* _subject;
 };

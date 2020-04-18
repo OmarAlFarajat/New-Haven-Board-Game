@@ -55,9 +55,17 @@ void GBMap::setResourceTracker(std::map<ResourceType, int>* inTracker)
 	resourceTracker[0][ResourceType::STONE] = inTracker[0][ResourceType::STONE];
 	resourceTracker[0][ResourceType::TIMBER] = inTracker[0][ResourceType::TIMBER];
 	resourceTracker[0][ResourceType::WHEAT] = inTracker[0][ResourceType::WHEAT];
-
+	
 	// A3. Notify observer of change to resource tracker! 
-	Notify();
+	if (resourceTracker[0][ResourceType::SHEEP] == 0 &&
+		resourceTracker[0][ResourceType::STONE] == 0 &&
+		resourceTracker[0][ResourceType::TIMBER] == 0 &&
+		resourceTracker[0][ResourceType::WHEAT] == 0) {
+		Notify("Resources Reset");
+		return;
+	}
+	// A3. Notify observer of change to resource tracker! 
+	Notify("Resources Added");
 }
 
 void GBMap::spendResource(ResourceType type, int cost)
@@ -65,7 +73,7 @@ void GBMap::spendResource(ResourceType type, int cost)
 	resourceTracker[0][type] -= cost;
 
 	// A3. Notify observer of change to resource tracker! 
-	Notify();
+	Notify("Resources Removed");
 }
 
 bool GBMap::isValidExpense(ResourceType type, int cost)
@@ -83,11 +91,11 @@ bool GBMap::hasWealthToShare()
 
 void GBMap::displayResourceTracker()
 {
-	cout << "\t\t$$$ Resource Tracker " << endl;
-	cout << "\t\t\tSHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
-	cout << "\t\t\tTIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
-	cout << "\t\t\tSTONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
-	cout << "\t\t\tWHEAT: " << resourceTracker[0][ResourceType::WHEAT] << "\n" << endl;;
+	cout << "\t\t$$$\tResource Tracker " << endl;
+	cout << "\t\t\t\tSHEEP: " << resourceTracker[0][ResourceType::SHEEP] << endl;
+	cout << "\t\t\t\tTIMBER: " << resourceTracker[0][ResourceType::TIMBER] << endl;;
+	cout << "\t\t\t\tSTONE: " << resourceTracker[0][ResourceType::STONE] << endl;;
+	cout << "\t\t\t\tWHEAT: " << resourceTracker[0][ResourceType::WHEAT] << "\n" << endl;;
 
 }
 
@@ -156,7 +164,7 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	tileNode->setOccupied(true);
 
 	// A3. Notify observers of tile placement! 
-	Notify(); 
+	Notify("Harvest Placed"); 
 	return true;
 }
 
@@ -181,16 +189,37 @@ GBMapObserver::~GBMapObserver() {
 	_subject->Detach(this);
 }
 
-void GBMapObserver::Update(Subject* theChangedSubject)
+void GBMapObserver::Update(Subject* theChangedSubject, string message)
 {
 	if (theChangedSubject == _subject)
-		Output();
+		Output(message);
 }
 
-void GBMapObserver::Output() {
+void GBMapObserver::Output(string message) {
 
 	cout << "\t\t$$$ GBMAP OBSERVER SAYS: The state of GBMap has changed!" << endl;
-	cout << "\t\t$$$ GBMAP OBSERVER SAYS: Either a Harvest card was placed, or resources were generated or removed!" << endl;
-	_subject->displayResourceTracker();
+
+	if (message.compare("Harvest Placed") == 0) 
+		cout << "\t\t$$$\tA Harvest card was placed." << endl; 
+
+	else if (message.compare("Resources Reset") == 0) {
+		cout << "\t\t$$$\tResources were reset!" << endl;
+		_subject->displayResourceTracker();
+	}
+
+	else if (message.compare("Resources Removed") == 0) {
+		cout << "\t\t$$$\tResources were removed!" << endl;
+		_subject->displayResourceTracker();
+	}
+
+	else if (message.compare("Resources Added") == 0) {
+		cout << "\t\t$$$\tResources were added!" << endl;
+		_subject->displayResourceTracker();
+	}
+
+	else {
+		cout << "\t\t$$$ GBMAP OBSERVER SAYS: Couldn't understand the notification I received!" << endl;
+	}
+
 
 }

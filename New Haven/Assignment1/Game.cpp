@@ -116,13 +116,13 @@ GameObserver::~GameObserver() {
 	_subject->Detach(this);
 }
 
-void GameObserver::Update(Subject* theChangedSubject)
+void GameObserver::Update(Subject* theChangedSubject, string message)
 {
 	if (theChangedSubject == _subject)
-		Output();
+		Output(message);
 }
 
-void GameObserver::Output() {
+void GameObserver::Output(string message) {
 	cout << "\t\t$$$ GAME OBSERVER SAYS: The state of the game has changed!" << endl;
 	cout << "\t\t$$$ GAME OBSERVER SAYS: " << *_subject->getCurrentPlayer()->getName() << " is currently playing!" << endl;
 	cout << "\t\t$$$ GAME OBSERVER SAYS: The game state is as follows: " << endl; 

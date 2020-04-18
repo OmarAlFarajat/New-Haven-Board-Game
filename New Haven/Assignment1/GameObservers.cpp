@@ -1,7 +1,9 @@
 // Adapted from: https://www.bogotobogo.com/DesignPatterns/observer.php
 // The above source uses code examples from the book "Design Patterns: Elements of Reusable Object-Oriented Software" by Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides.
-
+#include <string>
 #include "GameObservers.h"
+
+using std::string;
 
 void Subject::Attach(Observer* o)
 {
@@ -22,10 +24,10 @@ void Subject::Detach(Observer* o)
 
 }
 
-void Subject::Notify()
+void Subject::Notify(string message)
 {
     int count = _observers.size();
 
     for (int i = 0; i < count; i++)
-        (_observers[i])->Update(this);
+        (_observers[i])->Update(this, message);
 }

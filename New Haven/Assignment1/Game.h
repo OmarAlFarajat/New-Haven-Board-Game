@@ -44,7 +44,7 @@ public:
 inline void Game::setCurrentPlayer(Player* playerIn) { 
 	currentPlayer = playerIn; 
 	// A3. Notify observers that player has changed.
-	Notify();
+	Notify("Player Change");
 }
 inline void Game::PrintGameState()
 {
@@ -54,7 +54,7 @@ inline void Game::PrintGameState()
 			if (Players[0][i]->getVGMap()->getBuildingGraph()->getNode(j)->isOccupied())
 				numberOfBuildingsMade++;
 		cout << "\t\t\t$$$ "
-			<< *Players[0][i]->getName() << ", "
+			<< *Players[0][i]->getName() << ": "
 			<< numberOfBuildingsMade << " buildings, "
 			<< Players[0][i]->getVGMap()->calculatePoints() << " points.\n";
 	}
@@ -68,8 +68,8 @@ class GameObserver : public Observer {
 public:
 	GameObserver(Game*);
 	~GameObserver();
-	void Update(Subject*);
-	void Output();
+	void Update(Subject*,string);
+	void Output(string);
 private:
 	Game* _subject;
 };

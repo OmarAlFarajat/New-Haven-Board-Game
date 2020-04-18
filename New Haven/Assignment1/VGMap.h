@@ -65,8 +65,8 @@ class VGMapObserver : public Observer {
 public:
 	VGMapObserver(VGMap*);
 	~VGMapObserver();
-	void Update(Subject*);
-	void Output();
+	void Update(Subject*,string);
+	void Output(string);
 private:
 	VGMap* _subject;
 };
