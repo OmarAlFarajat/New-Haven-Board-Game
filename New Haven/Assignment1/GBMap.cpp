@@ -1,3 +1,4 @@
+#include<algorithm>
 #include "GBMap.h"
 #include "Harvest.h"
 
@@ -18,6 +19,8 @@ GBMap::GBMap()
 	buildingsAvailable[2] = nullptr;
 	buildingsAvailable[3] = nullptr;
 	buildingsAvailable[4] = nullptr;
+
+	isSideB = new bool(false);
 
 }
 
@@ -122,7 +125,7 @@ void GBMap::calcResourceAdjacencies(TileNode* root, std::map<ResourceType, int> 
 }
 
 bool GBMap::isValid(TileNode* tileNode) {
-	return(!tileNode->isOccupied() && tileNode->isEnabled());
+	return(!tileNode->isOccupied() && tileNode->isEnabled() || tileNode->isBuildingTile());
 }
 
 bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
@@ -152,6 +155,19 @@ bool GBMap::placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode) {
 	return true;
 }
 
+bool GBMap::placeBuildingTile(BuildingTile* building, TileNode* tileNode)
+{
+	if (!tileNode->isEnabled()) {
+		return false;
+	}
+	tileNode->setBuildingStatus(true);
+	tileNode->setOccupied(true);
+	//Set occupied but not setting the type
+	for (int i = 0; i < 4; ++i) {
+		tileNode->getResourceNodes()[i]->setOccupied(true);
+	}
+}
+
 BuildingTile* GBMap::DrawBuilding(BuildingDeck* deck)
 {
 	if (deck->getNumOfRemain() <= 0) {
@@ -160,5 +176,85 @@ BuildingTile* GBMap::DrawBuilding(BuildingDeck* deck)
 	}
 	else {
 		return deck->draw();
+	}
+}
+
+HarvestTile* GBMap::DrawHarvest(HarvestDeck* deck) {
+	if (deck->getNumOfRemain() <= 0) {
+		cout << "There is no more Harvest Tile in the Deck to draw" << endl;
+		return nullptr; 
+	}
+	else {
+		return deck->draw();
+	}
+}
+
+HarvestTile* GBMap::DrawPond() {
+	HarvestTile* temp = new HarvestTile();
+	temp->becomesPond();
+	return temp;
+}
+
+void GBMap::initSettlementLocation() {
+	this->settlementLocation[0].push_back(8);
+	this->settlementLocation[0].push_back(10);
+	this->settlementLocation[0].push_back(12);
+
+	this->settlementLocation[0].push_back(22);
+	this->settlementLocation[0].push_back(26);
+
+	this->settlementLocation[0].push_back(36);
+	this->settlementLocation[0].push_back(38);
+	this->settlementLocation[0].push_back(40);
+}
+
+void GBMap::initBuildingLocation() {
+	this->buildingLocation[0].push_back(2);
+	this->buildingLocation[0].push_back(4);
+
+	this->buildingLocation[0].push_back(14);
+	this->buildingLocation[0].push_back(16);
+	this->buildingLocation[0].push_back(18);
+	this->buildingLocation[0].push_back(20);
+
+	this->buildingLocation[0].push_back(24);
+
+	this->buildingLocation[0].push_back(28);
+	this->buildingLocation[0].push_back(30);
+	this->buildingLocation[0].push_back(32);
+	this->buildingLocation[0].push_back(34);
+
+	this->buildingLocation[0].push_back(44);
+	this->buildingLocation[0].push_back(46);
+}
+
+void GBMap::makeSideB(BuildingDeck* buildDeck, HarvestDeck* harvestDeck) {
+	*isSideB = true;
+
+	initBuildingLocation();
+	//Place settlements buildings on the board
+	for (int i = 0; i < getBuildingLocation().size(); ++i) {
+		TileNode* location = static_cast<TileNode*>(this->getTileGraph()->getNode(getBuildingLocation()[i]));
+		BuildingTile* building = DrawBuilding(buildDeck);
+		if (!location->isEnabled()){
+			placeBuildingTile(building, location);
+		}
+	}
+
+	initSettlementLocation();
+	vector<HarvestTile*> pondAndHarvest;
+	// Add Harvest Tiles and Pond Tiles
+	int turn = 4;
+	for (int i = 0; i < turn; ++i) {
+		pondAndHarvest.push_back(DrawHarvest(harvestDeck));
+		pondAndHarvest.push_back(DrawPond());
+	}
+
+	random_shuffle(pondAndHarvest.begin(), pondAndHarvest.end()); 
+
+	//Place ponds and init harvest tile on the board
+	for (int i = 0; i < getSettlementLocation().size(); ++i) {
+		TileNode* location = static_cast<TileNode*>(this->getTileGraph()->getNode(getSettlementLocation()[i]));
+		placeHarvestTile(pondAndHarvest[i], location);
 	}
 }

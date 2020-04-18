@@ -1,11 +1,12 @@
 #pragma once
 #include "Resources.h"
+#include "Building.h"
 #include <cstddef>
 
 class TileNode : public Node
 {
 	Resource* resources[4];
-	bool* isShipment;
+	BuildingTile* building;
 
 public:
 	TileNode();

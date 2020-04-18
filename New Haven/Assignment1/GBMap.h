@@ -12,6 +12,10 @@ class GBMap
 	Graph* resourceGraph;							// A graph representing all the resources that can be on the board. Composed of 'Resource' nodes. 
 	std::map<ResourceType, int>* resourceTracker;	// Keeps track of the number of resources accumulated from Harvset tile placement
 	BuildingTile* buildingsAvailable[5];			// TODO: A container for the 5 buildings that should be out on the gameboard. 
+	
+	bool* isSideB;
+	vector<int>* settlementLocation;
+	vector<int>* buildingLocation;
 
 public:
 	GBMap();
@@ -25,7 +29,12 @@ public:
 	*(!)It's intended use is only as a helper for Hand::playHarvest() in conjunction with isValid().	*/
 	bool placeHarvestTile(HarvestTile* harvestTile, TileNode* tileNode);
 
+	//Only available for the game to init side B
+	bool placeBuildingTile(BuildingTile* building, TileNode* tileNode);
+
 	BuildingTile* DrawBuilding(BuildingDeck* deck);
+	HarvestTile* DrawHarvest(HarvestDeck* deck);
+	HarvestTile* DrawPond();
 
 	/*	A helper function for Hand::playHarvest().
 	*	Ensures that the request to place a Harvest tile on the board is valid.	*/
@@ -46,12 +55,20 @@ public:
 	bool hasWealthToShare();
 
 	//void setAvailableBuilding(int index, BuildingTile* building);
-  
+
+	//Only for side B
+	void initSettlementLocation();
+	void initBuildingLocation();
+
 	// Getters
 	Graph* getTileGraph();
 	Graph* getResourceGraph();
 	std::map<ResourceType, int>* getResourceTracker();
 	BuildingTile* getBuildingsAvailable();
+
+	void makeSideB(BuildingDeck*, HarvestDeck*);
+	vector<int> getSettlementLocation();
+	vector<int> getBuildingLocation();
 
 	friend class Game;
 	friend class MapDrawer;
@@ -60,5 +77,7 @@ inline Graph* GBMap::getTileGraph() { return tileGraph; }
 inline Graph* GBMap::getResourceGraph() { return resourceGraph; }
 inline std::map<ResourceType, int>* GBMap::getResourceTracker() { return resourceTracker; }
 inline BuildingTile* GBMap::getBuildingsAvailable() { return buildingsAvailable[0]; }
+inline vector<int> GBMap::getSettlementLocation() { return *settlementLocation; }
+inline vector<int> GBMap::getBuildingLocation() { return *buildingLocation; }
 //inline void GBMap::setAvailableBuilding(int index, BuildingTile* building) { *buildingsAvailable[0] = *building; }
 //inline BuildingTile GBMap::getAvailableBuilding(int index) { return *buildingsAvailable[index]; }

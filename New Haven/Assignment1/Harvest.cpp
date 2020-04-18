@@ -47,6 +47,7 @@ HarvestTile::HarvestTile()
 	shipmentTile = new bool(false);
 	shipmentContainer = new vector<ResourceType*>();
 	isSelected = new bool(false);
+	isPond = new bool(false);
 }
 
 HarvestTile::HarvestTile(ResourceType resources[4])

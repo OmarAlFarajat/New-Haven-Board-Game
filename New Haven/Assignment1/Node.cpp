@@ -12,6 +12,8 @@ Node::Node()
 	right = NULL;
 	left = NULL;
 	isShipment = new bool(false);
+	isBuilding = new bool(false);
+	isPond = new bool(false);
 }
 
 Node::~Node()

@@ -8,6 +8,7 @@ TileNode::TileNode()
 	resources[1] = nullptr;
 	resources[2] = nullptr;
 	resources[3] = nullptr;
+	building = new BuildingTile();
 }
 
 TileNode::~TileNode()
