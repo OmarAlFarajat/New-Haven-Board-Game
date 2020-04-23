@@ -1,11 +1,14 @@
 #pragma once
 #include <string>
+
 #include "Graph.h"
 #include "Building.h"
 
+#include "GameObservers.h"
+
 using std::string;
 
-class VGMap
+class VGMap : public Subject
 {
 	Graph* buildingGraph;
 	string* name;
@@ -40,6 +43,7 @@ public:
 	*	But, it could be a nice feature to implement for custom games.	*/
 	void initTileValues();
 
+	// A3. >>> OBSERVED <<<
 	/*	Helper to Hand::PlayBuilding().	
 	*	Sets the member data of BuildingTile fromHand to that of toBoard.
 	*(!)This behaves like a setter.		*/
@@ -55,3 +59,15 @@ inline void VGMap::setName(std::string name) { *this->name = name; }
 inline Graph* VGMap::getBuildingGraph() {	return buildingGraph; }
 inline	string VGMap::getName() { return *name; }
 inline int VGMap::getCounter() { return *counter; }
+
+// A3. VGMap Class Concrete Observer
+class VGMapObserver : public Observer {
+public:
+	VGMapObserver(VGMap*);
+	~VGMapObserver();
+	void Update(Subject*,string);
+	void Output(string);
+private:
+	VGMap* _subject;
+};
+

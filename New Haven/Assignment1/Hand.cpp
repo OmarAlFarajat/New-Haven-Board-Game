@@ -128,7 +128,7 @@ void Hand::exchange(GBMap* gb_map, TileNode* location)
 	std::map<ResourceType, int> generatedResources = { {ResourceType::SHEEP,0},{ResourceType::STONE,0},{ResourceType::TIMBER,0},{ResourceType::WHEAT,0} };
 	gb_map->calcResourceAdjacencies(location, generatedResources);
 	gb_map->setResourceTracker(&generatedResources);
-	gb_map->displayResourceTracker();
+	//gb_map->displayResourceTracker();
 }
 
 vector<int> Hand::askHarvestLocation(GBMap* const gb_map)

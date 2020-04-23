@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObservers.cpp" />
     <ClCompile Include="GBMap.cpp" />
     <ClCompile Include="GBMapLoader.cpp" />
     <ClCompile Include="Graph.cpp" />
@@ -144,6 +146,7 @@
     <ClInclude Include="CImg.h" />
     <ClInclude Include="DrawDisplay.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObservers.h" />
     <ClInclude Include="GBMap.h" />
     <ClInclude Include="GBMapLoader.h" />
     <ClInclude Include="Graph.h" />
