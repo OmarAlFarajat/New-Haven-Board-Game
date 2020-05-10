@@ -2,9 +2,15 @@
 
 # New Haven
 ## In-game Images:
-![gbDefault](ingameImg/gameboard.jpeg)
-![gbplaying](ingameImg/gameboardPlaying.jpeg)
-![VGMap](ingameImg/VGBoard.jpeg)
+![gbDefault](ingameImg/gameboard.jpg)
+
+Main Game Board
+
+![gbplaying](ingameImg/gameboardPlaying.jpg)
+Main game board in playing
+
+![VGMap](ingameImg/VGBoard.jpg)
+Village board in game
 
 ## Description:
 The project is about writing a C++ computer game that allows the user to play a reasonable version of the New Haven game. The New Haven is a “tactical” game, the gaming rules are given [here](./docs/gamerules.pdf)
@@ -50,8 +56,7 @@ The project is about writing a C++ computer game that allows the user to play a 
 + `cmake .`
 + `cmake --build .`
 
-## Contributors:
-| List |
+| Contributors |
 | --------------- |
 | [Duc Nguyen](https://github.com/DukeNgn)      |
 | [Omar Al-Farajat](https://github.com/OmarAlFarajat) |
