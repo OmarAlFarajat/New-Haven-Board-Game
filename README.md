@@ -1,19 +1,24 @@
-![intro](intro.png)
-
 # New Haven
 ## In-game Images:
+
 ![gbDefault](ingameImg/gameboard.jpg)
 
 Main Game Board
 
 ![gbplaying](ingameImg/gameboardPlaying.jpg)
+
 Main game board in playing
 
 ![VGMap](ingameImg/VGBoard.jpg)
+
 Village board in game
 
 ## Description:
-The project is about writing a C++ computer game that allows the user to play a reasonable version of the New Haven game. The New Haven is a “tactical” game, the gaming rules are given [here](./docs/gamerules.pdf)
+The project is about writing a C++ computer game that allows the user to play a reasonable version of the New Haven game. The New Haven is a “tactical” game, the gaming rules are given [here](gamerules.pdf)
+
+## Dependencies:
+### CImg:
+[CImg library](https://cimg.eu/) was used to create Graphical User Interface for the project. 
 
 ## Requirements:
 ### Windows:
