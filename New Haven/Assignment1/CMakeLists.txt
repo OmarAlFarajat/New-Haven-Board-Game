@@ -16,7 +16,11 @@ file(GLOB graph Graph.cpp Graph.h)
 file(GLOB GBmap GBmap.cpp GBmap.h GBMapLoader.cpp GBMapLoader.h)
 file(GLOB VGMap VGMap.cpp VGMap.h VGMapLoader.cpp VGMapLoader.h)
 
-add_executable(NewHaven ${graph} ${node}
+file(GLOB Graphic CImg.h DrawDisplay.h MapDrawer.cpp MapDrawer.h)
+file(GLOB GameObservers GameObservers.cpp GameObservers.h)
+file(GLOB control Game.cpp Game.h)
+
+add_executable(NewHaven ${graph} ${Graphic} ${GameObservers} ${control} ${node}
     ${building} ${harvest} ${resources} ${player} ${GBMap} ${VGMap} ${driver})
 
 install(TARGETS NewHaven)
