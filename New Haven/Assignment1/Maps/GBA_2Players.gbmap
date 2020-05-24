@@ -1,0 +1,8 @@
+# Length and height of the grid
+LENGTH	5
+HEIGHT	5
+# Starting resources on the map. Can be modified to allow for custom maps. 
+RESOURCE	0	STONE	SHEEP	TIMBER	TIMBER
+RESOURCE	4	WHEAT	SHEEP	WHEAT	TIMBER
+RESOURCE	20	STONE	STONE	TIMBER	WHEAT
+RESOURCE	24	SHEEP	STONE	SHEEP	WHEAT
